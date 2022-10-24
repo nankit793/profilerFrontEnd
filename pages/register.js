@@ -1,8 +1,9 @@
-import Head from "next/head";
+import React from "react";
 import Navbar from "../components/navbar/Navbar";
-
-import { Button } from "@mui/material";
-export default function Home() {
+import Head from "next/head";
+import Link from "next/link";
+import RegisterForm from "../components/molecules/forms/RegisterForm";
+function register() {
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -24,11 +25,10 @@ export default function Home() {
       },
     ],
   };
-
   return (
     <>
       <Head>
-        <title>Profiler - create & and share your profiles</title>
+        <title>Profiler - Get yourself registered for Free</title>
         <meta
           name="description"
           content="Profiler is an application in which you would create your profiles regarding different fields without having to worry about saving documents"
@@ -41,7 +41,15 @@ export default function Home() {
         />
       </Head>
       <Navbar />
-      <Button disabled>disabled</Button>
+      <div className="h-screen flex flex-col items-center justify-center mt-4">
+        <Link href="/">
+          <a className="cursor-pointer text-4xl mb-2 font-semibold  text-[black]">
+            PROFILER
+          </a>
+        </Link>
+        <RegisterForm />
+      </div>
     </>
   );
 }
+export default register;
