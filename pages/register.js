@@ -41,9 +41,9 @@ function register() {
         />
       </Head>
       <Navbar />
-      <div className="h-screen flex flex-col items-center justify-center mt-4">
+      <div className="w-full md:mt-10 h-screen md:h-full flex items-center flex-col justify-center">
         <Link href="/">
-          <a className="cursor-pointer text-4xl mb-2 font-semibold  text-[black]">
+          <a className="cursor-pointer text-4xl font-semibold  text-[black]">
             PROFILER
           </a>
         </Link>

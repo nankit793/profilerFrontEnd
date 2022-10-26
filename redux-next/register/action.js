@@ -15,14 +15,14 @@ export function postUserRegistration(data) {
 
 export function postUserRegistration_Success(data) {
   return {
-    type: actionTypes.POST_USER_REGISTRATION,
+    type: actionTypes.POST_USER_REGISTRATION_SUCCESS,
     payload: data,
   };
 }
 
 export function postUserRegistration_Error(data) {
   return {
-    type: actionTypes.POST_USER_REGISTRATION,
+    type: actionTypes.POST_USER_REGISTRATION_ERROR,
     payload: data,
   };
 }

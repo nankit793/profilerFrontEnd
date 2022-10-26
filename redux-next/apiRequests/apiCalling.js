@@ -1,15 +1,9 @@
 import React from "react";
-
+import axios from "./axios";
 class apiCalling {
   async makePostRequests(params) {
-    try {
-      console.log(params.body);
-      return await fetch(params.url, {
-        method: params.method,
-        body: JSON.stringify(params.body),
-      });
-    } catch (error) {
-      return error;
+    if (params.method === "post") {
+      return axios.post(params.url, params.body);
     }
   }
 }

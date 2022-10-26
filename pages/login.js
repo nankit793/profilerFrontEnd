@@ -1,8 +1,6 @@
 import React from "react";
 import Head from "next/head";
 import Navbar from "../components/navbar/Navbar";
-import InputField from "../components/atoms/input/InputField";
-import ButtomPrimary from "../components/atoms/input/ButtomPrimary";
 import Link from "next/link";
 import LoginForm from "../components/molecules/forms/LoginForm";
 function login() {
@@ -17,9 +15,9 @@ function login() {
         <link rel="canonical" href="/" />
       </Head>
       <Navbar />
-      <div className="w-full h-screen flex flex-col items-center justify-center">
+      <div className="w-full md:mt-10 h-screen md:h-full flex items-center flex-col justify-center">
         <Link href="/">
-          <a className="cursor-pointer text-4xl mb-2 font-semibold text-[black]">
+          <a className="cursor-pointer text-4xl font-semibold text-[black]">
             PROFILER
           </a>
         </Link>

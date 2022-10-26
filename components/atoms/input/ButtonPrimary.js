@@ -2,10 +2,10 @@ import React from "react";
 
 import { Button } from "@mui/material";
 
-function ButtomPrimary(props) {
+function ButtonPrimary(props) {
   return (
     <>
-      <div>
+      <div className="">
         <Button
           variant="text"
           //   color={props.color}
@@ -23,4 +23,4 @@ function ButtomPrimary(props) {
   );
 }
 
-export default ButtomPrimary;
+export default ButtonPrimary;
