@@ -13,10 +13,9 @@ function Navbar() {
       setShowTheMenuBar(true);
     }
   };
-  console.log(router.pathname);
   return (
     <>
-      <div className=" md:block hidden py-5 bg-[#03254c] w-full">
+      <div className="rounded-xl md:block hidden py-2 bg-[#03254c] w-full ">
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">PROFILER</div>
           <div className="flex">
@@ -25,7 +24,7 @@ function Navbar() {
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
                   router.pathname === "/aboutUs"
                     ? "text-[#9cf1df]"
-                    : "text-[white"
+                    : "text-[white]"
                 } `}
               >
                 About Us
@@ -36,7 +35,7 @@ function Navbar() {
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
                   router.pathname === "/login"
                     ? "text-[#9cf1df]"
-                    : "text-[white"
+                    : "text-[white]"
                 } `}
               >
                 Login
@@ -47,7 +46,7 @@ function Navbar() {
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
                   router.pathname === "/register"
                     ? "text-[#9cf1df]"
-                    : "text-[white"
+                    : "text-[white]"
                 } `}
               >
                 Register
@@ -56,10 +55,10 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="w-full flex justify-between items-center md:hidden block py-5 bg-[#03254c] w-full">
+      <div className="rounded-3xl w-full flex justify-between items-center md:hidden block py-5  bg-[#03254c] w-full">
         <div className="ml-2  w-min text-white font-semibold">PROFILER</div>
         <div
-          className={`mx-2 z-10 w-min  ${
+          className={`mr-4 z-10 w-min  ${
             showTheMenuBar ? "text-black" : "text-white"
           } text-white font-semibold`}
           onClick={showButtonToggle}
@@ -67,7 +66,7 @@ function Navbar() {
           {showTheMenuBar ? <Close /> : <Menu />}
         </div>
         <div
-          className={`absolute absolute rounded-xl drop-shadow-xl  right-1 top-4  bg-[white] ${
+          className={`absolute rounded-xl drop-shadow-xl  right-2 top-2  bg-[white] ${
             showTheMenuBar ? "block" : "hidden"
           } `}
         >

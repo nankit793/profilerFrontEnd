@@ -40,17 +40,59 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-      <Navbar />
-      <div className="h-full flex flex-col md:flex-row md:justify-start justify-start items-center ">
-        <div className="md:block hidden absolute top-20">
+      <div className="h-screen imageBackground overflow-hidden flex flex-col items-center max-h-[800px] justify-between">
+        <div className="p-2 w-full">
+          <Navbar />
+        </div>
+        <div className="flex flex-col md:flex-row">
+          <div className="">
+            <span className="whitespace-nowrap text-[25px]">
+              Profiler makes it easy to manage <br />
+            </span>
+            <strong className="text-[#03254c] text-[25px] font-bold">
+              different profiles
+            </strong>
+          </div>
+          <div className="md:flex text-center justify-center items-center p-2 w-full">
+            <div>
+              <ButtonPrimary
+                type="button"
+                text="Login"
+                className="border border-[#9cf1df]  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
+              />
+            </div>
+            <div className="md:ml-10">
+              <ButtonPrimary
+                type="button"
+                text="Register"
+                className="border-2 py-4 px-10 bg-[#a5eefa] text-[black]  font-semibold drop-shadow-sm rounded-xl"
+              />
+            </div>
+          </div>
+        </div>
+        <div className="md:text-[25px] text-[18px] mb-5 text-[#03254c] text-center font-bold ">
+          1Million People are using Profiler as their Portfolio <br />
+          <span className="italic">Join the team Now!</span>
+        </div>
+      </div>
+      hyy
+      {/* 
+      <div className="h-full flex flex-col  md:flex-row md:justify-start justify-start items-center ">
+        <div className="md:block hidden absolute top-20  h-screen overflow-hidden">
           <img
             src="https://cdn.wedevs.com/uploads/2019/04/Explore-the-easiest-WordPress-user-registration-plugin.png"
             alt=""
+            width="100%"
+            height="100%"
+            layout="fill"
           />
         </div>
         <div className="md:hidden block ">
           <img
             src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?w=2000"
+            width="100%"
+            height="100%"
+            layout="fill"
             alt=""
           />
         </div>
@@ -58,19 +100,18 @@ export default function Home() {
           <div className=" text-2xl md:text-left text-center">
             Profiler helps you manage your profiles for different field. <br />{" "}
             <span className="font-semibold text-[#03254c]">
-              {" "}
               So stop sharing documents share your profiler!
             </span>
           </div>
-          <div className="flex justify-center items-center w-full mt-10">
+          <div className="md:flex text-center justify-center items-center p-2 w-full mt-10">
             <div>
               <ButtonPrimary
                 type="button"
                 text="Login"
-                className="border  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
+                className="border border-[#9cf1df]  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
               />
             </div>
-            <div className="ml-10">
+            <div className="md:ml-10">
               <ButtonPrimary
                 type="button"
                 text="Register"
@@ -79,7 +120,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-      </div>
+      </div> */}
     </>
   );
 }

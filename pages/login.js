@@ -14,14 +14,18 @@ function login() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <Navbar />
-      <div className="w-full md:mt-10 h-screen md:h-full flex items-center flex-col justify-center">
-        <Link href="/">
-          <a className="cursor-pointer text-4xl font-semibold text-[black]">
-            PROFILER
-          </a>
-        </Link>
-        <LoginForm />
+      <div className="imageBackground h-screen flex flex-col items-center max-h-[1000px]">
+        <div className="p-2 w-full">
+          <Navbar />
+        </div>
+        <div className="w-full flex items-center flex-col h-full justify-center">
+          <Link href="/">
+            <a className="cursor-pointer  mb-10 text-4xl font-semibold text-[black]">
+              PROFILER
+            </a>
+          </Link>
+          <LoginForm />
+        </div>
       </div>
     </>
   );

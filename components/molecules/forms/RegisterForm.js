@@ -35,7 +35,7 @@ export default function RegisterForm() {
 
   return (
     <>
-      <div className="mt-10 md:min-w-[500px] md:w-[40%] w-[90%]">
+      <div className=" md:min-w-[500px] md:w-[40%] w-[90%]">
         <ThirdPartyAuthentication />
         <form onSubmit={onSubmit} method="POST">
           <div className="pt-2">
@@ -68,7 +68,7 @@ export default function RegisterForm() {
           <div className="pt-2">
             <ButtomPrimary
               type="submit"
-              className="text-black bg-[#03254c] text-[white] hover:text-[black] hover:bg-[#e9f7ec] p-3 font-semibold text-[16px]"
+              className=" bg-[#03254c] text-[white] hover:text-[black] hover:bg-[#9cf1df] p-3 font-semibold text-[16px]"
               color="primary"
               text="Register"
               disableFocusRipple={false}

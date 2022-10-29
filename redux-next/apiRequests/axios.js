@@ -21,16 +21,7 @@ instance.interceptors.request.use(
     return req;
   },
   (error) => {
-    return Promise.reject(error);
-  }
-);
-
-instance.interceptors.response.use(
-  function (response) {
-    return response;
-  },
-  function (error) {
-    return Promise.reject(error);
+    return error;
   }
 );
 export { instance as default };

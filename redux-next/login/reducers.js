@@ -9,9 +9,9 @@ export default function loginUserReducers(state = initialState, action) {
     case actionTypes.LOGIN_USER:
       return { ...state, isLoggedIn: false };
     case actionTypes.LOGIN_USER_SUCCESS:
-      return { ...state, isLoggedIn: true, payload: action.payload };
+      return { ...state, isLoggedIn: true, loggedInUser: action.payload };
     case actionTypes.LOGIN_USER_ERROR:
-      return { ...state, isLoggedIn: false, payload: action.payload };
+      return { ...state, isLoggedIn: false, loggedInUser: action.payload };
 
     default:
       return state;

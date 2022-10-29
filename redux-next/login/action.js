@@ -7,7 +7,6 @@ export const actionTypes = {
 
 // user login
 export function loginUser(data) {
-  console.log("login");
   return {
     type: actionTypes.LOGIN_USER,
     payload: data,

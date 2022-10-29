@@ -3,10 +3,8 @@
 
 @import "tailwindcss/utilities";
 
-body
-{
-    /* background-color: rgb(233, 245, 255); */
-}
-.formWitdhSelect{
-    width: max(40%, 500px);
+.imageBackground{
+    /* background: url(https://shots.codepen.io/vaibhavarora/pen/xmpxjp-1280.jpg?version=1546378731) no-repeat; */
+    background: url(https://img.freepik.com/free-vector/ocean-sea-waves-with-ripples_1017-30742.jpg?w=2000) no-repeat;
+    object-fit: fill;
 }

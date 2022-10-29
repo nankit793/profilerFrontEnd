@@ -1,18 +1,45 @@
 import React, { useState, useEffect } from "react";
 import ButtonPrimary from "../../atoms/input/ButtonPrimary";
 import InputField from "../../atoms/input/InputField";
+import { validator } from "./validateFields";
 import ThirdPartyAuthentication from "./thirdPartyAuthentication/ThirdPartyAuthentication";
 import * as loginActions from "../../../redux-next/login/action";
+import { AlertMessage } from "../../atoms/AlertMessage";
+import CircularProgresser from "../../atoms/CircularProgresser";
 // dependencies
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
 
 function LoginForm() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
+  const [showError, setShowError] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
+
+  const dispatch = useDispatch();
+  const loginData = useSelector((state) => state.loginUserReducers);
+
+  useEffect(() => {
+    if (
+      loginData &&
+      loginData.loggedInUser &&
+      loginData.loggedInUser.data &&
+      loginData.loggedInUser.status === 200
+    ) {
+      router.push("/dashboard");
+    } else {
+      setShowError(true);
+      setLoading(false);
+      setErrorMessage("Invalid Username or Password");
+    }
+  }, [loginData && loginData.loggedInUser]);
 
   const onInputChangeHandler = (e) => {
+    setShowError(false);
     if (e.target.name === "userid") {
       setUserid(e.target.value);
     } else if (e.target.name === "password") {
@@ -21,24 +48,30 @@ function LoginForm() {
       setConfirmPassword(e.target.value);
     }
   };
-  useEffect(() => {
-    console.log("effected");
-  }, []);
-
-  const dispatch = useDispatch();
-  const loginData = useSelector((state) => state.loginUserReducers);
 
   const onSubmit = (e) => {
     e.preventDefault();
-    console.log("submitt");
-    dispatch(loginActions.loginUser({ userid, password }));
+    const validate = validator(userid, password);
+    if (validate) {
+      setLoading(true);
+      dispatch(loginActions.loginUser({ userid, password }));
+    } else {
+      setShowError(true);
+      setErrorMessage("Invalid Username or   Password");
+    }
   };
+
   return (
     <>
-      <div className="mt-10 md:min-w-[500px] md:w-[40%] w-[90%]">
+      <div className="md:min-w-[500px] md:w-[40%] w-[90%]">
         <ThirdPartyAuthentication />
-        <form onSubmit={onSubmit} method="POST">
-          <div className="pt-2">
+        <div>
+          {showError && (
+            <div className="text-[red] font-inter absolute">{errorMessage}</div>
+          )}
+        </div>
+        <form onSubmit={onSubmit} className="mt-9" method="POST">
+          <div className="">
             <InputField
               label="Email"
               type="email"
@@ -59,10 +92,10 @@ function LoginForm() {
           <div className="pt-2">
             <ButtonPrimary
               type="submit"
-              className="text-black bg-[#03254c] text-[white] hover:text-[black] hover:bg-[#e9f7ec] p-3 font-semibold text-[16px]"
+              className=" bg-[#03254c] text-[white] hover:text-[black] h-[50px]  hover:bg-[#9cf1df] p-3 font-semibold text-[16px]"
               color="primary"
               disableFocusRipple={false}
-              text="Login"
+              text={loading ? [<CircularProgresser key="key" />] : "Login"}
             />
           </div>
         </form>
