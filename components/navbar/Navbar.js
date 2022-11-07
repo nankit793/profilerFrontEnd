@@ -15,7 +15,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="rounded-xl md:block hidden py-2 bg-[#03254c] w-full ">
+      <div className="py-3 md:block hidden py-2 bg-color_2 w-full ">
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">PROFILER</div>
           <div className="flex">
@@ -23,7 +23,7 @@ function Navbar() {
               <a
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
                   router.pathname === "/aboutUs"
-                    ? "text-[#9cf1df]"
+                    ? "text-color_1"
                     : "text-[white]"
                 } `}
               >
@@ -33,9 +33,7 @@ function Navbar() {
             <Link href="/login">
               <a
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
-                  router.pathname === "/login"
-                    ? "text-[#9cf1df]"
-                    : "text-[white]"
+                  router.pathname === "/login" ? "text-color_1" : "text-[white]"
                 } `}
               >
                 Login
@@ -45,7 +43,7 @@ function Navbar() {
               <a
                 className={`cursor-pointer font-semibold mx-2 text-[white] p-2 ${
                   router.pathname === "/register"
-                    ? "text-[#9cf1df]"
+                    ? "text-color_1"
                     : "text-[white]"
                 } `}
               >
@@ -55,7 +53,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className="rounded-3xl w-full flex justify-between items-center md:hidden block py-5  bg-[#03254c] w-full">
+      <div className=" w-full flex justify-between items-center md:hidden block py-5  bg-color_2 w-full">
         <div className="ml-2  w-min text-white font-semibold">PROFILER</div>
         <div
           className={`mr-4 z-10 w-min  ${
@@ -75,7 +73,7 @@ function Navbar() {
               <a
                 className={`cursor-pointer font-semibold mx-2  p-2 ${
                   router.pathname === "/aboutUs"
-                    ? "text-[#9cf1df]"
+                    ? "text-color_1"
                     : "text-[black]"
                 } `}
               >
@@ -85,9 +83,7 @@ function Navbar() {
             <Link href="/login">
               <a
                 className={`cursor-pointer font-semibold mx-2 p-2 ${
-                  router.pathname === "/login"
-                    ? "text-[#9cf1df]"
-                    : "text-[black]"
+                  router.pathname === "/login" ? "text-color_1" : "text-[black]"
                 } `}
               >
                 Login
@@ -97,7 +93,7 @@ function Navbar() {
               <a
                 className={`cursor-pointer font-semibold mx-2 p-2 ${
                   router.pathname === "/register"
-                    ? "text-[#9cf1df]"
+                    ? "text-color_1"
                     : "text-[black]"
                 } `}
               >

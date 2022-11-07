@@ -41,7 +41,7 @@ function register() {
         />
       </Head>
       <div className="imageBackground h-screen flex flex-col items-center ">
-        <div className="p-2 w-full">
+        <div className="w-full">
           <Navbar />
         </div>
         <div className="w-full flex items-center flex-col h-full justify-center">

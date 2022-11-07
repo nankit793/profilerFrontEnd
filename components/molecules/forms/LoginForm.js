@@ -4,48 +4,66 @@ import InputField from "../../atoms/input/InputField";
 import { validator } from "./validateFields";
 import ThirdPartyAuthentication from "./thirdPartyAuthentication/ThirdPartyAuthentication";
 import * as loginActions from "../../../redux-next/login/action";
-import { AlertMessage } from "../../atoms/AlertMessage";
+import {
+  errorNotification,
+  successNotification,
+  warningNotification,
+} from "../../atoms/AlertMessage";
+import "react-notifications-component/dist/theme.css";
 import CircularProgresser from "../../atoms/CircularProgresser";
 // dependencies
 
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
+import { NotificationContainer } from "react-notifications";
+import { data } from "autoprefixer";
 
 function LoginForm() {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
-  const [showError, setShowError] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
 
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.loginUserReducers);
+  const isRegistered = useSelector((state) => state.registerReducer);
+  useEffect(() => {
+    if (isRegistered && isRegistered.user) {
+      if (isRegistered.isPosted && isRegistered.user.status === 200) {
+        successNotification(
+          "You have registered",
+          "Login with same credentials"
+        );
+      }
+    }
+  }, [isRegistered && isRegistered.user]);
 
   useEffect(() => {
     if (
       loginData &&
       loginData.loggedInUser &&
-      loginData.loggedInUser.data &&
       loginData.loggedInUser.status === 200
     ) {
+      successNotification("Successfully Logged In", "redirecting");
       router.push("/dashboard");
-    } else {
-      setShowError(true);
-      setLoading(false);
-      setErrorMessage("Invalid Username or Password");
+    } else if (
+      loginData &&
+      loginData.loggedInUser &&
+      loginData.loggedInUser.status === 400
+    ) {
+      warningNotification(loginData.loggedInUser.data.message, "Try again");
+      loginData.loggedInUser = {};
+      loginData.isLoggedIn = false;
     }
+    setLoading(false);
   }, [loginData && loginData.loggedInUser]);
 
   const onInputChangeHandler = (e) => {
-    setShowError(false);
     if (e.target.name === "userid") {
       setUserid(e.target.value);
-    } else if (e.target.name === "password") {
-      setPassword(e.target.value);
     } else {
-      setConfirmPassword(e.target.value);
+      setPassword(e.target.value);
     }
   };
 
@@ -56,8 +74,7 @@ function LoginForm() {
       setLoading(true);
       dispatch(loginActions.loginUser({ userid, password }));
     } else {
-      setShowError(true);
-      setErrorMessage("Invalid Username or   Password");
+      setLoading(false);
     }
   };
 
@@ -65,13 +82,17 @@ function LoginForm() {
     <>
       <div className="md:min-w-[500px] md:w-[40%] w-[90%]">
         <ThirdPartyAuthentication />
-        <div>
-          {showError && (
-            <div className="text-[red] font-inter absolute">{errorMessage}</div>
-          )}
-        </div>
-        <form onSubmit={onSubmit} className="mt-9" method="POST">
-          <div className="">
+
+        <form onSubmit={onSubmit} method="POST">
+          <div
+            className="w-full text-right text-[blue] underline cursor-pointer pr-2"
+            onClick={() => {
+              router.push("/register");
+            }}
+          >
+            Create Account
+          </div>
+          <div className="pt-2">
             <InputField
               label="Email"
               type="email"
@@ -89,16 +110,25 @@ function LoginForm() {
               onChange={onInputChangeHandler}
             />
           </div>
+          <div
+            className="w-full text-right text-[blue] underline  cursor-pointer pr-2"
+            onClick={() => {
+              router.push("/login");
+            }}
+          >
+            Forgot Password?
+          </div>
           <div className="pt-2">
             <ButtonPrimary
               type="submit"
-              className=" bg-[#03254c] text-[white] hover:text-[black] h-[50px]  hover:bg-[#9cf1df] p-3 font-semibold text-[16px]"
+              className=" bg-color_2 text-[white] hover:text-[black] h-[50px]  hover:bg-color_1 p-3 font-semibold text-[16px]"
               color="primary"
               disableFocusRipple={false}
               text={loading ? [<CircularProgresser key="key" />] : "Login"}
             />
           </div>
         </form>
+        <NotificationContainer />
       </div>
     </>
   );

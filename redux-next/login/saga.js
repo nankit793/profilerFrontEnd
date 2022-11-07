@@ -10,18 +10,18 @@ function* loginUserSaga(action) {
       url: "http://localhost:5000/user/login",
       body: action.payload,
     });
-    const { data, status, message } = result;
-    console.log(result);
+    const { data } = result;
     if (result.status === 200) {
       const { accessToken, refreshToken } = data;
       saveTokensOnLocal("accessToken", accessToken);
       saveTokensOnLocal("idToken", refreshToken);
       yield put(loginUser_Success(result));
     } else {
-      yield put(loginUser_Error(status, message));
+      yield put(loginUser_Error(result));
     }
   } catch (error) {
-    yield put(loginUser_Error(error));
+    console.log(error.response);
+    yield put(loginUser_Error(error.response));
   }
 }
 

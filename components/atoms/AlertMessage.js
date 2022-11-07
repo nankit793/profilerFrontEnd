@@ -1,18 +1,16 @@
-import React, { useState } from "react";
-import { Alert, AlertTitle } from "@mui/material";
+import "react-notifications/lib/notifications.css";
+import { NotificationManager } from "react-notifications";
 
-export let AlertMessage = function ({ severity, title, desc }) {
-  // setTimeout(() => {
-  //   return "";
-  // }, 3000);
-
-  return (
-    <div className="fixed top-20 right-2">
-      <Alert severity={severity}>
-        <AlertTitle>{title}</AlertTitle>
-        {desc}
-        <strong>{}</strong>
-      </Alert>
-    </div>
-  );
+let time = 2000;
+export let errorNotification = (text, subText) => {
+  return NotificationManager.error(text, subText, time);
+};
+export let successNotification = (text, subText) => {
+  return NotificationManager.success(text, subText, time);
+};
+export let infoNotification = (text, subText) => {
+  return NotificationManager.info(text, subText, time);
+};
+export let warningNotification = (text, subText) => {
+  return NotificationManager.warning(text, subText, time);
 };

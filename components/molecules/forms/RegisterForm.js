@@ -5,22 +5,47 @@ import ButtomPrimary from "../../atoms/input/ButtonPrimary";
 import InputField from "../../atoms/input/InputField";
 import * as registerActions from "../../../redux-next/register/action";
 import ThirdPartyAuthentication from "./thirdPartyAuthentication/ThirdPartyAuthentication";
+import CircularProgresser from "../../atoms/CircularProgresser";
+import { validator } from "./validateFields";
+import {
+  successNotification,
+  warningNotification,
+} from "../../atoms/AlertMessage";
 
 // dependencies
-
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { ReactNotifications } from "react-notifications-component";
+import { useRouter } from "next/router";
+import { NotificationContainer } from "react-notifications";
 
 export default function RegisterForm() {
   const [userid, setUserid] = useState("");
+  const [loading, setLoading] = useState(false);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const dispatch = useDispatch();
+
   const data = useSelector((state) => state.registerReducer);
+  const dispatch = useDispatch();
+  const router = useRouter();
 
   const onSubmit = (e) => {
     e.preventDefault();
-    dispatch(registerActions.postUserRegistration({ userid, password }));
+    const validate = validator(userid, password);
+    const passMatch = password === confirmPassword;
+
+    setLoading(true);
+    if (validate && passMatch) {
+      dispatch(registerActions.postUserRegistration({ userid, password }));
+    } else if (!validate) {
+      warningNotification("Invalid Username/Password", "Enter valid details");
+    } else {
+      warningNotification(
+        "password do not match",
+        "please enter same password on both the fields"
+      );
+    }
+    setLoading(false);
   };
 
   const onInputChangeHandler = (e) => {
@@ -33,11 +58,36 @@ export default function RegisterForm() {
     }
   };
 
+  useEffect(() => {
+    if (data && data.user) {
+      if (data.isPosted) {
+        setPassword("");
+        setConfirmPassword("");
+        setUserid("");
+        router.push("/login");
+      } else if (data.user.status === 409) {
+        setLoading(false);
+        warningNotification(data.user.data.message, "Enter valid details");
+        data.user = {};
+        data.isPosted = false;
+      }
+    }
+  }, [data && data.user]);
+
   return (
     <>
+      <ReactNotifications />
       <div className=" md:min-w-[500px] md:w-[40%] w-[90%]">
         <ThirdPartyAuthentication />
         <form onSubmit={onSubmit} method="POST">
+          <div
+            className="w-full text-right text-[blue] underline  cursor-pointer pr-2"
+            onClick={() => {
+              router.push("/login");
+            }}
+          >
+            Login
+          </div>
           <div className="pt-2">
             <InputField
               label="Email"
@@ -68,13 +118,15 @@ export default function RegisterForm() {
           <div className="pt-2">
             <ButtomPrimary
               type="submit"
-              className=" bg-[#03254c] text-[white] hover:text-[black] hover:bg-[#9cf1df] p-3 font-semibold text-[16px]"
+              className=" bg-color_2 text-[white] hover:text-[black] h-[50px]  hover:bg-color_1 p-3 font-semibold text-[16px]"
               color="primary"
-              text="Register"
+              text={loading ? [<CircularProgresser key="key" />] : "Register"}
               disableFocusRipple={false}
             />
           </div>
         </form>
+
+        <NotificationContainer />
       </div>
     </>
   );

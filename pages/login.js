@@ -1,9 +1,23 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Head from "next/head";
 import Navbar from "../components/navbar/Navbar";
 import Link from "next/link";
 import LoginForm from "../components/molecules/forms/LoginForm";
+import { useRouter } from "next/router";
 function login() {
+  const router = useRouter();
+  useEffect(() => {
+    if (
+      localStorage.getItem("accessToken") &&
+      localStorage.getItem("idToken")
+    ) {
+      if (localStorage.getItem("pathName")) {
+        router.push(`${localStorage.getItem("pathName")}`);
+      }
+      router.push("/dashboard");
+    }
+  }, []);
+
   return (
     <>
       <Head>
@@ -15,7 +29,7 @@ function login() {
         <link rel="canonical" href="/" />
       </Head>
       <div className="imageBackground h-screen flex flex-col items-center max-h-[1000px]">
-        <div className="p-2 w-full">
+        <div className=" w-full">
           <Navbar />
         </div>
         <div className="w-full flex items-center flex-col h-full justify-center">

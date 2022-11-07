@@ -41,7 +41,7 @@ export default function Home() {
         />
       </Head>
       <div className="h-screen imageBackground overflow-hidden flex flex-col items-center max-h-[800px] justify-between">
-        <div className="p-2 w-full">
+        <div className="w-full">
           <Navbar />
         </div>
         <div className="flex flex-col md:flex-row">
@@ -49,7 +49,7 @@ export default function Home() {
             <span className="whitespace-nowrap text-[25px]">
               Profiler makes it easy to manage <br />
             </span>
-            <strong className="text-[#03254c] text-[25px] font-bold">
+            <strong className="text-color_2 text-[25px] font-bold">
               different profiles
             </strong>
           </div>
@@ -58,7 +58,7 @@ export default function Home() {
               <ButtonPrimary
                 type="button"
                 text="Login"
-                className="border border-[#9cf1df]  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
+                className="border border-color_1  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
               />
             </div>
             <div className="md:ml-10">
@@ -70,7 +70,7 @@ export default function Home() {
             </div>
           </div>
         </div>
-        <div className="md:text-[25px] text-[18px] mb-5 text-[#03254c] text-center font-bold ">
+        <div className="md:text-[25px] text-[18px] mb-5 text-color_2 text-center font-bold ">
           1Million People are using Profiler as their Portfolio <br />
           <span className="italic">Join the team Now!</span>
         </div>
@@ -99,7 +99,7 @@ export default function Home() {
         <div className="z-10 flex justify-center items-center md:mt-40 w-full flex-col">
           <div className=" text-2xl md:text-left text-center">
             Profiler helps you manage your profiles for different field. <br />{" "}
-            <span className="font-semibold text-[#03254c]">
+            <span className="font-semibold text-color_2">
               So stop sharing documents share your profiler!
             </span>
           </div>
@@ -108,14 +108,14 @@ export default function Home() {
               <ButtonPrimary
                 type="button"
                 text="Login"
-                className="border border-[#9cf1df]  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
+                className="border border-color_1  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
               />
             </div>
             <div className="md:ml-10">
               <ButtonPrimary
                 type="button"
                 text="Register"
-                className="border-2 py-4 px-10 bg-[#9cf1df] text-[black]  font-semibold drop-shadow-sm rounded-xl"
+                className="border-2 py-4 px-10 bg-color_1 text-[black]  font-semibold drop-shadow-sm rounded-xl"
               />
             </div>
           </div>

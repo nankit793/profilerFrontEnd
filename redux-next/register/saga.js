@@ -9,7 +9,6 @@ import {
 //user registraion
 function* postUserRegistrationSaga(action) {
   try {
-    console.log("first");
     const result = yield call(apiCalling.makePostRequests, {
       method: "post",
       url: "http://localhost:5000/user/register",
@@ -21,7 +20,7 @@ function* postUserRegistrationSaga(action) {
       yield put(postUserRegistration_Error(result));
     }
   } catch (error) {
-    yield put(postUserRegistration_Error(error));
+    yield put(postUserRegistration_Error(error.response));
   }
 }
 

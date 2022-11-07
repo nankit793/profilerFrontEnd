@@ -10,7 +10,11 @@ import store from "../redux-next/store";
 function MyApp({ Component, pageProps }) {
   // const store = createStore(reducer);
 
-  return <Component {...pageProps} />;
+  return (
+    <>
+      <Component {...pageProps} />
+    </>
+  );
 }
 
 export default withRedux(store)(MyApp);
