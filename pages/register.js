@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Navbar from "../components/navbar/Navbar";
 import Head from "next/head";
 import Link from "next/link";
 import RegisterForm from "../components/molecules/forms/RegisterForm";
+import { useRouter } from "next/router";
+
 function register() {
+  const router = useRouter();
+
   const schemaData = {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -25,6 +29,18 @@ function register() {
       },
     ],
   };
+  useEffect(() => {
+    if (
+      localStorage.getItem("accessToken") &&
+      localStorage.getItem("idToken")
+    ) {
+      if (localStorage.getItem("pathName")) {
+        router.push(`${localStorage.getItem("pathName")}`);
+      }
+      router.push("/dashboard");
+    }
+  }, []);
+
   return (
     <>
       <Head>

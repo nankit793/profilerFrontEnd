@@ -7,7 +7,7 @@ function InputField(props) {
       <div className="w-full bg-[white]">
         <TextField
           id=""
-          // size="string"
+          value={props.value}
           required={props.required || false}
           type={props.type}
           // placeholder={props.placeholder}

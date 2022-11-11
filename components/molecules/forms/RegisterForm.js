@@ -15,7 +15,7 @@ import {
 // dependencies
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
-import { ReactNotifications } from "react-notifications-component";
+// import { ReactNotifications } from "react-notifications-component";
 import { useRouter } from "next/router";
 import { NotificationContainer } from "react-notifications";
 
@@ -26,6 +26,8 @@ export default function RegisterForm() {
   const [confirmPassword, setConfirmPassword] = useState("");
 
   const data = useSelector((state) => state.registerReducer);
+  const loginData = useSelector((state) => state.loginUserReducers);
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -41,8 +43,8 @@ export default function RegisterForm() {
       warningNotification("Invalid Username/Password", "Enter valid details");
     } else {
       warningNotification(
-        "password do not match",
-        "please enter same password on both the fields"
+        "please enter same password on both the fields",
+        "password do not match"
       );
     }
     setLoading(false);
@@ -74,9 +76,31 @@ export default function RegisterForm() {
     }
   }, [data && data.user]);
 
+  useEffect(() => {
+    const token = localStorage.getItem("idToken");
+    console.log(token, loginData.isLoggedIn);
+    if (
+      loginData &&
+      loginData.loggedInUser &&
+      loginData.loggedInUser.status === 200 &&
+      token
+    ) {
+      successNotification("Successfully Logged In", "redirecting");
+      router.push("/dashboard");
+    } else if (
+      loginData &&
+      loginData.loggedInUser &&
+      loginData.loggedInUser.status === 400
+    ) {
+      warningNotification(loginData.loggedInUser.data.message, "Try again");
+      loginData.loggedInUser = {};
+      loginData.isLoggedIn = false;
+    }
+    setLoading(false);
+  }, [loginData && loginData.loggedInUser]);
+
   return (
     <>
-      <ReactNotifications />
       <div className=" md:min-w-[500px] md:w-[40%] w-[90%]">
         <ThirdPartyAuthentication />
         <form onSubmit={onSubmit} method="POST">

@@ -9,7 +9,6 @@ import {
   successNotification,
   warningNotification,
 } from "../../atoms/AlertMessage";
-import "react-notifications-component/dist/theme.css";
 import CircularProgresser from "../../atoms/CircularProgresser";
 // dependencies
 
@@ -17,7 +16,6 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { NotificationContainer } from "react-notifications";
-import { data } from "autoprefixer";
 
 function LoginForm() {
   const router = useRouter();
@@ -113,7 +111,7 @@ function LoginForm() {
           <div
             className="w-full text-right text-[blue] underline  cursor-pointer pr-2"
             onClick={() => {
-              router.push("/login");
+              router.push("/forgotPassword");
             }}
           >
             Forgot Password?

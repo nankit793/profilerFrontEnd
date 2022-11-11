@@ -8,6 +8,7 @@ function ButtonPrimary(props) {
       <div className="">
         <Button
           variant="text"
+          // disabled={true}
           //   color={props.color}
           //   startIcon={`${props.startIcon}` || false}
           //   endIcon={`${props.endIcon}` || false}

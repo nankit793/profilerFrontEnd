@@ -15,7 +15,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="py-3 md:block hidden py-2 bg-color_2 w-full ">
+      <div className="md:block hidden py-5 bg-color_2 w-full ">
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">PROFILER</div>
           <div className="flex">
