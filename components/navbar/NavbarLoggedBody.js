@@ -38,10 +38,10 @@ function NavbarLoggedBody() {
         </div>
         <div className="w-full">
           <div className="flex flex-col justify-center w-full items-center border-color_2">
-            <Link href="/">
+            <Link href="/myAccount">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black]  ${
-                  router.pathname === "/aboutUs" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
+                  router.pathname === "/myAccount" ? "bg-color_1" : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}
@@ -50,8 +50,8 @@ function NavbarLoggedBody() {
             </Link>
             <Link href="/">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black]  ${
-                  router.pathname === "/aboutUs" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
+                  router.pathname === "/createProfile" ? "text-color_1" : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}
@@ -60,8 +60,8 @@ function NavbarLoggedBody() {
             </Link>
             <Link href="/">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black]  ${
-                  router.pathname === "/aboutUs" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center  ${
+                  router.pathname === "/editProfile" ? "text-color_1" : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}

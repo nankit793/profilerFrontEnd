@@ -26,7 +26,7 @@ function uid(props) {
     <>
       {!isLoggedInUser && <Navbar />}
       {isLoggedInUser && <NavbarLogged />}
-      User do not exist
+      {/* User do not exist */}
     </>
   );
 }

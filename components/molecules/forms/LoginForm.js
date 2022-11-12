@@ -44,7 +44,7 @@ function LoginForm() {
       loginData.loggedInUser.status === 200
     ) {
       successNotification("Successfully Logged In", "redirecting");
-      router.push("/home");
+      router.push("/home/userid");
     } else if (
       loginData &&
       loginData.loggedInUser &&
