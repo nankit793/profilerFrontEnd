@@ -3,6 +3,9 @@ export const actionTypes = {
   LOGIN_USER: "LOGIN_USER",
   LOGIN_USER_SUCCESS: "LOGIN_USER_SUCCESS",
   LOGIN_USER_ERROR: "LOGIN_USER_ERROR",
+
+  // initial state
+  SET_INITIAL_STATE: "SET_INITIAL_STATE",
 };
 
 // user login

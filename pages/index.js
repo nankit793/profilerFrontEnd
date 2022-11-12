@@ -37,7 +37,7 @@ export default function Home() {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
-      router.push("/dashboard");
+      router.push("/home");
     }
   }, []);
   return (

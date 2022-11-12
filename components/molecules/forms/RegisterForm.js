@@ -78,7 +78,6 @@ export default function RegisterForm() {
 
   useEffect(() => {
     const token = localStorage.getItem("idToken");
-    console.log(token, loginData.isLoggedIn);
     if (
       loginData &&
       loginData.loggedInUser &&
@@ -86,7 +85,7 @@ export default function RegisterForm() {
       token
     ) {
       successNotification("Successfully Logged In", "redirecting");
-      router.push("/dashboard");
+      router.push("/home");
     } else if (
       loginData &&
       loginData.loggedInUser &&

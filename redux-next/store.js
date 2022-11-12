@@ -10,7 +10,6 @@ import { applyMiddleware, createStore } from "redux";
 //     const { composeWithDevTools } = require("@redux-devtools/extension");
 //     return composeWithDevTools(applyMiddleware(...middleware));
 //   }
-//   console.log("heeewdwffnelrelrkvk");
 //   return applyMiddleware(...middleware);
 // };
 

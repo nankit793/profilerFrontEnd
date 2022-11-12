@@ -35,7 +35,7 @@ function forgotPassword() {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
-      router.push("/dashboard");
+      router.push("/home");
     }
   }, []);
 

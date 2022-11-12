@@ -37,7 +37,7 @@ function register() {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
-      router.push("/dashboard");
+      router.push("/home");
     }
   }, []);
 
@@ -56,7 +56,7 @@ function register() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-      <div className="imageBackground h-screen flex flex-col items-center ">
+      <div className=" h-screen flex flex-col items-center ">
         <div className="w-full">
           <Navbar />
         </div>

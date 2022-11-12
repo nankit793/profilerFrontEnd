@@ -1,7 +1,13 @@
 import { all, takeEvery, put, call } from "redux-saga/effects";
 import apiCalling from "../apiRequests/apiCalling";
 import { saveTokensOnLocal } from "../apiRequests/localStoragePortal";
-import { actionTypes, loginUser_Success, loginUser_Error } from "./action";
+import {
+  actionTypes,
+  loginUser_Success,
+  loginUser_Error,
+  logout_Success,
+  logout_Error,
+} from "./action";
 function* loginUserSaga(action) {
   try {
     const result = yield call(apiCalling.makePostRequests, {
@@ -15,12 +21,12 @@ function* loginUserSaga(action) {
       const { accessToken, refreshToken } = data;
       saveTokensOnLocal("accessToken", accessToken);
       saveTokensOnLocal("idToken", refreshToken);
+      saveTokensOnLocal("mail", "userid");
       yield put(loginUser_Success(result));
     } else {
       yield put(loginUser_Error(result));
     }
   } catch (error) {
-    console.log(error.response);
     yield put(loginUser_Error(error.response));
   }
 }

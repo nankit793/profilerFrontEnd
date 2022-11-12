@@ -1,7 +1,7 @@
 import "react-notifications/lib/notifications.css";
 import { NotificationManager } from "react-notifications";
 
-let time = 2000;
+let time = 3000;
 export let errorNotification = (text, subText) => {
   return NotificationManager.error(text, subText, time);
 };

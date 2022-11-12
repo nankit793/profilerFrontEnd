@@ -13,8 +13,9 @@ function login() {
     ) {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
+      } else {
+        router.push("/home");
       }
-      router.push("/dashboard");
     }
   }, []);
 
@@ -28,7 +29,7 @@ function login() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <div className="imageBackground h-screen flex flex-col items-center max-h-[1000px]">
+      <div className=" h-screen flex flex-col items-center max-h-[1000px]">
         <div className=" w-full">
           <Navbar />
         </div>
