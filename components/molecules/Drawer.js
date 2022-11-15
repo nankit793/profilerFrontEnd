@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
-import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+// import SwipeableDrawer from "@mui/material/SwipeableDrawer";
+import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
 import Divider from "@mui/material/Divider";
@@ -36,8 +37,8 @@ export default function SwipeableTemporaryDrawer(props) {
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
       role="presentation"
-      onClick={toggleDrawer(anchor, false)}
-      onKeyDown={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
       {data}
     </Box>
@@ -52,14 +53,15 @@ export default function SwipeableTemporaryDrawer(props) {
         >
           {click}
         </Button>
-        <SwipeableDrawer
+        <Drawer
           anchor={anchor}
+          // variant="temporary"
           open={state[anchor]}
           onClose={toggleDrawer(anchor, false)}
           onOpen={toggleDrawer(anchor, true)}
         >
           {list(anchor)}
-        </SwipeableDrawer>
+        </Drawer>
       </React.Fragment>
     </div>
   );

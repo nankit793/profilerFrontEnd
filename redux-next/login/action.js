@@ -29,3 +29,11 @@ export function loginUser_Error(data) {
     payload: data,
   };
 }
+
+export function clearStore(data) {
+  console.log("clear action");
+  return {
+    type: actionTypes.SET_INITIAL_STATE,
+    payload: data,
+  };
+}

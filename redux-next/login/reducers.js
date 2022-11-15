@@ -12,6 +12,9 @@ export default function loginUserReducers(state = initialState, action) {
       return { ...state, isLoggedIn: true, loggedInUser: action.payload };
     case actionTypes.LOGIN_USER_ERROR:
       return { ...state, isLoggedIn: false, loggedInUser: action.payload };
+    case actionTypes.SET_INITIAL_STATE:
+      console.log("reducer");
+      return { ...state, isLoggedIn: false, loggedInUser: {} };
 
     default:
       return state;

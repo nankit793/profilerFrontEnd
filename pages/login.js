@@ -4,21 +4,18 @@ import Navbar from "../components/navbar/Navbar";
 import Link from "next/link";
 import LoginForm from "../components/molecules/forms/LoginForm";
 import { useRouter } from "next/router";
-function login() {
+import { ifLogged } from "../components/ifLogged";
+function Login() {
   const router = useRouter();
+
   useEffect(() => {
-    if (
-      localStorage.getItem("accessToken") &&
-      localStorage.getItem("idToken")
-    ) {
+    if (ifLogged()) {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
-      } else {
-        router.push("/home");
       }
+      router.push("/home");
     }
-  }, []);
-
+  });
   return (
     <>
       <Head>
@@ -46,4 +43,4 @@ function login() {
   );
 }
 
-export default login;
+export default Login;

@@ -4,8 +4,8 @@ import Head from "next/head";
 import Link from "next/link";
 import RegisterForm from "../components/molecules/forms/RegisterForm";
 import { useRouter } from "next/router";
-
-function register() {
+import { ifLogged } from "../components/ifLogged";
+function Register() {
   const router = useRouter();
 
   const schemaData = {
@@ -30,16 +30,13 @@ function register() {
     ],
   };
   useEffect(() => {
-    if (
-      localStorage.getItem("accessToken") &&
-      localStorage.getItem("idToken")
-    ) {
+    if (ifLogged()) {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
       router.push("/home");
     }
-  }, []);
+  });
 
   return (
     <>
@@ -72,4 +69,4 @@ function register() {
     </>
   );
 }
-export default register;
+export default Register;

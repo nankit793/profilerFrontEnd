@@ -10,13 +10,14 @@ import {
   warningNotification,
 } from "../components/atoms/AlertMessage";
 import getOTP from "../redux-next/otp";
+import { ifLogged } from "../components/ifLogged";
 // depencies
 import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // const { Auth, LoginCredentials } = require("two-step-auth");
 
-function forgotPassword() {
+function ForgotPassword() {
   const [userid, setUserid] = useState("");
   const [otp, setOtp] = useState("");
   const [otpChecker, setOtpChecker] = useState();
@@ -28,16 +29,13 @@ function forgotPassword() {
   const router = useRouter();
 
   useEffect(() => {
-    if (
-      localStorage.getItem("accessToken") &&
-      localStorage.getItem("idToken")
-    ) {
+    if (ifLogged()) {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
       router.push("/home");
     }
-  }, []);
+  });
 
   const onInputChangeHandler = (e) => {
     if (!isMailVerified) {
@@ -262,4 +260,4 @@ function forgotPassword() {
   );
 }
 
-export default forgotPassword;
+export default ForgotPassword;

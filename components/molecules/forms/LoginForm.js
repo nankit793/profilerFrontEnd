@@ -35,7 +35,8 @@ function LoginForm() {
         );
       }
     }
-  }, [isRegistered && isRegistered.user]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isRegistered && isRegistered.user && isRegistered.isPosted]);
 
   useEffect(() => {
     if (
@@ -44,7 +45,7 @@ function LoginForm() {
       loginData.loggedInUser.status === 200
     ) {
       successNotification("Successfully Logged In", "redirecting");
-      router.push("/home/userid");
+      router.push("/home");
     } else if (
       loginData &&
       loginData.loggedInUser &&
@@ -55,6 +56,7 @@ function LoginForm() {
       loginData.isLoggedIn = false;
     }
     setLoading(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [loginData && loginData.loggedInUser]);
 
   const onInputChangeHandler = (e) => {

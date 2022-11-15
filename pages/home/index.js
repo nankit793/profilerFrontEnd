@@ -4,19 +4,19 @@ import { logout } from "../../components/logout";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 
-function home() {
+function Home() {
   const registerData = useSelector((state) => state.registerReducer);
   const loginData = useSelector((state) => state.loginUserReducers);
 
   const router = useRouter();
   useEffect(() => {
-    if (localStorage.getItem("mail")) {
-      router.push(`home/${localStorage.getItem("mail")}`);
+    if (localStorage.getItem("userid")) {
+      router.push(`home/${localStorage.getItem("userid")}`);
     } else {
       (loginData.isLoggedIn = false),
         (loginData.loggedInUser = {}),
         (registerData.user = {}),
-        (registerData.isPostedc = false),
+        (registerData.isPosted = false),
         logout();
       router.push(`/login`);
     }
@@ -24,4 +24,4 @@ function home() {
   return <></>;
 }
 
-export default home;
+export default Home;

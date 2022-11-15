@@ -6,6 +6,17 @@ class apiCalling {
       return axios.post(params.url, params.body);
     }
   }
+  async makeGetRequest(params) {
+    console.log(params.body);
+    if (params.method === "get") {
+      return axios.get(params.url, {
+        headers: {
+          "Authorization": "ndlksndlsds",
+          "userid": params.body.userid,
+        },
+      });
+    }
+  }
 }
 
 export default new apiCalling();

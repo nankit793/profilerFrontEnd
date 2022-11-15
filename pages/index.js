@@ -5,7 +5,7 @@ import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import ButtonPrimary from "../components/atoms/input/ButtonPrimary";
 import { useRouter } from "next/router";
-
+import { ifLogged } from "../components/ifLogged";
 export default function Home() {
   const schemaData = {
     "@context": "https://schema.org",
@@ -30,16 +30,13 @@ export default function Home() {
   };
   const router = useRouter();
   useEffect(() => {
-    if (
-      localStorage.getItem("accessToken") &&
-      localStorage.getItem("idToken")
-    ) {
+    if (ifLogged()) {
       if (localStorage.getItem("pathName")) {
         router.push(`${localStorage.getItem("pathName")}`);
       }
       router.push("/home");
     }
-  }, []);
+  });
   return (
     <>
       <Head>

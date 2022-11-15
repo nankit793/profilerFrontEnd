@@ -21,7 +21,7 @@ function* loginUserSaga(action) {
       const { accessToken, refreshToken } = data;
       saveTokensOnLocal("accessToken", accessToken);
       saveTokensOnLocal("idToken", refreshToken);
-      saveTokensOnLocal("mail", "userid");
+      saveTokensOnLocal("userid", action.payload.userid);
       yield put(loginUser_Success(result));
     } else {
       yield put(loginUser_Error(result));

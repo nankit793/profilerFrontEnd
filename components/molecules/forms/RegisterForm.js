@@ -11,6 +11,7 @@ import {
   successNotification,
   warningNotification,
 } from "../../atoms/AlertMessage";
+import { ifLogged } from "../../ifLogged";
 
 // dependencies
 import { useDispatch } from "react-redux";
@@ -43,8 +44,8 @@ export default function RegisterForm() {
       warningNotification("Invalid Username/Password", "Enter valid details");
     } else {
       warningNotification(
-        "please enter same password on both the fields",
-        "password do not match"
+        "Please enter same password on both the fields",
+        "Password do not match"
       );
     }
     setLoading(false);
@@ -70,33 +71,10 @@ export default function RegisterForm() {
       } else if (data.user.status === 409) {
         setLoading(false);
         warningNotification(data.user.data.message, "Enter valid details");
-        data.user = {};
-        data.isPosted = false;
       }
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data && data.user]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("idToken");
-    if (
-      loginData &&
-      loginData.loggedInUser &&
-      loginData.loggedInUser.status === 200 &&
-      token
-    ) {
-      successNotification("Successfully Logged In", "redirecting");
-      router.push("/home");
-    } else if (
-      loginData &&
-      loginData.loggedInUser &&
-      loginData.loggedInUser.status === 400
-    ) {
-      warningNotification(loginData.loggedInUser.data.message, "Try again");
-      loginData.loggedInUser = {};
-      loginData.isLoggedIn = false;
-    }
-    setLoading(false);
-  }, [loginData && loginData.loggedInUser]);
 
   return (
     <>
