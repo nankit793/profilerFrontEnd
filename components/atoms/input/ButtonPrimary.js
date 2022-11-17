@@ -17,6 +17,7 @@ function ButtonPrimary(props) {
           disableFocusRipple={props.disableFocusRipple || true}
           type={props.type}
         >
+          {props.icon}
           {props.text}
         </Button>
       </div>

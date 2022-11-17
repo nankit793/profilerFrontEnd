@@ -9,10 +9,6 @@ export default async function getOTP(body) {
       isOTP: isOTP,
       userid: userid,
     }),
-    headers: {
-      "Content-Type": "application/json",
-      // 'Content-Type': 'application/x-www-form-urlencoded',
-    },
   };
   const result = await fetch(
     "http://localhost:5000/user/isUserRegistered",

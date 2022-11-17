@@ -40,8 +40,9 @@ function NavbarLoggedBody() {
           <div className="flex flex-col justify-center w-full items-center border-color_2">
             <Link href="/myAccount">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${router.pathname === "/myAccount" ? "bg-color_1" : ""
-                  } `}
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
+                  router.pathname === "/myAccount" ? "bg-color_1" : ""
+                } `}
               >
                 {/* <SettingsIcon /> */}
                 My Account
@@ -49,17 +50,19 @@ function NavbarLoggedBody() {
             </Link>
             <Link href="/">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${router.pathname === "/createProfile" ? "text-color_1" : ""
-                  } `}
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
+                  router.pathname === "/createProfile" ? "text-color_1" : ""
+                } `}
               >
                 {/* <SettingsIcon /> */}
                 Create Profile
               </a>
             </Link>
-            <Link href="/">
+            <Link href="/update/basicDetails">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center  ${router.pathname === "/editProfile" ? "text-color_1" : ""
-                  } `}
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center  ${
+                  router.pathname === "/editProfile" ? "text-color_1" : ""
+                } `}
               >
                 {/* <SettingsIcon /> */}
                 Edit Profile
@@ -70,24 +73,27 @@ function NavbarLoggedBody() {
             <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${router.pathname === "/aboutUs" ? "text-color_1" : ""
-                    } `}
+                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  } `}
                 >
                   About
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${router.pathname === "/aboutUs" ? "text-color_1" : ""
-                    } `}
+                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  } `}
                 >
                   Contact
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${router.pathname === "/aboutUs" ? "text-color_1" : ""
-                    } `}
+                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  } `}
                 >
                   FAQs
                 </a>
@@ -97,8 +103,9 @@ function NavbarLoggedBody() {
           <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
             <Link href="/">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black]  ${router.pathname === "/aboutUs" ? "text-color_1" : ""
-                  } `}
+                className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                  router.pathname === "/aboutUs" ? "text-color_1" : ""
+                } `}
               >
                 <SettingsIcon />
                 Setings

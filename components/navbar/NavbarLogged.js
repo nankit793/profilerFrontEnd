@@ -13,35 +13,45 @@ function NavbarLogged() {
     <>
       <div className=" py-4 bg-color_2 w-full ">
         <div className="flex justify-between items-center">
-          <div className=" ml-2  w-min text-white font-semibold cursor-pointer" onClick={() => { router.push("/home") }}>PROFILER</div>
+          <div
+            className=" ml-2  w-min text-white font-semibold cursor-pointer"
+            onClick={() => {
+              router.push(`home/${localStorage.getItem("userid")}`);
+            }}
+          >
+            PROFILER
+          </div>
           <div className="flex items-center mr-5">
             <div className="md:block hidden">
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${router.pathname === "/aboutUs"
-                    ? "text-color_1"
-                    : "text-[white]"
-                    } `}
+                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                    router.pathname === "/aboutUs"
+                      ? "text-color_1"
+                      : "text-[white]"
+                  } `}
                 >
                   About
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${router.pathname === "/aboutUs"
-                    ? "text-color_1"
-                    : "text-[white]"
-                    } `}
+                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                    router.pathname === "/aboutUs"
+                      ? "text-color_1"
+                      : "text-[white]"
+                  } `}
                 >
                   Contact
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${router.pathname === "/aboutUs"
-                    ? "text-color_1"
-                    : "text-[white]"
-                    } `}
+                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                    router.pathname === "/aboutUs"
+                      ? "text-color_1"
+                      : "text-[white]"
+                  } `}
                 >
                   FAQs
                 </a>

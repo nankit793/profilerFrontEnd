@@ -6,10 +6,10 @@ import NavbarLogged from "../../components/navbar/NavbarLogged";
 import { useDispatch } from "react-redux";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import { logout } from "../../components/logout";
+import Footer from "../../components/footer/Footer";
 function Uid(props) {
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [userid, setUserid] = useState("");
-
   const router = useRouter();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.basicDataReducer);
@@ -26,7 +26,7 @@ function Uid(props) {
     if (!uid && !userid) {
       logout();
     }
-    setUserid(uid)
+    setUserid(uid);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [setIsLoggedInUser, router, router.query]);
 
@@ -41,6 +41,7 @@ function Uid(props) {
     <>
       {!isLoggedInUser && <Navbar />}
       {isLoggedInUser && <NavbarLogged />}
+      {/* <Footer /> */}
       {/* User do not exist */}
     </>
   );

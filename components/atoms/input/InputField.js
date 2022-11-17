@@ -4,9 +4,10 @@ import { TextField } from "@mui/material";
 function InputField(props) {
   return (
     <>
-      <div className="w-full bg-[white]">
+      <div className="w-full bg-[white] ">
         <TextField
           id=""
+          className=""
           value={props.value}
           required={props.required || false}
           type={props.type}
@@ -15,7 +16,7 @@ function InputField(props) {
           onChange={props.onChange}
           label={props.label}
           name={props.name}
-          variant="outlined"
+          variant={"outlined"}
         />
       </div>
     </>

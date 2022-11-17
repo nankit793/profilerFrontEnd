@@ -7,12 +7,11 @@ class apiCalling {
     }
   }
   async makeGetRequest(params) {
-    console.log(params.body);
     if (params.method === "get") {
       return axios.get(params.url, {
         headers: {
-          "Authorization": "ndlksndlsds",
-          "userid": params.body.userid,
+          Authorization: "ndlksndlsds",
+          userid: params.body.userid,
         },
       });
     }
