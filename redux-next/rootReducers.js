@@ -2,11 +2,12 @@ import { combineReducers } from "redux";
 import registerReducer from "./register/reducer";
 import loginUserReducers from "./login/reducers";
 import basicDataReducer from "./getUserBasic/reducer";
-
+import basicDataUploadReducer from "./uploadDataBasic/reducer";
 const appReducer = combineReducers({
   registerReducer,
   loginUserReducers,
   basicDataReducer,
+  basicDataUploadReducer,
 });
 
 const rootReducer = (state, action) => {

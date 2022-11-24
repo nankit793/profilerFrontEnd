@@ -51,7 +51,12 @@ function LoginForm() {
       loginData.loggedInUser &&
       loginData.loggedInUser.status === 400
     ) {
-      warningNotification(loginData.loggedInUser.data.message, "Try again");
+      warningNotification(
+        loginData.loggedInUser.data.message
+          ? loginData.loggedInUser.data.message
+          : "Enter Valid Username/Password",
+        "Try again"
+      );
       loginData.loggedInUser = {};
       loginData.isLoggedIn = false;
     }
@@ -95,7 +100,7 @@ function LoginForm() {
           <div className="pt-2">
             <InputField
               label="Email"
-              type="email"
+              type="text"
               required={true}
               onChange={onInputChangeHandler}
               name="userid"

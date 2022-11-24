@@ -16,7 +16,7 @@ function NavbarLogged() {
           <div
             className=" ml-2  w-min text-white font-semibold cursor-pointer"
             onClick={() => {
-              router.push(`home/${localStorage.getItem("userid")}`);
+              router.push(`/home/${localStorage.getItem("userid")}`);
             }}
           >
             PROFILER

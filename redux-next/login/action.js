@@ -31,7 +31,7 @@ export function loginUser_Error(data) {
 }
 
 export function clearStore(data) {
-  console.log("clear action");
+  // console.log("clear action");
   return {
     type: actionTypes.SET_INITIAL_STATE,
     payload: data,

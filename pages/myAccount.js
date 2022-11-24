@@ -1,6 +1,6 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useEffect, useState } from "react";
-// import { useRouter } from "next/router";
+import { useRouter } from "next/router";
 import NavbarLogged from "../components/navbar/NavbarLogged";
 // import { logout } from "../components/logout";
 import Head from "next/head";
@@ -12,15 +12,16 @@ import UserField from "../components/molecules/UserField";
 import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
+2;
 import { authenticate } from "../components/authentication";
 import Footer from "../components/footer/Footer";
 function MyAccount() {
   const [userBasicData, setUserBasicData] = useState({});
-  // const router = useRouter();
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.loginUserReducers);
   const registerData = useSelector((state) => state.registerReducer);
   const userData = useSelector((state) => state.basicDataReducer);
+  const router = useRouter();
   useEffect(() => {
     const auth = async () => {
       await authenticate(loginData, registerData);
@@ -66,53 +67,54 @@ function MyAccount() {
         <div className="text-[25px] font-bold my-4 font-inter text-text_1">
           My Account
         </div>
-        <div className="md:block hidden w-full flex p-10 bg-[white] rounded-xl ">
-          <div className=" w-full flex">
-            <div className="">
-              <div className="w-[200px] h-[200px] rounded-xl  bg-color_2"></div>
-            </div>
-            <div className="w-full ml-10 flex flex-col justify-between">
-              <div className="flex items-center justify-between w-full ">
-                <div>{userBasicData.name}</div>
-                <div>
+        <div className="w-full md:flex justify-between gap-5 ">
+          <div className="rounded-xl bg-[white] w-[100%] md:w-[70%] md:flex justify-between p-5 items-center">
+            <div className="w-[200px] h-[200px] rounded-xl w-full bg-color_2 flex md:mx-0 mx-auto"></div>
+            <div className="w-full md:w-[60%] mt-10 md:mt-0 flex flex-col justify-between h-full ">
+              <div className="flex w-full justify-between items-center">
+                <div className="text-[23px] text-text_1 font-bold ">
+                  {userBasicData.name}
+                </div>
+                <div className="mr-4">
                   {userBasicData.age}
                   {userBasicData.gender}
                   {userBasicData.nationality}
                 </div>
               </div>
-              <div className="flex justify-between w-full">
-                <div className="w-full ">
-                  <div className="flex justify-between border-b mr-5  border-dashed">
-                    <div className="w-full font-bold text-text_1">
-                      Joined At:
-                    </div>
-                    <div className="text-right w-full text-[16px] font-semibold">
-                      {userBasicData.joiningDate
-                        ? userBasicData.joiningDate
-                        : ""}
-                    </div>
-                  </div>
-                  <div className="flex text-text_1 justify-between border-b border-dashed mr-5 my-7 ">
-                    <div className="w-full font-bold">Email</div>
-                    <div className="text-right w-full text-[16px] font-semibold">
-                      {userBasicData.userid}
-                    </div>
-                  </div>
-                  <div className="flex justify-between border-b mr-5 border-dashed">
-                    <div className="w-full text-text_1 font-bold">Username</div>
-                    <div className="text-right w-full">
-                      {userBasicData.username}
-                    </div>
-                  </div>
+              <div className="flex justify-between border-b mr-5  border-dashed md:mt-0 mt-5">
+                <div className="w-full font-bold text-text_1">Joined At:</div>
+                <div className="text-right w-full text-[16px] font-semibold whitespace-nowrap">
+                  {userBasicData.joiningDate ? userBasicData.joiningDate : ""}
                 </div>
-                <div className="w-full"></div>
               </div>
+              <div className="flex text-text_1 justify-between border-b border-dashed mr-5 my-5 md:my-2 ">
+                <div className="w-full font-bold">Email</div>
+                <div className="text-right w-full text-[16px] font-semibold">
+                  {userBasicData.userid}
+                </div>
+              </div>
+              <div className="flex justify-between border-b mr-5 border-dashed">
+                <div className="w-full text-text_1 font-bold">Username</div>
+                <div className="text-right w-full">
+                  {userBasicData.username}
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="rounded-xl bg-[white] w-[100%] md:w-[30%] mt-5 md:mt-0 px-5">
+            <div className="font-bold text-text_1 text-[24px] border-b py-3">
+              Insights
             </div>
           </div>
         </div>
         <div className="w-full flex items-center justify-between my-5">
           <div className="text-[20px] text-text_1 font-bold">User Details</div>
-          <div className="">
+          <div
+            className=""
+            onClick={() => {
+              router.push("/update/basicDetails");
+            }}
+          >
             <ButtonPrimary
               type="button"
               text="Edit Details"
@@ -128,7 +130,10 @@ function MyAccount() {
             </div> */}
             <UserField keyName="Name" value={userBasicData.name} />
             <UserField keyName="Phone" value={userBasicData.phone} />
-            <UserField keyName="Date Of Birth" value={userBasicData.dob} />
+            <UserField
+              keyName="Date Of Birth"
+              value={userBasicData.dob ? userBasicData.dob : ""}
+            />
             <UserField keyName="Bio" value={userBasicData.bio} />
             <UserField keyName="Slogan" value={userBasicData.slogan} />
             <UserField keyName="Zodiac" value={userBasicData.zodiac} />
@@ -149,11 +154,44 @@ function MyAccount() {
             {/* <div className="text-[24px] mb-4 font-semibold md:mt-0 mt-10">
               Social Information
             </div> */}
-            <UserField keyName="Facebook" value={userBasicData.facebook} />
-            <UserField keyName="Instagram" value={userBasicData.instagram} />
-            <UserField keyName="YouTube" value={userBasicData.youtube} />
-            <UserField keyName="Linkdn" value={userBasicData.linkdn} />
-            <UserField keyName="Github" value={userBasicData.github} />
+
+            <UserField
+              keyName="Facebook"
+              link={userBasicData.facebook ? true : false}
+              value={
+                userBasicData.facebook ? userBasicData.facebook : "Not provided"
+              }
+            />
+            <UserField
+              keyName="Instagram"
+              link={userBasicData.instagram ? true : false}
+              value={
+                userBasicData.instagram
+                  ? userBasicData.instagram
+                  : "Not provided"
+              }
+            />
+            <UserField
+              keyName="YouTube"
+              link={userBasicData.youtube ? true : false}
+              value={
+                userBasicData.youtube ? userBasicData.youtube : "Not provided"
+              }
+            />
+            <UserField
+              keyName="Linkdn"
+              link={userBasicData.linkdn ? true : false}
+              value={
+                userBasicData.linkdn ? userBasicData.linkdn : "Not provided"
+              }
+            />
+            <UserField
+              keyName="Github"
+              link={userBasicData.github ? true : false}
+              value={
+                userBasicData.github ? userBasicData.github : "Not provided"
+              }
+            />
           </div>
         </div>
       </div>

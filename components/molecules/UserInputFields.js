@@ -7,8 +7,13 @@ function UserInputFields(props) {
         <div className="text-[16px] font-semibold text-text_1 ">
           {props.keyName}
         </div>
-        <div className="w-[70%]">
-          <InputField value={props.value} type="text" name={props.name} />
+        <div className="w-[60%]">
+          <InputField
+            value={props.value}
+            type={props.type}
+            name={props.name}
+            onChange={props.onChange}
+          />
         </div>
       </div>
     </>

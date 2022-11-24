@@ -40,8 +40,8 @@ function NavbarLoggedBody() {
           <div className="flex flex-col justify-center w-full items-center border-color_2">
             <Link href="/myAccount">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
-                  router.pathname === "/myAccount" ? "bg-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center ${
+                  router.pathname === "/myAccount" ? "bg-color_3 font-bold" : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}
@@ -50,8 +50,8 @@ function NavbarLoggedBody() {
             </Link>
             <Link href="/">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center ${
-                  router.pathname === "/createProfile" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center ${
+                  router.pathname === "/createProfile" ? "text-color_3" : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}
@@ -60,8 +60,10 @@ function NavbarLoggedBody() {
             </Link>
             <Link href="/update/basicDetails">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_1 w-full text-center  ${
-                  router.pathname === "/editProfile" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center  ${
+                  router.pathname === "/update/basicDetails"
+                    ? "bg-[#EBF5FB] font-bold"
+                    : ""
                 } `}
               >
                 {/* <SettingsIcon /> */}
