@@ -84,7 +84,7 @@ function MyAccount() {
               <div className="flex justify-between border-b mr-5  border-dashed md:mt-0 mt-5">
                 <div className="w-full font-bold text-text_1">Joined At:</div>
                 <div className="text-right w-full text-[16px] font-semibold whitespace-nowrap">
-                  {userBasicData.joiningDate ? userBasicData.joiningDate : ""}
+                  {/* {userBasicData.joiningDate ? userBasicData.joiningDate : ""} */}
                 </div>
               </div>
               <div className="flex text-text_1 justify-between border-b border-dashed mr-5 my-5 md:my-2 ">
@@ -129,10 +129,12 @@ function MyAccount() {
               Personal Information
             </div> */}
             <UserField keyName="Name" value={userBasicData.name} />
-            <UserField keyName="Phone" value={userBasicData.phone} />
+            {/* <UserField keyName="Phone" value={userBasicData.phone} /> */}
             <UserField
               keyName="Date Of Birth"
-              value={userBasicData.dob ? userBasicData.dob : ""}
+              value={
+                userBasicData && userBasicData.dob ? userBasicData.dob : ""
+              }
             />
             <UserField keyName="Bio" value={userBasicData.bio} />
             <UserField keyName="Slogan" value={userBasicData.slogan} />

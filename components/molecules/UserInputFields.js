@@ -7,11 +7,14 @@ function UserInputFields(props) {
         <div className="text-[16px] font-semibold text-text_1 ">
           {props.keyName}
         </div>
-        <div className="w-[60%]">
+        <div className={`w-[70%] flex`}>
           <InputField
+            length={props.length}
             value={props.value}
             type={props.type}
+            unit={props.unit}
             name={props.name}
+            multiline={props.multiline ? true : false}
             onChange={props.onChange}
           />
         </div>

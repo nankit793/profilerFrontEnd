@@ -18,6 +18,7 @@ class apiCalling {
   }
   async makePatchRequest(params) {
     if (params.method === "patch") {
+      // console.log(params.data);
       return axios.patch(params.url, {
         headers: {
           refreshtoken: localStorage.getItem("idToken"),

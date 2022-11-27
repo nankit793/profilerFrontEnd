@@ -5,6 +5,7 @@ import Navbar from "../../components/navbar/Navbar";
 import NavbarLogged from "../../components/navbar/NavbarLogged";
 import { useDispatch } from "react-redux";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
+import * as getProfileLIst from "../../redux-next/profileList/action";
 import { logout } from "../../components/logout";
 import Footer from "../../components/footer/Footer";
 import verifyId from "../../redux-next/otp";
@@ -15,7 +16,7 @@ import FemaleIcon from "@mui/icons-material/Female";
 import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Avatar } from "@mui/material";
 import ReactCountryFlag from "react-country-flag";
-import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
+// import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
 function Uid(props) {
@@ -26,6 +27,7 @@ function Uid(props) {
   const router = useRouter();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.basicDataReducer);
+  const profileList = useSelector((state) => state.profileListReducer);
   useEffect(() => {
     let token, userid;
     token = localStorage.getItem("idToken");
@@ -47,6 +49,7 @@ function Uid(props) {
     const effectHandler = async () => {
       if (userid) {
         dispatch(getBasicDataActions.getBasicData({ userid: userid }));
+        dispatch(getProfileLIst.getProfilesList({ userid: userid }));
       }
       // eslint-disable-next-line react-hooks/exhaustive-deps
     };
