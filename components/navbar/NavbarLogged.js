@@ -57,12 +57,14 @@ function NavbarLogged() {
                 </a>
               </Link>
             </div>
+            <div className="">
             <SwipeableTemporaryDrawer
               anchor="right"
               click={<SearchIcon />}
-              classNameDrawer="normal-case  cursor-pointer font-semibold text-[white] p-0  text-[15px]"
+              classNameDrawer="text-white hover:bg-color_2"
               data={<SearchBarBody />}
-            />
+              />
+              </div>
             <div className="text-color_2 rounded-full w-[40px] flex justify-center border bg-white">
               <SwipeableTemporaryDrawer
                 anchor="right"

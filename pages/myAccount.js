@@ -64,7 +64,7 @@ function MyAccount() {
         <NavbarLogged />
       </div>
       <div className="md:mx-20 m-8">
-        <div className="text-[25px] font-bold my-4 font-inter text-text_1">
+        <div className="text-[25px] font-bold my-4 font-inter text-color_2">
           My Account
         </div>
         <div className="w-full md:flex justify-between gap-5 ">
@@ -101,14 +101,16 @@ function MyAccount() {
               </div>
             </div>
           </div>
-          <div className="rounded-xl bg-[white] w-[100%] md:w-[30%] mt-5 md:mt-0 px-5">
-            <div className="font-bold text-text_1 text-[24px] border-b py-3">
-              Insights
-            </div>
+          <div className="rounded-xl bg-[white] w-[100%] md:w-[30%] mt-5 md:mt-0 ">
+          <div className="text-white text-[19px] font-semibold border-b bg-color_2 rounded-t-xl">
+                    <div className="px-4 py-2">
+                    Insights
+                    </div>
+                  </div>
           </div>
         </div>
         <div className="w-full flex items-center justify-between my-5">
-          <div className="text-[20px] text-text_1 font-bold">User Details</div>
+          <div className="text-[20px] text-color_2 font-bold">Details</div>
           <div
             className=""
             onClick={() => {
@@ -139,8 +141,8 @@ function MyAccount() {
             <UserField keyName="Bio" value={userBasicData.bio} />
             <UserField keyName="Slogan" value={userBasicData.slogan} />
             <UserField keyName="Zodiac" value={userBasicData.zodiac} />
-            <UserField keyName="Height" value={userBasicData.height} />
-            <UserField keyName="Weight" value={userBasicData.weight} />
+            <UserField keyName="Height" value={`${userBasicData.height} cm`} />
+            <UserField keyName="Weight" value={`${userBasicData.weight} kg`} />
             <UserField keyName="Gender" value={userBasicData.gender} />
             <UserField keyName="Job Role" value={userBasicData.jobTitle} />
             <UserField

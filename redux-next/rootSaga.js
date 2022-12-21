@@ -5,8 +5,6 @@ import getUserBasicSaga from "./getUserBasic/saga";
 import uploaderBAsicDataSaga from "./uploadDataBasic/saga";
 import getProfilesListSaga from "./profileList/saga";
 export default function* rootSaga() {
-  console.log("rootreducer");
-
   yield all([
     registerSaga(),
     loginSaga(),

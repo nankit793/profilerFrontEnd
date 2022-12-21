@@ -128,8 +128,9 @@ function LoginForm() {
               type="submit"
               className=" bg-color_2 text-[white] hover:text-[black] h-[50px]  hover:bg-color_1 p-3 font-semibold text-[16px]"
               color="primary"
+              disabled={loading ? true : false}
               disableFocusRipple={false}
-              text={loading ? [<CircularProgresser key="key" />] : "Login"}
+              text={loading ? <CircularProgresser key="key" /> : "Login"}
             />
           </div>
         </form>

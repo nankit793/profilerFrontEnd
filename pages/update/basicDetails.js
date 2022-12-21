@@ -123,24 +123,25 @@ function BasicDetails() {
         <NavbarLogged />
       </div>
       <form onSubmit={handleSubmit}>
-        <div className="bg-white md:px-10 px-3 pt-3 mt-10 rounded-xl m-4 md:mx-20 pb-3">
-          <div className="flex w-full justify-between items-center">
-            <div className="text-text_1 font-bold my-5 text-[23px] whitespace-nowrap">
+        <div className="bg-white mt-10 rounded-xl md:mx-20 mx-5 pb-3">
+          <div className="md:px-10 px-4 flex  rounded-t-xl w-full justify-between items-center border-b ">
+            <div className="text-[black]  font-bold my-4 text-[19px] whitespace-nowrap">
               Edit Details
             </div>
             <div className="">
               <ButtonPrimary
                 type="submit"
+                disabled={loading ? true : false}
                 // onClick={handleSubmit}
                 text={loading ? <CircularProgresser /> : "Save Changes"}
                 // icon={<ModeEditOutlineIcon />}
-                className=" bg-color_2 text-[white] hover:text-[black] h-[40px] w-[140px]  hover:bg-color_1 p-3 font-semibold text-[16px]"
+                className="bg-color_2 text-[white] hover:text-[black] h-[45px] w-[140px]  hover:bg-color_3 font-semibold text-[15px]"
               />
             </div>
           </div>
-          <div className="w-full md:flex justify-between gap-5 ">
+          <div className="w-full md:flex justify-between gap-5 mt-5 px-4 md:px-10">
             <div className="w-full">
-              <div className="text-text_1 font-semibold text-[20px] border-b py-2">
+              <div className="text-text_1 font-semibold text-[20px] py-2">
                 Personal Information
               </div>
               <UserInputFields
@@ -604,13 +605,13 @@ function BasicDetails() {
               </div>
             </div>
             <div className="w-full">
-              <div className="text-text_1 font-semibold text-[20px] border-b md:ml-4 py-2">
+              <div className="text-text_1 font-semibold text-[20px] md:ml-4 py-2">
                 Social Links
               </div>
               <div className="text-[12px] text-text_2 md:ml-4">
                 (Note: Put the links to your social media is the fields)
               </div>
-              <div className="md:border-l md:pl-4 ">
+              <div className=" md:pl-4 ">
                 <UserInputFields
                   name="facebook"
                   onChange={onChange}

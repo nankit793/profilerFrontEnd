@@ -7,7 +7,7 @@ function UserInputFields(props) {
         <div className="text-[16px] font-semibold text-text_1 ">
           {props.keyName}
         </div>
-        <div className={`w-[70%] flex`}>
+        <div className={`w-[70%]`}>
           <InputField
             length={props.length}
             value={props.value}

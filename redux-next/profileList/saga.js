@@ -8,7 +8,6 @@ import {
 
 function* saga(action) {
   try {
-    console.log("sagsa");
     const result = yield call(apiCalling.makeGetRequest, {
       method: "get",
       // mode: "cors",

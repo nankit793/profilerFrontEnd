@@ -16,6 +16,7 @@ function ButtonPrimary(props) {
           className={`capitalize ${props.className}`}
           onClick={props.onClick ? props.onClick : null}
           disableFocusRipple={props.disableFocusRipple || true}
+          disabled={props.disabled}
           type={props.type}
         >
           {props.icon}

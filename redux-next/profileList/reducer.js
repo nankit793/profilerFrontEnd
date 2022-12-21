@@ -5,7 +5,6 @@ const initialState = {
 };
 
 export default function profileListReducer(state = initialState, action) {
-  console.log(action);
   switch (action.type) {
     case actionTypes.GET_PROFILE_LIST:
       return { ...state, isList: false };
