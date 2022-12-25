@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
+import { useRouter } from "next/router";
+import { Scrollbars } from "react-custom-scrollbars";
+
 import * as getProfileLIst from "../../redux-next/profileList/action";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
 
 function ProfileListDesktop(props) {
+  const router = useRouter();
   const [profilesList, setProfilesList] = useState({});
   const [jobProfile, setJobProfile] = useState(false);
 
@@ -16,16 +21,19 @@ function ProfileListDesktop(props) {
       }
     };
     effectHandler();
-  }, [dispatch && props.userid]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     if (
       profileList &&
       profileList.profileList &&
       profileList.isList &&
+      profileList.profileList.data &&
       profileList.profileList.status === 200
     ) {
       setProfilesList(profileList.profileList.data);
+      setJobProfile(true);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profileList]);
@@ -33,15 +41,119 @@ function ProfileListDesktop(props) {
     return (
       <>
         {profilesList && profilesList.jobProfile ? (
-          <div className="w-full border rounded border hover:bg-color_3 p-3">
-            <div className="font-bold text-text_1">Job Profile</div>
-          </div>
+          <>
+            <Scrollbars
+              autoHide
+              autoHideTimeout={200}
+              autoHideDuration={200}
+              style={{ width: "100%", height: "100%" }}
+            >
+              <div className="">
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
+                  <div
+                    className="font-bold text-text_1"
+                    onClick={() => {
+                      router.push(`/jobProfile/${props.userid}`);
+                    }}
+                  >
+                    Job Profile
+                  </div>
+                  <div className="flex justify-between w-[40%]">
+                    <div className="text-[darkgreen]">active</div>
+                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
+                      <MoreVertIcon />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </Scrollbars>
+          </>
         ) : (
           ""
         )}
         {profilesList && !profilesList.jobProfile ? (
           <div className="w-full flex justify-center align-center">
-            User has not created any profile{" "}
+            User has not created any profile
           </div>
         ) : (
           ""

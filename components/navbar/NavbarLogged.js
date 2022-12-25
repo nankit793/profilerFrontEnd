@@ -11,10 +11,10 @@ function NavbarLogged() {
   const router = useRouter();
   return (
     <>
-      <div className=" py-4 bg-color_2 w-full ">
+      <div className="py-3 bg-color_7 drop-shadow w-full ">
         <div className="flex justify-between items-center">
           <div
-            className=" ml-2  w-min text-white font-semibold cursor-pointer"
+            className=" ml-2 text-[18px] w-min text-color_2 font-bold cursor-pointer"
             onClick={() => {
               router.push(`/home/${localStorage.getItem("userid")}`);
             }}
@@ -25,32 +25,32 @@ function NavbarLogged() {
             <div className="md:block hidden">
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2  ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
-                      : "text-[white]"
+                      : "text-color_2"
                   } `}
                 >
-                  About
+                  ABOUT
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2 ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
-                      : "text-[white]"
+                      : "text-color_2"
                   } `}
                 >
-                  Contact
+                  CONTACT
                 </a>
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold mx-2 text-[white]  ${
+                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2  ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
-                      : "text-[white]"
+                      : "text-color_2"
                   } `}
                 >
                   FAQs
@@ -58,13 +58,13 @@ function NavbarLogged() {
               </Link>
             </div>
             <div className="">
-            <SwipeableTemporaryDrawer
-              anchor="right"
-              click={<SearchIcon />}
-              classNameDrawer="text-white hover:bg-color_2"
-              data={<SearchBarBody />}
+              <SwipeableTemporaryDrawer
+                anchor="right"
+                click={<SearchIcon />}
+                classNameDrawer="text-color_2 hover:bg-color_2"
+                data={<SearchBarBody />}
               />
-              </div>
+            </div>
             <div className="text-color_2 rounded-full w-[40px] flex justify-center border bg-white">
               <SwipeableTemporaryDrawer
                 anchor="right"

@@ -42,7 +42,7 @@ function MyAccount() {
       userData.isUser == true &&
       userData.userData.status === 200
     ) {
-      setUserBasicData(userData.userData.data.user);
+      setUserBasicData(userData.userData.data.newData);
     }
   }, [userData && userData.userData]);
 
@@ -63,16 +63,16 @@ function MyAccount() {
       <div className=" w-full">
         <NavbarLogged />
       </div>
-      <div className="md:mx-20 m-8">
-        <div className="text-[25px] font-bold my-4 font-inter text-color_2">
-          My Account
+      <div className="md:mx-20 mx-3">
+        <div className="text-[20px] font-bold my-2 font-inter text-color_2">
+          MY ACCOUNT
         </div>
         <div className="w-full md:flex justify-between gap-5 ">
           <div className="rounded-xl bg-[white] w-[100%] md:w-[70%] md:flex justify-between p-5 items-center">
             <div className="w-[200px] h-[200px] rounded-xl w-full bg-color_2 flex md:mx-0 mx-auto"></div>
             <div className="w-full md:w-[60%] mt-10 md:mt-0 flex flex-col justify-between h-full ">
               <div className="flex w-full justify-between items-center">
-                <div className="text-[23px] text-text_1 font-bold ">
+                <div className="text-[23px] text-color_2 font-bold ">
                   {userBasicData.name}
                 </div>
                 <div className="mr-4">
@@ -82,19 +82,23 @@ function MyAccount() {
                 </div>
               </div>
               <div className="flex justify-between border-b mr-5  border-dashed md:mt-0 mt-5">
-                <div className="w-full font-bold text-text_1">Joined At:</div>
-                <div className="text-right w-full text-[16px] font-semibold whitespace-nowrap">
+                <div className="w-full text-[14px] font-bold text-text_1">
+                  JOINED ON
+                </div>
+                <div className="text-right w-full text-[14px] font-semibold whitespace-nowrap">
                   {/* {userBasicData.joiningDate ? userBasicData.joiningDate : ""} */}
                 </div>
               </div>
               <div className="flex text-text_1 justify-between border-b border-dashed mr-5 my-5 md:my-2 ">
-                <div className="w-full font-bold">Email</div>
+                <div className="w-full text-[14px] font-bold">EMAIL</div>
                 <div className="text-right w-full text-[16px] font-semibold">
                   {userBasicData.userid}
                 </div>
               </div>
               <div className="flex justify-between border-b mr-5 border-dashed">
-                <div className="w-full text-text_1 font-bold">Username</div>
+                <div className="w-full text-text_1 text-[14px] font-bold">
+                  USERNAME
+                </div>
                 <div className="text-right w-full">
                   {userBasicData.username}
                 </div>
@@ -102,15 +106,13 @@ function MyAccount() {
             </div>
           </div>
           <div className="rounded-xl bg-[white] w-[100%] md:w-[30%] mt-5 md:mt-0 ">
-          <div className="text-white text-[19px] font-semibold border-b bg-color_2 rounded-t-xl">
-                    <div className="px-4 py-2">
-                    Insights
-                    </div>
-                  </div>
+            <div className="text-white text-[19px] font-semibold border-b bg-color_5 rounded-t-xl">
+              <div className="px-4 py-2 text-[15px] font-bold">INSIGHTS</div>
+            </div>
           </div>
         </div>
-        <div className="w-full flex items-center justify-between my-5">
-          <div className="text-[20px] text-color_2 font-bold">Details</div>
+        <div className="w-full flex items-center justify-between my-3">
+          <div className="text-[20px] text-color_2 font-bold">DETAILS</div>
           <div
             className=""
             onClick={() => {
@@ -121,7 +123,7 @@ function MyAccount() {
               type="button"
               text="Edit Details"
               // icon={<ModeEditOutlineIcon />}
-              className="text-white bg-color_2 font-semibold text-[14px] hover:bg-color_1 hover:text-black px-5 flex items-center justify-center rounded"
+              className="text-white bg-color_2 font-semibold text-[14px] hover:bg-color_5  px-5 flex items-center justify-center rounded"
             />
           </div>
         </div>

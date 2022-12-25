@@ -9,7 +9,7 @@ import { logout } from "../logout";
 import Modal from "../../components/molecules/Modal";
 import { NotificationContainer } from "react-notifications";
 import { useSelector } from "react-redux";
-
+import CreateProfileModal from "../molecules/CreateProfileModal";
 import {
   errorNotification,
   successNotification,
@@ -42,54 +42,71 @@ function NavbarLoggedBody() {
       userData.isUser == true &&
       userData.userData.status === 200
     ) {
-      setUserBasicData(userData.userData.data.user);
+      setUserBasicData(userData.userData.data.newData);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
 
+  {
+    /* <div className="flex flex-col justify-center items-center w-full mt-10">
+    <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-color_1 text-color_2">
+      <PersonIcon />
+    </div>
+    <div className="text-text_1 font-bold text-xl mt-5">
+      {userBasicData.name ? userBasicData.name : ""}
+    </div>
+  </div> */
+  }
   return (
     <>
       <div className="w-full h-screen flex flex-col items-center justify-between">
-        <div className="flex flex-col justify-center items-center w-full mt-10">
+        <div
+          className="flex justify-between items-center border rounded-lg m-2 bg-[white]  cursor-pointer gap-5 w-[90%] p-3 bg-color_3"
+          onClick={() => {
+            router.push(`/home/${localStorage.getItem("userid")}`);
+          }}
+        >
           <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-color_1 text-color_2">
             <PersonIcon />
           </div>
-          <div className="text-text_1 font-bold text-xl mt-5">
-            {userBasicData.name ? userBasicData.name : ""}
+          <div className="flex flex-col justify-between text-right ">
+            <div className="text-text_1 font-bold text-lg  ">
+              {userBasicData.name ? userBasicData.name : ""}
+            </div>
+            <div className="text-text_1 text-lg ">
+              {localStorage.getItem("userid")}
+            </div>
           </div>
         </div>
         <div className="w-full">
           <div className="flex flex-col justify-center w-full items-center border-color_2">
             <Link href="/myAccount">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center ${
+                className={`cursor-pointer font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center ${
                   router.pathname === "/myAccount" ? "bg-color_3 font-bold" : ""
                 } `}
               >
-                {/* <SettingsIcon /> */}
                 My Account
               </a>
             </Link>
             <a className="w-full">
-              {/* <SettingsIcon /> */}
               <Modal
                 onClick={handleOpen}
                 onClose={handleClose}
                 text="Create Profile"
                 open={open}
-                textClass="cursor-pointer capitalize font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center"
+                data={<CreateProfileModal />}
+                textClass="cursor-pointer capitalize font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center"
               />
             </a>
             <Link href="/update/basicDetails">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black] hover:bg-color_3 w-full text-center  ${
+                className={`cursor-pointer font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center  ${
                   router.pathname === "/update/basicDetails"
                     ? "bg-[#EBF5FB] font-bold"
                     : ""
                 } `}
-                // onClick={handleOpen}
               >
-                {/* <SettingsIcon /> */}
                 Edit Profile
               </a>
             </Link>
@@ -98,7 +115,7 @@ function NavbarLoggedBody() {
             <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
                     router.pathname === "/aboutUs" ? "text-color_1" : ""
                   } `}
                 >
@@ -107,7 +124,7 @@ function NavbarLoggedBody() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
                     router.pathname === "/aboutUs" ? "text-color_1" : ""
                   } `}
                 >
@@ -116,7 +133,7 @@ function NavbarLoggedBody() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-[black]  ${
+                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
                     router.pathname === "/aboutUs" ? "text-color_1" : ""
                   } `}
                 >
@@ -126,10 +143,10 @@ function NavbarLoggedBody() {
             </div>
           </div>
           <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
-            <Link href="/">
+            <Link href="/setting">
               <a
-                className={`cursor-pointer font-semibold py-3 text-[black]  ${
-                  router.pathname === "/aboutUs" ? "text-color_1" : ""
+                className={`cursor-pointer font-semibold py-3 w-full text-center bg-color_3  text-color_black  ${
+                  router.pathname === "/setting" ? "font-bold" : ""
                 } `}
               >
                 <SettingsIcon />

@@ -12,7 +12,9 @@ function MyApp({ Component, pageProps }) {
 
   return (
     <>
-      <Component {...pageProps} />
+      <div className="bg-color_3 ">
+        <Component {...pageProps} />
+      </div>
     </>
   );
 }

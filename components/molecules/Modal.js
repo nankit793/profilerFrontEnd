@@ -27,7 +27,7 @@ export default function BasicModal(props) {
         aria-describedby="modal-modal-description"
       >
         <Box sx={style} className="rounded-xl ">
-          <div>Modal is this</div>
+          <div>{props.data}</div>
         </Box>
       </Modal>
     </div>

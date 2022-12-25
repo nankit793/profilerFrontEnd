@@ -4,6 +4,7 @@ import Link from "next/link";
 import { Menu, Close } from "@mui/icons-material";
 import SwipeableTemporaryDrawer from "../molecules/Drawer";
 import SearchIcon from "@mui/icons-material/Search";
+import SearchBarBody from "./SearchBarBody";
 
 function Navbar() {
   const [showTheMenuBar, setShowTheMenuBar] = useState(false);
@@ -56,7 +57,7 @@ function Navbar() {
               anchor="right"
               click={<SearchIcon />}
               classNameDrawer="normal-case  cursor-pointer font-semibold text-[white] p-0  text-[15px]"
-              data="working on this feature"
+              data={<SearchBarBody />}
             />
           </div>
         </div>
@@ -68,7 +69,7 @@ function Navbar() {
             anchor="right"
             click={<SearchIcon />}
             classNameDrawer="normal-case  cursor-pointer font-semibold text-[white] p-0  text-[15px]"
-            data="working on this feature"
+            data={<SearchBarBody />}
           />
 
           <div
