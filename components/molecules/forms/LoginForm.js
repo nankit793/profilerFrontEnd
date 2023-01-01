@@ -126,7 +126,7 @@ function LoginForm() {
           <div className="pt-2">
             <ButtonPrimary
               type="submit"
-              className=" bg-color_2 text-[white] hover:text-[black] h-[50px]  hover:bg-color_1 p-3 font-semibold text-[16px]"
+              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 font-semibold text-[16px]"
               color="primary"
               disabled={loading ? true : false}
               disableFocusRipple={false}

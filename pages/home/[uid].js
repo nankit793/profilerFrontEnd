@@ -94,8 +94,8 @@ function Uid(props) {
           </div>
         )}
         {!profileLoading && isUserFound && (
-          <div className="md:px-10 px-2 md:flex mt-20 justify-between gap-5 my-5 drop-shadow-sm">
-            <div className="h-full md:w-[35%] w-[100%] scrollbar-hide overflow-y-auto bg-white rounded-t-xl drop-shadow flex flex-col justify-start items-center">
+          <div className="md:px-10 px-2 md:flex mt-20 justify-between gap-5 my-5 ">
+            <div className="h-full md:w-[35%] w-[100%] scrollbar-hide overflow-y-auto bg-white rounded-t-xl  flex flex-col justify-start items-center">
               <div className="w-[100px] h-[100px] rounded-full border my-3 bg-color_4"></div>
               <div className=" w-full text-center px-4 ">
                 <div className="text-color_5 text-xl font-semibold">
@@ -106,8 +106,13 @@ function Uid(props) {
                   {userBasicData.userid ? userBasicData.userid : ""}
                 </div>
 
-                <div className="text-text_2 text-lg font-semibold">
-                  {userBasicData.userid ? (
+                <div
+                  className="text-text_2 text-lg font-semibold"
+                  onClick={() => {
+                    router.push("/update/basicDetails");
+                  }}
+                >
+                  {userBasicData.userid === localStorage.getItem("userid") ? (
                     <>
                       <div className="w-full text-[16px] rounded-3xl flex items-center justify-center text-color_5 cursor-pointer border border-color_5 p-2 my-3">
                         <EditIcon sx={{ fontSize: 18, marginRight: "5px" }} />
@@ -184,7 +189,7 @@ function Uid(props) {
                   </AccordionDetails>
                 </Accordion> */}
 
-                  <div className="w-full border my-2 rounded drop-shadow-sm">
+                  <div className="w-full border my-2 rounded ">
                     <div className="text-sm pl-3 bg-color_5 font-bold text-[white] rounded-t py-3 text-left w-full">
                       SOCIAL LINKS
                     </div>
@@ -280,7 +285,7 @@ function Uid(props) {
                       )}
                     </div>
                   </div>
-                  <div className="w-full border my-2 rounded drop-shadow-sm">
+                  <div className="w-full border my-2 rounded">
                     <div className="text-sm pl-3 bg-color_5 font-bold text-[white] rounded-t py-3 text-left w-full">
                       THOUGHTS
                     </div>
@@ -296,7 +301,7 @@ function Uid(props) {
             {/* side panel end  */}
             <div className="w-full flex  flex-col justify-start gap-5 h-full">
               <div className=" md:flex justify-start gap-5">
-                <div className=" w-ful md:w-9/12 rounded-t-xl md:mt-0 mt-5  drop-shadow-sm bg-[white]">
+                <div className=" w-ful md:w-9/12 rounded-t-xl md:mt-0 mt-5  bg-[white]">
                   <div className="w-full bg-color_5 text-sm rounded-t-xl font-bold text-[white] p-3">
                     ABOUT ME
                   </div>
@@ -304,7 +309,7 @@ function Uid(props) {
                     {userBasicData.bio ? userBasicData.bio : ""}
                   </div>
                 </div>
-                <div className="w-full md:w-3/12 rounded-t-xl md:mt-0 mt-5  drop-shadow-sm bg-[white]">
+                <div className="w-full md:w-3/12 rounded-t-xl md:mt-0 mt-5  bg-[white]">
                   <div className="w-full bg-color_5 text-sm rounded-t-xl font-bold text-[white] p-3">
                     INFORMATION
                   </div>
@@ -331,7 +336,7 @@ function Uid(props) {
                   </div>
                 </div>
               </div>
-              <div className="w-full md:flex  gap-5 drop-shadow-sm ">
+              <div className="w-full md:flex  gap-5 ">
                 <div className="w-full md:w-[50%] bg-[white] rounded-b-xl">
                   <div className="text-sm bg-color_5 p-3 font-bold text-[white]">
                     MY PORTFOLIOS
@@ -349,7 +354,7 @@ function Uid(props) {
                       </div>
                     </div>
                   </div>
-                  <div className="mx-3 h-[200px] scrollbar-hide overflow-y-scroll">
+                  <div className=" h-[200px] scrollbar-hide overflow-y-scroll">
                     <ProfileListDesktop isDesktop={true} userid={userid} />
                   </div>
                   {/* data here  */}

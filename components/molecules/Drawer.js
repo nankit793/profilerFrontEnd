@@ -14,7 +14,6 @@ import MailIcon from "@mui/icons-material/Mail";
 
 export default function SwipeableTemporaryDrawer(props) {
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log("first");
     if (
       event &&
       event.type === "keydown" &&
@@ -35,11 +34,17 @@ export default function SwipeableTemporaryDrawer(props) {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
+      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250, height: "100%" }}
       role="presentation"
-      // onClick={toggleDrawer(anchor, false)}
-      // onKeyDown={toggleDrawer(anchor, false)}
+    // onClick={toggleDrawer(anchor, false)}
+    // onKeyDown={toggleDrawer(anchor, false)}
     >
+      {/* <div onClick={() => {
+        toggleDrawer("right", false)
+      }} className="cursor-pointer">
+
+        Close
+      </div> */}
       {data}
     </Box>
   );

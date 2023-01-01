@@ -11,10 +11,10 @@ function NavbarLogged() {
   const router = useRouter();
   return (
     <>
-      <div className="py-3 bg-color_7 drop-shadow w-full ">
+      <div className="py-3 bg-color_7 w-full pr-5">
         <div className="flex justify-between items-center">
           <div
-            className=" ml-2 text-[18px] w-min text-color_2 font-bold cursor-pointer"
+            className=" ml-2 text-[18px] w-min text-color_2 font-semibold  cursor-pointer"
             onClick={() => {
               router.push(`/home/${localStorage.getItem("userid")}`);
             }}
@@ -25,7 +25,7 @@ function NavbarLogged() {
             <div className="md:block hidden">
               <Link href="/">
                 <a
-                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2  ${
+                  className={`cursor-pointer text-[14px] font-semibold mx-2 text-color_2  ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
                       : "text-color_2"
@@ -36,7 +36,7 @@ function NavbarLogged() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2 ${
+                  className={`cursor-pointer text-[14px] font-semibold mx-2 text-color_2 ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
                       : "text-color_2"
@@ -47,7 +47,7 @@ function NavbarLogged() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer text-[14px] font-bold mx-2 text-color_2  ${
+                  className={`cursor-pointer text-[14px] font-semibold mx-2 text-color_2  ${
                     router.pathname === "/aboutUs"
                       ? "text-color_1"
                       : "text-color_2"
@@ -61,7 +61,7 @@ function NavbarLogged() {
               <SwipeableTemporaryDrawer
                 anchor="right"
                 click={<SearchIcon />}
-                classNameDrawer="text-color_2 hover:bg-color_2"
+                classNameDrawer="text-color_2"
                 data={<SearchBarBody />}
               />
             </div>

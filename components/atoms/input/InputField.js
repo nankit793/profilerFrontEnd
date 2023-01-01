@@ -5,7 +5,7 @@ function InputField(props) {
   if (props.multiline) {
     return (
       <>
-        <div className="w-full bg-color_3  subpixel-antialiased  ">
+        <div className="w-full bg-color_2  subpixel-antialiased  ">
           <TextField
             id=""
             className=""
@@ -30,7 +30,7 @@ function InputField(props) {
     return (
       <>
         {props.unit ? (
-          <div className="w-full bg-color_3 subpixel-antialiased ">
+          <div className="w-full bg-color_2 subpixel-antialiased ">
             <TextField
               id=""
               className=""
@@ -61,7 +61,7 @@ function InputField(props) {
             />
           </div>
         ) : (
-          <div className="w-full bg-color_3 subpixel-antialiased ">
+          <div className="w-full bg-color_2 subpixel-antialiased ">
             <TextField
               id=""
               className=""

@@ -48,90 +48,10 @@ function ProfileListDesktop(props) {
               autoHideDuration={200}
               style={{ width: "100%", height: "100%" }}
             >
-              <div className="">
+              <div className="mx-3">
                 <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
                   <div
-                    className="font-bold text-text_1"
-                    onClick={() => {
-                      router.push(`/jobProfile/${props.userid}`);
-                    }}
-                  >
-                    Job Profile
-                  </div>
-                  <div className="flex justify-between w-[40%]">
-                    <div className="text-[darkgreen]">active</div>
-                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
-                      <MoreVertIcon />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
-                  <div
-                    className="font-bold text-text_1"
-                    onClick={() => {
-                      router.push(`/jobProfile/${props.userid}`);
-                    }}
-                  >
-                    Job Profile
-                  </div>
-                  <div className="flex justify-between w-[40%]">
-                    <div className="text-[darkgreen]">active</div>
-                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
-                      <MoreVertIcon />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
-                  <div
-                    className="font-bold text-text_1"
-                    onClick={() => {
-                      router.push(`/jobProfile/${props.userid}`);
-                    }}
-                  >
-                    Job Profile
-                  </div>
-                  <div className="flex justify-between w-[40%]">
-                    <div className="text-[darkgreen]">active</div>
-                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
-                      <MoreVertIcon />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
-                  <div
-                    className="font-bold text-text_1"
-                    onClick={() => {
-                      router.push(`/jobProfile/${props.userid}`);
-                    }}
-                  >
-                    Job Profile
-                  </div>
-                  <div className="flex justify-between w-[40%]">
-                    <div className="text-[darkgreen]">active</div>
-                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
-                      <MoreVertIcon />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
-                  <div
-                    className="font-bold text-text_1"
-                    onClick={() => {
-                      router.push(`/jobProfile/${props.userid}`);
-                    }}
-                  >
-                    Job Profile
-                  </div>
-                  <div className="flex justify-between w-[40%]">
-                    <div className="text-[darkgreen]">active</div>
-                    <div className="text-text_1 flex justify-center  hover:bg-[aliceblue] duration-350 rounded-full">
-                      <MoreVertIcon />
-                    </div>
-                  </div>
-                </div>
-                <div className="w-full border mb-2 rounded border hover:border-color_5   p-3 cursor-pointer flex justify-between ">
-                  <div
-                    className="font-bold text-text_1"
+                    className="font-semibold  text-text_1"
                     onClick={() => {
                       router.push(`/jobProfile/${props.userid}`);
                     }}

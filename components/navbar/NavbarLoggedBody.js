@@ -61,7 +61,7 @@ function NavbarLoggedBody() {
     <>
       <div className="w-full h-screen flex flex-col items-center justify-between">
         <div
-          className="flex justify-between items-center border rounded-lg m-2 bg-[white]  cursor-pointer gap-5 w-[90%] p-3 bg-color_3"
+          className="flex justify-between items-center border rounded-lg m-2 cursor-pointer gap-5 w-[90%] p-3 bg-color_6"
           onClick={() => {
             router.push(`/home/${localStorage.getItem("userid")}`);
           }}
@@ -70,10 +70,10 @@ function NavbarLoggedBody() {
             <PersonIcon />
           </div>
           <div className="flex flex-col justify-between text-right ">
-            <div className="text-text_1 font-bold text-lg  ">
+            <div className="text-text_1 font-bold text-[16px]  ">
               {userBasicData.name ? userBasicData.name : ""}
             </div>
-            <div className="text-text_1 text-lg ">
+            <div className="text-text_1 text-[16px] ">
               {localStorage.getItem("userid")}
             </div>
           </div>
@@ -82,8 +82,10 @@ function NavbarLoggedBody() {
           <div className="flex flex-col justify-center w-full items-center border-color_2">
             <Link href="/myAccount">
               <a
-                className={`cursor-pointer font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center ${
-                  router.pathname === "/myAccount" ? "bg-color_3 font-bold" : ""
+                className={`cursor-pointer py-3  hover:text-color_5 w-full text-center ${
+                  router.pathname === "/myAccount"
+                    ? "font-semibold text-color_5"
+                    : "text-color_black "
                 } `}
               >
                 My Account
@@ -96,15 +98,15 @@ function NavbarLoggedBody() {
                 text="Create Profile"
                 open={open}
                 data={<CreateProfileModal />}
-                textClass="cursor-pointer capitalize font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center"
+                textClass="cursor-pointer capitalize py-3 text-color_black hover:text-color_5 w-full text-center"
               />
             </a>
             <Link href="/update/basicDetails">
               <a
-                className={`cursor-pointer font-semibold py-3 text-color_black hover:bg-color_3 w-full text-center  ${
+                className={`cursor-pointer py-3 hover:text-color_5 w-full text-center  ${
                   router.pathname === "/update/basicDetails"
-                    ? "bg-[#EBF5FB] font-bold"
-                    : ""
+                    ? " font-semibold text-color_5"
+                    : "text-color_black "
                 } `}
               >
                 Edit Profile
@@ -115,8 +117,10 @@ function NavbarLoggedBody() {
             <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
-                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  className={`cursor-pointer  py-3 text-color_black  ${
+                    router.pathname === "/aboutUs"
+                      ? "font-bold text-color_5 "
+                      : ""
                   } `}
                 >
                   About
@@ -124,8 +128,10 @@ function NavbarLoggedBody() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
-                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  className={`cursor-pointer py-3 ${
+                    router.pathname === "/aboutUs"
+                      ? "text-color_1 text-color_5 "
+                      : "text-color_black "
                   } `}
                 >
                   Contact
@@ -133,8 +139,10 @@ function NavbarLoggedBody() {
               </Link>
               <Link href="/">
                 <a
-                  className={`cursor-pointer font-semibold py-3 text-color_black  ${
-                    router.pathname === "/aboutUs" ? "text-color_1" : ""
+                  className={`cursor-pointer py-3  ${
+                    router.pathname === "/aboutUs"
+                      ? "text-color_1 text-color_5 "
+                      : "text-color_black "
                   } `}
                 >
                   FAQs
@@ -145,20 +153,20 @@ function NavbarLoggedBody() {
           <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
             <Link href="/setting">
               <a
-                className={`cursor-pointer font-semibold py-3 w-full text-center bg-color_3  text-color_black  ${
+                className={`cursor-pointer font-semibold py-3 w-full text-center text-color_black  ${
                   router.pathname === "/setting" ? "font-bold" : ""
                 } `}
               >
-                <SettingsIcon />
+                <SettingsIcon sx={{ marginRight: 1 }} />
                 Setings
               </a>
             </Link>
           </div>
           <div
             onClick={handleLogOut}
-            className="p-5 font-bold cursor-pointer bg-[#541e1b] text-white w-full flex justify-center items-center"
+            className="p-5 font-bold cursor-pointer bg-[#880808] text-white w-full flex justify-center items-center"
           >
-            <ExitToAppIcon />
+            <ExitToAppIcon sx={{ marginRight: 1 }} />
             Log Out
           </div>
         </div>

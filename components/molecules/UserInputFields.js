@@ -1,13 +1,15 @@
 import React from "react";
 import InputField from "../atoms/input/InputField";
+import Checkbox from "@mui/material/Checkbox";
+
 function UserInputFields(props) {
   return (
     <>
-      <div className="w-full my-3 md:flex justify-between ">
-        <div className="text-[16px] font-semibold text-text_1 ">
+      <div className="">
+        <div className="text-[16px] font-semibold text-color_7 ">
           {props.keyName}
         </div>
-        <div className={`w-full mt-2 md:mt-0 md:w-[70%]`}>
+        <div className={`w-full mt-1 md:mt-0 w-full`}>
           <InputField
             length={props.length}
             value={props.value}
@@ -17,6 +19,14 @@ function UserInputFields(props) {
             multiline={props.multiline ? true : false}
             onChange={props.onChange}
           />
+          {props.checkBox && (
+            <>
+              <div className="text-sm text-color_7">
+                <Checkbox size="small" />
+                {props.checkBoxValue}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </>

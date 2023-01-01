@@ -24,16 +24,16 @@ function SearchBarBody() {
       <div className="w-[100%] h-full  text-center px-2">
         <div className="mt-2">
           <TextField
+            className="focus:outline-none"
             onChange={(e) => {
               search(e);
             }}
             id="standard-search"
-            placeholder="Search Username or User Id"
-            label="Search field"
+            placeholder="Search Username/User Id"
             autoComplete="off"
-            type="search"
+            type="text"
             fullWidth={true}
-            variant="standard"
+            variant="outlined"
           />
         </div>
         <div className="">
@@ -46,16 +46,15 @@ function SearchBarBody() {
                   onClick={() => {
                     router.push(`/home/${user.id}`);
                   }}
-                  className="w-full  cursor-pointer flex justify-start gap-2 align-center py-2 hover:bg-color_3 px-2 border rounded  my-2"
-                >
-                  <div className="  w-[40%]">
-                    <div className="rounded-full w-[50px] h-[50px] bg-color_2"></div>
+                  className="w-full min-h-[60px] cursor-pointer flex justify-start  align-center  hover:bg-color_3  border rounded  my-2">
+                  <div className="w-[40%]">
+                    <div className="w-[50px] h-full bg-color_5 rounded-l"></div>
                   </div>
-                  <div className="text-left flex flex-col justify-between w-full">
-                    <div className=" font-semibold text-color_2">
+                  <div className="text-left flex text-[15px] flex-col justify-between w-full overflow-x-hidden py-1">
+                    <div className=" font-semibold text-text_1">
                       {user.name}
                     </div>
-                    <div className="text-text_2">{user.id}</div>
+                    <div className="text-text_2 overflow-x-auto scrollbar-hide ">{user.id}</div>
                   </div>
                 </div>
               );

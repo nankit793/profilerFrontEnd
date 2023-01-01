@@ -63,13 +63,13 @@ function MyAccount() {
       <div className=" w-full">
         <NavbarLogged />
       </div>
-      <div className="md:mx-20 mx-3">
-        <div className="text-[20px] font-bold my-2 font-inter text-color_2">
+      <div className="md:mx-20 mx-3 mb-10">
+        <div className="text-[20px] font-bold my-2 font-inter text-color_7">
           MY ACCOUNT
         </div>
         <div className="w-full md:flex justify-between gap-5 ">
           <div className="rounded-xl bg-[white] w-[100%] md:w-[70%] md:flex justify-between p-5 items-center">
-            <div className="w-[200px] h-[200px] rounded-xl w-full bg-color_2 flex md:mx-0 mx-auto"></div>
+            <div className="w-[200px] h-[200px] rounded-xl w-full bg-color_5 flex md:mx-0 mx-auto"></div>
             <div className="w-full md:w-[60%] mt-10 md:mt-0 flex flex-col justify-between h-full ">
               <div className="flex w-full justify-between items-center">
                 <div className="text-[23px] text-color_2 font-bold ">
@@ -112,7 +112,7 @@ function MyAccount() {
           </div>
         </div>
         <div className="w-full flex items-center justify-between my-3">
-          <div className="text-[20px] text-color_2 font-bold">DETAILS</div>
+          <div className="text-[20px] text-color_7 font-bold">DETAILS</div>
           <div
             className=""
             onClick={() => {
@@ -123,7 +123,7 @@ function MyAccount() {
               type="button"
               text="Edit Details"
               // icon={<ModeEditOutlineIcon />}
-              className="text-white bg-color_2 font-semibold text-[14px] hover:bg-color_5  px-5 flex items-center justify-center rounded"
+              className="text-white bg-color_7 font-semibold text-[14px] hover:bg-color_5  px-5 flex items-center justify-center rounded"
             />
           </div>
         </div>

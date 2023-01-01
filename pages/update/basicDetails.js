@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import NavbarLogged from "../../components/navbar/NavbarLogged";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import ButtonPrimary from "../../components/atoms/input/ButtonPrimary";
+import { useRouter } from "next/router";
+
 // import UserInputFields onChange={onChange} from "../../components/molecules/UserInputFields onChange={onChange}";
 // dependencies
 // import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
@@ -38,12 +40,16 @@ import AccordionSummary from "@mui/material/AccordionSummary";
 import AccordionDetails from "@mui/material/AccordionDetails";
 import Typography from "@mui/material/Typography";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import * as getProfileLIst from "../../redux-next/profileList/action";
+import EditIcon from "@mui/icons-material/Edit";
 
 function BasicDetails() {
+  const router = useRouter();
+
   const [userBasicData, setUserBasicData] = useState({});
   const [loading, setLoading] = useState(false);
   // const [value, setValue] = useState("");
-
+  const [profilesList, setProfilesList] = useState({});
   const [startDate, setStartDate] = useState(new Date());
 
   const handleChange = (event) => {
@@ -55,12 +61,18 @@ function BasicDetails() {
   const registerData = useSelector((state) => state.registerReducer);
   const userData = useSelector((state) => state.basicDataReducer);
   const userBasicUpload = useSelector((state) => state.basicDataUploadReducer);
+  const profileList = useSelector((state) => state.profileListReducer);
 
   useEffect(() => {
     const auth = async () => {
       await authenticate(loginData, registerData);
       dispatch(
         getBasicDataActions.getBasicData({
+          userid: localStorage.getItem("userid"),
+        })
+      );
+      dispatch(
+        getProfileLIst.getProfilesList({
           userid: localStorage.getItem("userid"),
         })
       );
@@ -80,6 +92,19 @@ function BasicDetails() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
+
+  useEffect(() => {
+    if (
+      profileList &&
+      profileList.profileList &&
+      profileList.isList &&
+      profileList.profileList.data &&
+      profileList.profileList.status === 200
+    ) {
+      setProfilesList(profileList.profileList.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profileList]);
 
   useEffect(() => {
     if (userBasicData && userBasicData.dob) {
@@ -132,8 +157,8 @@ function BasicDetails() {
         <form onSubmit={handleSubmit}>
           <div className="bg-white mt-10 rounded-xl md:mx-20 mx-3 pb-3">
             <div className="md:px-10 px-4 flex  rounded-t-xl w-full justify-between items-center border-b ">
-              <div className="text-[black]  font-bold my-4 text-[19px] whitespace-nowrap">
-                Edit Details
+              <div className="text-color_7  font-bold my-4 text-[19px] whitespace-nowrap">
+                EDIT DETAILS
               </div>
               <div className="">
                 <ButtonPrimary
@@ -142,9 +167,28 @@ function BasicDetails() {
                   // onClick={handleSubmit}
                   text={loading ? <CircularProgresser /> : "Save Changes"}
                   // icon={<ModeEditOutlineIcon />}
-                  className="bg-color_2 text-[white] hover:text-[black] h-[45px] w-[140px]  hover:bg-color_3 font-semibold text-[15px]"
+                  className="bg-color_7 text-[white] h-[45px] w-[140px]  hover:bg-color_5  text-[15px]"
                 />
               </div>
+            </div>
+            <div className="md:mx-10 mx-5 p-5 my-5 rounded-lg drop-shadow-sm border">
+              <div className="font-bold text-color_7 ">CREATED PROFILES</div>
+              {profilesList.jobProfile && (
+                <>
+                  <div className="flex justify-between p-5 border bg-color_2  rounded-lg my-3">
+                    <div className="">Job Profile</div>
+                    <div
+                      className="text-linkBlue underline cursor-pointer"
+                      onClick={() => {
+                        router.push(`/update/jobProfile`);
+                      }}
+                    >
+                      <EditIcon sx={{ fontSize: 18, marginRight: "5px" }} />
+                      update
+                    </div>
+                  </div>
+                </>
+              )}
             </div>
             <div className="w-full md:flex justify-between gap-5 mt-5 px-4 md:px-10">
               <div className="w-full">
@@ -165,7 +209,7 @@ function BasicDetails() {
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
+                    <Typography className="flex flex-col gap-3">
                       <UserInputFields
                         onChange={onChange}
                         name="name"
@@ -180,7 +224,7 @@ function BasicDetails() {
                         length={10}
                         value={userBasicData.phone}
                       />
-                      <div className="flex justify-between my-3">
+                      <div className="flex justify-between ">
                         <UserInputFields
                           onChange={onChange}
                           keyName="Date Of Birth"
@@ -242,7 +286,7 @@ function BasicDetails() {
                           Zodiac
                         </div>
 
-                        <FormControl className="flex w-full justify-end w-full mt-2 md:mt-0 md:w-[70%]  text-left">
+                        <FormControl className="flex w-full justify-end w-full mt-1 md:mt-0 md:w-[70%]  text-left">
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -295,7 +339,7 @@ function BasicDetails() {
                           Gender
                         </div>
 
-                        <FormControl className="flex w-full justify-end w-full mt-2 md:mt-0 md:w-[70%]  text-left">
+                        <FormControl className="flex w-full justify-end w-full mt-1 md:mt-0 md:w-[70%]  text-left">
                           <Select
                             labelId="demo-simple-select-label"
                             id="demo-simple-select"
@@ -328,7 +372,7 @@ function BasicDetails() {
                         value={userBasicData.currentLocation}
                         lenght={25}
                       />
-                      <div className="md:flex justify-between my-3">
+                      <div className="md:flex justify-between ">
                         <div className="text-[16px] font-semibold text-text_1 whitespace-nowrap">
                           Nationality
                         </div>
@@ -684,7 +728,7 @@ function BasicDetails() {
                     </Typography>
                   </AccordionSummary>
                   <AccordionDetails>
-                    <Typography>
+                    <Typography className="flex flex-col gap-3">
                       <UserInputFields
                         name="facebook"
                         onChange={onChange}

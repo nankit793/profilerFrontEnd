@@ -26,8 +26,8 @@ function Login() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <div className=" h-screen flex flex-col items-center max-h-[1000px]">
-        <div className=" w-full">
+      <div className=" h-screen flex flex-col items-center">
+        <div className="w-full">
           <Navbar />
         </div>
         <div className="w-full flex items-center flex-col h-full justify-center">
