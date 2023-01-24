@@ -11,7 +11,7 @@ function NavbarLogged() {
   const router = useRouter();
   return (
     <>
-      <div className="py-3 bg-color_7 w-full pr-5">
+      <div className="py-3 bg-color_7 w-full">
         <div className="flex justify-between items-center">
           <div
             className=" ml-2 text-[18px] w-min text-color_2 font-semibold  cursor-pointer"

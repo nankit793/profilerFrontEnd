@@ -4,6 +4,9 @@ import MenuIcon from "@mui/icons-material/Menu";
 import CloseIcon from "@mui/icons-material/Close";
 import SwipeableTemporaryDrawer from "./Drawer";
 import UpdateProfileSideNav from "../UpdateProfileSideNav";
+import { errorNotification, successNotification } from "../atoms/AlertMessage";
+import { NotificationContainer } from "react-notifications";
+
 function UpdatePage(props) {
   const [showSidemenu, setShowSideMenu] = useState(false);
   const [selectedPage, setSelectedPage] = useState();
@@ -47,6 +50,35 @@ function UpdatePage(props) {
       }
     });
   };
+
+  const onSave = async () => {
+    const accesstoken = localStorage.getItem("accessToken");
+    const refreshtoken = localStorage.getItem("idToken");
+    const userid = localStorage.getItem("userid");
+    try {
+      const save = await fetch(props.onSave, {
+        method: "PATCH",
+        body: JSON.stringify({
+          headers: {
+            accesstoken: accesstoken,
+            refreshtoken: refreshtoken,
+            userid: userid,
+          },
+          jobProfile: props.data,
+        }),
+        headers: { "Content-Type": "application/json" },
+      });
+      const finalSave = await save.json();
+      console.log(save, finalSave);
+      if (save && save.status === 200 && save.statusText === "OK") {
+        successNotification(finalSave.message, "Success");
+      } else {
+        errorNotification("chages not saved", "Error");
+      }
+    } catch (error) {
+      errorNotification("chages not saved", "Error");
+    }
+  };
   return (
     <>
       <div className=" w-full">
@@ -68,9 +100,7 @@ function UpdatePage(props) {
             Next
           </div>
           <div
-            onClick={() => {
-              // handlePageNav(-1)
-            }}
+            onClick={onSave}
             className="p-2 border drop-shadow font-bold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
           >
             Save
@@ -122,6 +152,7 @@ function UpdatePage(props) {
           }
         />
       </div> */}
+      <NotificationContainer />
     </>
   );
 }
