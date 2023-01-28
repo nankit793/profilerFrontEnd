@@ -7,7 +7,7 @@ import CloseIcon from "@mui/icons-material/Close";
 function UpdateProfileSideNav(props) {
   return (
     <>
-      <div className="  h-full bg-color_6 drop-shadow overflow-h-scroll">
+      <div className="  h-full bg-color_3 overflow-h-scroll">
         {/* <div className="flex justify-between items-center px-3 py-3 drop-shadow-sm" >
                     <div className="h-[100px] w-[100px] rounded-full bg-[blue]"></div>
                     <div className="flex flex-col justify-between text-right">
@@ -35,9 +35,9 @@ function UpdateProfileSideNav(props) {
                   }}
                   className={`  ${
                     props.selectedPage && props.selectedPage.id === item.id
-                      ? "bg-color_2"
-                      : "bg-color_6"
-                  } duration-100  w-full cursor-pointer hover:bg-color_2 rounded px-3 py-5 my-1 text-color_7  
+                      ? "bg-color_5 text-[white]"
+                      : "bg-color_3 text-color_7  "
+                  } duration-100  w-full cursor-pointer hover:bg-color_5 hover:text-[white] rounded px-3 py-5 my-1 
                          font-semibold text-[16px]`}
                 >
                   {item.name}

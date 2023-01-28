@@ -20,7 +20,7 @@ module.exports = {
         maroon: "#541e1b",
         color_4: "#6987ab",
         color_5: "#004F7F",
-        color_black: "black",
+        black: "black",
         color_6: "#f0f5f5",
         text_1: "#36454f",
         text_2: "#808080",

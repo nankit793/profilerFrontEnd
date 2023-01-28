@@ -94,8 +94,8 @@ function Uid(props) {
           </div>
         )}
         {!profileLoading && isUserFound && (
-          <div className="md:px-10 px-2 md:flex mt-20 justify-between gap-5 my-5 ">
-            <div className="h-full md:w-[35%] w-[100%] scrollbar-hide overflow-y-auto bg-white rounded-t-xl  flex flex-col justify-start items-center">
+          <div className="md:px-10 px-2 md:flex mt-20 justify-between gap-5 my-5">
+            <div className="h-full md:w-[35%] w-[100%] drop-shadow scrollbar-hide overflow-y-auto bg-white rounded-t-xl  flex flex-col justify-start items-center">
               <div className="w-[100px] h-[100px] rounded-full border my-3 bg-color_4"></div>
               <div className=" w-full text-center px-4 ">
                 <div className="text-color_5 text-xl font-semibold">
@@ -300,7 +300,7 @@ function Uid(props) {
             </div>
             {/* side panel end  */}
             <div className="w-full flex  flex-col justify-start gap-5 h-full">
-              <div className=" md:flex justify-start gap-5">
+              <div className=" md:flex justify-start gap-5 drop-shadow">
                 <div className=" w-ful md:w-9/12 rounded-t-xl md:mt-0 mt-5  bg-[white]">
                   <div className="w-full bg-color_5 text-sm rounded-t-xl font-bold text-[white] p-3">
                     ABOUT ME
@@ -309,7 +309,7 @@ function Uid(props) {
                     {userBasicData.bio ? userBasicData.bio : ""}
                   </div>
                 </div>
-                <div className="w-full md:w-3/12 rounded-t-xl md:mt-0 mt-5  bg-[white]">
+                <div className="w-full md:w-3/12 rounded-t-xl md:mt-0 mt-5  bg-[white] drop-shadow">
                   <div className="w-full bg-color_5 text-sm rounded-t-xl font-bold text-[white] p-3">
                     INFORMATION
                   </div>
@@ -337,7 +337,7 @@ function Uid(props) {
                 </div>
               </div>
               <div className="w-full md:flex  gap-5 ">
-                <div className="w-full md:w-[50%] bg-[white] rounded-b-xl">
+                <div className="w-full md:w-[50%] bg-[white] rounded-b-xl drop-shadow">
                   <div className="text-sm bg-color_5 p-3 font-bold text-[white]">
                     MY PORTFOLIOS
                   </div>
@@ -359,7 +359,7 @@ function Uid(props) {
                   </div>
                   {/* data here  */}
                 </div>
-                <div className="w-full  md:mt-0 mt-5 md:w-[50%] bg-[white] rounded-b-xl">
+                <div className="w-full  md:mt-0 mt-5 md:w-[50%] bg-[white] rounded-b-xl drop-shadow">
                   <div className="text-sm bg-color_5 p-3 font-bold text-[white]">
                     INSIGHTS
                   </div>

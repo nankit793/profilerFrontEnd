@@ -34,10 +34,13 @@ export default function SwipeableTemporaryDrawer(props) {
 
   const list = (anchor) => (
     <Box
-      sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250, height: "100%" }}
+      sx={{
+        width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
+        height: "100%",
+      }}
       role="presentation"
-    // onClick={toggleDrawer(anchor, false)}
-    // onKeyDown={toggleDrawer(anchor, false)}
+      // onClick={toggleDrawer(anchor, false)}
+      // onKeyDown={toggleDrawer(anchor, false)}
     >
       {/* <div onClick={() => {
         toggleDrawer("right", false)
@@ -52,7 +55,7 @@ export default function SwipeableTemporaryDrawer(props) {
     <div>
       <React.Fragment key={anchor}>
         <Button
-          className={props.classNameDrawer}
+          className={`${props.classNameDrawer} `}
           onClick={toggleDrawer(anchor, true)}
         >
           {click}

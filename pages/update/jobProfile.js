@@ -80,7 +80,7 @@ function JobProfile() {
 
   const onChange = (e) => {
     const { name, value } = e;
-    console.log(name, value);
+    // console.log(name, value);
     setUserBasicData((prevState) => ({
       ...prevState,
       [name]: value,
@@ -99,11 +99,21 @@ function JobProfile() {
       id: 1,
     },
     {
-      pageData: <Experience data={userBasicData ? userBasicData : ""} />,
+      pageData: (
+        <Experience
+          onChange={onChange}
+          data={userBasicData ? userBasicData : ""}
+        />
+      ),
       id: 2,
     },
     {
-      pageData: <Education data={userBasicData ? userBasicData : ""} />,
+      pageData: (
+        <Education
+          onChange={onChange}
+          data={userBasicData ? userBasicData : ""}
+        />
+      ),
       id: 3,
     },
     { pageData: <Projects data={userBasicData ? userBasicData : ""} />, id: 4 },
@@ -129,8 +139,9 @@ function JobProfile() {
                 { name: "Basic Information", id: 1 },
                 { name: "Experience", id: 2 },
                 { name: "Education", id: 3 },
-                { name: "Projects", id: 4 },
-                { name: "Certificates", id: 5 },
+                { name: "Projects & Certificates", id: 4 },
+                // { name: "Certificates", id: 5 },
+                { name: "Resume", id: 5 },
               ]}
               pages={pages}
             />

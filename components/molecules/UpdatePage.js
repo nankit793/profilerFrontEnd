@@ -6,7 +6,8 @@ import SwipeableTemporaryDrawer from "./Drawer";
 import UpdateProfileSideNav from "../UpdateProfileSideNav";
 import { errorNotification, successNotification } from "../atoms/AlertMessage";
 import { NotificationContainer } from "react-notifications";
-
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 function UpdatePage(props) {
   const [showSidemenu, setShowSideMenu] = useState(false);
   const [selectedPage, setSelectedPage] = useState();
@@ -69,7 +70,6 @@ function UpdatePage(props) {
         headers: { "Content-Type": "application/json" },
       });
       const finalSave = await save.json();
-      console.log(save, finalSave);
       if (save && save.status === 200 && save.statusText === "OK") {
         successNotification(finalSave.message, "Success");
       } else {
@@ -81,55 +81,76 @@ function UpdatePage(props) {
   };
   return (
     <>
-      <div className=" w-full">
-        <div className="z-10 fixed  bottom-0 right-0 p-4 flex justify-end gap-2 w-fit px-5 ">
-          <div
-            onClick={() => {
-              handlePageNav(-1);
-            }}
-            className="p-2 bg-color_3 border drop-shadow.sm rounded text-[16px] text-color_7 font-bold px-5 cursor-pointer  "
-          >
-            Previous
-          </div>
-          <div
-            onClick={() => {
-              handlePageNav(1);
-            }}
-            className="py-2 border drop-shadow-sm font-bold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100    "
-          >
-            Next
-          </div>
-          <div
-            onClick={onSave}
-            className="p-2 border drop-shadow font-bold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
-          >
-            Save
-          </div>
+      <div className="z-10 fixed  flex-wrap bottom-0 right-0 p-4 flex justify-end gap-2 w-fit px-5 ">
+        <div className="py-1 flex justify-center items-center drop-shadow-sm bg-color_2  border rounded text-[16px] text-color_7 font-bold px-5 cursor-pointer">
+          {selectedPage && selectedPage.id !== null && maxPages ? (
+            <div>
+              {selectedPage.id} / {maxPages}
+            </div>
+          ) : (
+            ""
+          )}
+        </div>
+        <div
+          onClick={() => {
+            handlePageNav(-1);
+          }}
+          className="py-2 border drop-shadow-sm font-semibold text-[16px] rounded text-color_2 px-2 bg-color_5 cursor-pointer hover:bg-color_7 duration-100 flex items-center justify-center"
+        >
+          <NavigateBeforeIcon />
+          {/* Previous */}
+        </div>
+        <div
+          onClick={() => {
+            handlePageNav(1);
+          }}
+          className="py-2 border drop-shadow-sm font-semibold text-[16px] rounded text-color_2 px-2 bg-color_5 cursor-pointer hover:bg-color_7 duration-100 flex items-center justify-center"
+        >
+          {/* Next */}
+          <NavigateNextIcon />
+        </div>
+        <div
+          onClick={onSave}
+          className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
+        >
+          Save
         </div>
       </div>
 
-      <div className="md:flex justify-start h-full">
-        <div className="md:block hidden min-w-[250px] w-[25%] h-[100%] overflow-h-scroll">
+      <div className="md:flex justify-start h-full bg-color_2">
+        <div className="md:block hidden min-w-[250px] w-[25%] h-[100%] overflow-h-scroll border-r-2 ">
           <UpdateProfileSideNav
             selectedPage={selectedPage}
             data={props}
             onClicker={handleButtonClick}
           />
         </div>
-        <div className="w-full  overflow-y-auto mb-2 md:mb-20 pt-3">
-          <div className="mx-3 p-5 bg-color_2 rounded-md bg-color_2 drop-shadow">
-            <div className="py-1 absolute top-0 drop-shadow-sm bg-color_2 right-3 border rounded-3xl text-[16px] text-color_7 font-bold px-5 cursor-pointer">
-              {selectedPage && selectedPage.id !== null && maxPages ? (
-                <div>
-                  {selectedPage.id} / {maxPages}
-                </div>
-              ) : (
-                ""
-              )}
+        <div className="w-full  overflow-y-auto md:mb-16 ">
+          <div className="md:hidden block overflow-x-auto w-full">
+            <div className="flex w-full md:mx-auto mt-3  rounded-3xl">
+              {props.buttons.map((item) => {
+                return (
+                  <div
+                    className={`${
+                      selectedPage &&
+                      selectedPage.id &&
+                      selectedPage.id === item.id
+                        ? "bg-color_5 text-[white] px-5"
+                        : "text-text_1"
+                    } p-2 m-2 rounded-3xl duration-200 hover:bg-color_5 hover:text-[white] whitespace-nowrap cursor-pointer font-semibold rounded`}
+                    onClick={() => {
+                      handleButtonClick(item);
+                    }}
+                  >
+                    {item.name}
+                  </div>
+                );
+              })}
             </div>
+          </div>
+          <div className="p-3 md:p-5 rounded-md ">
             {selectedPage && selectedPage.pageData ? selectedPage.pageData : ""}
           </div>
-          <div></div>
         </div>
       </div>
       {/* <div

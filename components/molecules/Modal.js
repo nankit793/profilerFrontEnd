@@ -15,6 +15,7 @@ export default function BasicModal(props) {
     boxShadow: 24,
     p: 4,
   };
+  console.log(props.hideBackdrop);
   return (
     <div>
       <div onClick={props.onClick} className={`${props.textClass}`}>
@@ -23,10 +24,11 @@ export default function BasicModal(props) {
       <Modal
         open={props.open}
         onClose={props.onClose}
+        // hideBackdrop={props.hideBackdrop}
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="rounded-xl ">
+        <Box sx={style} className="rounded-xl outline-none">
           <div>{props.data}</div>
         </Box>
       </Modal>

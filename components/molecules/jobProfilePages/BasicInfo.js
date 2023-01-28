@@ -58,11 +58,18 @@ function BasicInfo(props) {
 
   return (
     <>
+      <div className="flex justify-between">
+        <div className="text-text_2 font-semibold text-lg mb-5">
+          Basic Details
+        </div>
+      </div>
       {/* <div className='font-semibold capitalize text-[20px] flex justify-center'>Basic Information</div> */}
       <div className=" md:flex justify-between w-full gap-5 ">
         <div className="w-full md:w-[50%] flex flex-col gap-5">
           <div>
-            <div className="font-semibold text-md mb-1">Offical Mail</div>
+            <div className="font-semibold text-text_1 text-md mb-1">
+              Offical Mail
+            </div>
             <input
               className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
               maxlength={30}
@@ -74,7 +81,7 @@ function BasicInfo(props) {
           </div>
           <div className="">
             <div className="font-semibold text-color_7 text-md">Skills:</div>
-            <div className="w-full rounded mt-1 bg-color_3 text-color_7 flex flex-wrap ">
+            <div className="w-full rounded mt-1 bg-color_6 text-color_7 flex flex-wrap ">
               <div className="w-full flex justify-between align-center">
                 <div className="m-2">
                   {jobBasicData &&
@@ -126,7 +133,7 @@ function BasicInfo(props) {
                         setSkill("");
                       }
                     }}
-                    className="w-full  m-3 rounded-3xl bg-white border flex"
+                    className="w-full drop-shadow m-3 rounded-3xl bg-white border flex"
                   >
                     <input
                       type="text"
@@ -152,7 +159,7 @@ function BasicInfo(props) {
           </div>
           <div className="">
             <div className="font-semibold text-color_7 text-md ">Hobbies:</div>
-            <div className="w-full rounded bg-color_3 text-color_7 flex flex-wrap mt-1">
+            <div className="w-full rounded bg-color_6 text-color_7 flex flex-wrap mt-1">
               <div className="w-full flex justify-between">
                 <div className="m-2">
                   {jobBasicData &&
@@ -206,7 +213,7 @@ function BasicInfo(props) {
                         setHobby("");
                       }
                     }}
-                    className="w-full m-3 rounded-3xl bg-white border flex"
+                    className="w-full m-3 drop-shadow rounded-3xl bg-white border flex"
                   >
                     <input
                       type="text"
@@ -232,11 +239,11 @@ function BasicInfo(props) {
           </div>
         </div>
         <div className="w-full md:w-[50%] mt-5 md:mt-0">
-          <div className="font-semibold text-md mb-1">
+          <div className="font-semibold text-text_1 text-md mb-1">
             Message to Hiring Manager
           </div>
-          <input
-            maxLength={600}
+          <InputField
+            length={600}
             className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
             value={jobBasicData && jobBasicData.about ? jobBasicData.about : ""}
             type="text"
@@ -244,9 +251,8 @@ function BasicInfo(props) {
             placeholder="Hello Hiring Manager....."
             name="about"
             onChange={onChange}
+            //   onChange={onChange}
           />
-
-          <div></div>
           {/* <div className="mb-5 md:mt-0 mt-5">
             <div className="font-semibold text-color_7 text-md">
               Achievements:
