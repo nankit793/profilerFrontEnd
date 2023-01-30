@@ -326,12 +326,12 @@ function Uid(props) {
                       {userBasicData.nationality
                         ? userBasicData.nationality
                         : ""}
-                      / /
-                      {/* / {userBasicData.age ? userBasicData.age : ""} / */}
+
+                      {userBasicData.age ? userBasicData.age : ""}
                       {userBasicData.currentLocation
                         ? userBasicData.currentLocation
                         : ""}
-                      {userBasicData.gender ? userBasicData.gender : ""}/
+                      {userBasicData.gender ? userBasicData.gender : ""}
                     </div>
                   </div>
                 </div>

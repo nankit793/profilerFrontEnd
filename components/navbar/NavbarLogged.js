@@ -11,7 +11,7 @@ function NavbarLogged() {
   const router = useRouter();
   return (
     <>
-      <div className="py-3 bg-color_7 w-full">
+      <div className="py-4 bg-color_7 w-full">
         <div className="flex justify-between items-center">
           <div
             className=" ml-2 text-[18px] w-min text-color_2 font-semibold  cursor-pointer"
@@ -19,7 +19,7 @@ function NavbarLogged() {
               router.push(`/home/${localStorage.getItem("userid")}`);
             }}
           >
-            PROFILER
+            ImPROFILE
           </div>
           <div className="flex items-center mr-5">
             <div className="md:block hidden">

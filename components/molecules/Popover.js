@@ -1,0 +1,49 @@
+import * as React from "react";
+import Popover from "@mui/material/Popover";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+
+function PopOver(props) {
+  const [anchorEl, setAnchorEl] = React.useState(null);
+
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+  const onClick = () => {
+    // const el = document.getElementById("data");
+    // el.style.display = "none";
+  };
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
+  return (
+    <div>
+      <div
+        className="px-[2px] py-[1px] hover:bg-color_5 duration-200 cursor-pointer hover:text-color_2 rounded-full mt-1"
+        aria-describedby={id}
+        onClick={handleClick}
+      >
+        {props.text}
+      </div>
+      <Popover
+        id={id}
+        open={open}
+        anchorEl={anchorEl}
+        onClose={handleClose}
+        anchorOrigin={{
+          vertical: "bottom",
+          horizontal: "left",
+        }}
+      >
+        <Typography id="data" onClick={onClick} sx={{ p: 2 }}>
+          {props.data}
+        </Typography>
+      </Popover>
+    </div>
+  );
+}
+
+export default PopOver;

@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react";
 import AddIcon from "@mui/icons-material/Add";
 import SwipeableTemporaryDrawer from "../Drawer";
 import EducationData from "./components/EducationData";
+import Popover from "../Popover";
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import DeleteIcon from "@mui/icons-material/Delete";
 
@@ -75,35 +77,45 @@ function Education(props) {
                   key={index}
                   className="border px-2 pb-3  bg-color_2 drop-shadow w-full md:w-[35%] md:my-0 my-5"
                 >
-                  <div className="w-full flex justify-end items-center gap-2">
-                    <SwipeableTemporaryDrawer
-                      anchor="right"
-                      click={
-                        <div className="text-text_2 hover:text-color_2 duration-200 cursor-pointer flex items-center p-1 rounded-full hover:bg-color_7">
-                          <AddIcon fontSize="small" />
-                        </div>
-                      }
+                  <div className="text-right">
+                    <Popover
                       data={
-                        <EducationData
-                          edited={true}
-                          educationData={jobEducationData["education"][index]}
-                          index={index}
-                          onClick={onClick}
-                        />
+                        <>
+                          <SwipeableTemporaryDrawer
+                            anchor="right"
+                            click={
+                              <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer flex items-center p-1 ">
+                                Edit
+                              </div>
+                            }
+                            data={
+                              <EducationData
+                                edited={true}
+                                educationData={
+                                  jobEducationData["education"][index]
+                                }
+                                index={index}
+                                onClick={onClick}
+                              />
+                            }
+                          />
+                          <div
+                            onClick={() => {
+                              removeEducation(index);
+                            }}
+                            className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
+                          >
+                            Delete
+                          </div>
+                        </>
                       }
+                      text={<MoreHorizIcon />}
                     />
-
-                    <div
-                      onClick={() => {
-                        removeEducation(index);
-                      }}
-                      className="text-text_2 hover:text-color_2 duration-200 cursor-pointer flex items-center p-1 rounded-full hover:bg-color_7"
-                    >
-                      <DeleteIcon fontSize="small" />
-                    </div>
                   </div>
-                  <div className="mx-3 font-semibold  whitespace-nowrap  flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
-                    {item.institution && item.institution}
+                  <div className="w-full flex justify-between flex-wrap items-center my-2 gap-2">
+                    <div className="mx-3 font-semibold  whitespace-nowrap  flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
+                      {item.institution && item.institution}
+                    </div>
                   </div>
                   <div className="mx-3 my-2 flex flex-wrap justify-start gap-2 whitespace-nowrap">
                     <div>{item.education && item.education},</div>

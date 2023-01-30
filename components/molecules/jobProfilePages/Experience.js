@@ -1,11 +1,14 @@
 import React, { useState, useEffect } from "react";
-// import Modal from "../../../components/molecules/Modal";
+import Modal from "../../../components/molecules/Modal";
 import SwipeableTemporaryDrawer from "../Drawer";
 import ExperienceData from "./components/ExperienceData";
-import Modal from "@mui/material/Modal";
+// import Modal from "@mui/material/Modal";
 import Box from "@mui/material/Box";
+import Popover from "../Popover";
 
 // mui
+
+import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 import EditIcon from "@mui/icons-material/Edit";
 import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
@@ -62,15 +65,15 @@ function Experience(props) {
           data={<ExperienceData onClick={onClick} />}
         />
       </div>
-      {/* <Modal
+      <Modal
         onClick={handleOpen}
         onClose={handleClose}
         textClass=""
         hideBackdrop={true}
-        text={<DeleteIcon fontSize="small" />}
+        // text={<DeleteIcon fontSize="small" />}
         open={open}
         data={<div>hello there</div>}
-      /> */}
+      />
       {jobExperienceData && jobExperienceData.experience.length === 0 && (
         <div className="text-semibold text-center text-md text-text_2">
           <div>
@@ -80,7 +83,7 @@ function Experience(props) {
         </div>
       )}
       {jobExperienceData && jobExperienceData.experience && (
-        <div className="md:flex gap-10 flex-wrap">
+        <div className="md:flex gap-5 flex-wrap">
           {jobExperienceData.experience.map((item, index) => {
             return (
               <div
@@ -90,38 +93,42 @@ function Experience(props) {
                 <div className="flex flex-wrap justify-between items-center font-semibold px-3 bg-color_2 text-text_1  w-full text-[16px]">
                   {item.company && item.company}
                   <div className="flex justify-center">
-                    <div>
-                      <SwipeableTemporaryDrawer
-                        anchor="right"
-                        click={
-                          <div className="p-1 rounded-full text-text_1  hover:bg-color_7 hover:text-color_2 flex justify-center items-center duration-200 cursor-pointer">
-                            <EditIcon
-                              fontSize="small"
-                              // sx={{ color: "#36454f" }}
+                    <Popover
+                      text={<MoreHorizIcon />}
+                      data={
+                        <div className="w-full text-text_1 px-2 bg-[white]">
+                          <div>
+                            <SwipeableTemporaryDrawer
+                              anchor="right"
+                              click={<div className="mb-2">Edit</div>}
+                              data={
+                                <ExperienceData
+                                  edit={true}
+                                  jobExperienceData={
+                                    jobExperienceData["experience"][index]
+                                  }
+                                  index={index}
+                                  onClick={onClick}
+                                />
+                              }
                             />
                           </div>
-                        }
-                        data={
-                          <ExperienceData
-                            edit={true}
-                            jobExperienceData={
-                              jobExperienceData["experience"][index]
-                            }
-                            index={index}
-                            onClick={onClick}
-                          />
-                        }
-                      />
-                    </div>
+                          <div className="cursor-pointer text-maroon">
+                            Delete
+                          </div>
+                        </div>
+                      }
+                    />
 
-                    <div
+                    {/* <div
                       onClick={() => {
-                        removeExperience();
+                        // handleOpen();
+                        // removeExperience();
                       }}
                       className="my-[5px] px-[5px] flex  justify-center items-center  rounded-full  text-text_1  hover:bg-color_7 hover:text-color_2 duration-200 cursor-pointer"
                     >
                       <DeleteIcon fontSize="small" />
-                    </div>
+                    </div> */}
                   </div>
                 </div>
                 <div className="mx-3 my-1">

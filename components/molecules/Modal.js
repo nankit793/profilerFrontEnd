@@ -15,7 +15,7 @@ export default function BasicModal(props) {
     boxShadow: 24,
     p: 4,
   };
-  console.log(props.hideBackdrop);
+  // console.log(props.hideBackdrop);
   return (
     <div>
       <div onClick={props.onClick} className={`${props.textClass}`}>

@@ -116,7 +116,15 @@ function JobProfile() {
       ),
       id: 3,
     },
-    { pageData: <Projects data={userBasicData ? userBasicData : ""} />, id: 4 },
+    {
+      pageData: (
+        <Projects
+          onChange={onChange}
+          data={userBasicData ? userBasicData : ""}
+        />
+      ),
+      id: 4,
+    },
     {
       pageData: <Certificates data={userBasicData ? userBasicData : ""} />,
       id: 5,
@@ -136,7 +144,7 @@ function JobProfile() {
               data={userBasicData}
               onSave="http://localhost:5000/updateJobProfile"
               buttons={[
-                { name: "Basic Information", id: 1 },
+                { name: "Details", id: 1 },
                 { name: "Experience", id: 2 },
                 { name: "Education", id: 3 },
                 { name: "Projects & Certificates", id: 4 },

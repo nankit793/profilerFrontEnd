@@ -63,7 +63,12 @@ function NavbarLoggedBody() {
         <div
           className="flex justify-between items-center border rounded-lg m-2 cursor-pointer gap-5 w-[90%] p-3 bg-color_6"
           onClick={() => {
-            router.push(`/home/${localStorage.getItem("userid")}`);
+            const user = localStorage.getItem("userid") || "";
+            if (user) {
+              router.push(`/home/${localStorage.getItem("userid")}`);
+            } else {
+              router.push("/home");
+            }
           }}
         >
           <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-color_1 text-color_2">
@@ -71,10 +76,12 @@ function NavbarLoggedBody() {
           </div>
           <div className="flex flex-col justify-between text-right ">
             <div className="text-text_1 font-bold text-[16px]  ">
-              {userBasicData.name ? userBasicData.name : ""}
+              {/* {userBasicData.name ? userBasicData.name : ""} */}
+              name here
             </div>
             <div className="text-text_1 text-[16px] ">
-              {localStorage.getItem("userid")}
+              email here
+              {/* {userBasicData.name && localStorage.getItem("userid")} */}
             </div>
           </div>
         </div>
