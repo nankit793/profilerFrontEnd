@@ -8,25 +8,33 @@ import { errorNotification, successNotification } from "../atoms/AlertMessage";
 import { NotificationContainer } from "react-notifications";
 import NavigateNextIcon from "@mui/icons-material/NavigateNext";
 import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+
 function UpdatePage(props) {
   const [showSidemenu, setShowSideMenu] = useState(false);
   const [selectedPage, setSelectedPage] = useState();
   const [maxPages, setMaxPages] = useState(0);
+  const [showSkeleton, setShowSkeleton] = useState(true);
   useEffect(() => {
     let id = 1;
     props.pages.map((page) => {
       id = page.id;
       if (page.id === 0) {
         setSelectedPage(page);
+        setShowSkeleton(false);
       }
     });
     setMaxPages(id);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const handleButtonClick = (item) => {
+    setShowSkeleton(true);
     props.pages.map((page) => {
       if (page.id === item.id) {
         setSelectedPage(page);
+        setShowSkeleton(false);
       }
     });
   };
@@ -40,9 +48,9 @@ function UpdatePage(props) {
   const handlePageNav = (num) => {
     const id = selectedPage.id + num;
     if (id > maxPages) {
-      id = 1;
+      id = 0;
     }
-    if (id < 1) {
+    if (id < 0) {
       id = maxPages;
     }
     props.pages.map((page) => {
@@ -82,7 +90,7 @@ function UpdatePage(props) {
   return (
     <>
       <div className="z-10 fixed  flex-wrap bottom-0 right-0 p-4 flex justify-end gap-2 w-fit px-5 ">
-        <div className="py-1 flex justify-center items-center drop-shadow-sm bg-color_2  border rounded text-[16px] text-color_7 font-bold px-5 cursor-pointer">
+        <div className="py-1 flex justify-center items-center drop-shadow-lg bg-color_2  rounded text-[16px] text-color_7 font-bold px-5 cursor-pointer">
           {selectedPage && selectedPage.id !== null && maxPages ? (
             <div>
               {selectedPage.id} / {maxPages}
@@ -126,18 +134,19 @@ function UpdatePage(props) {
           />
         </div>
         <div className="w-full  overflow-y-auto md:mb-16 ">
-          <div className="md:hidden block overflow-x-auto w-full">
-            <div className="flex w-full md:mx-auto mt-3  rounded-3xl">
-              {props.buttons.map((item) => {
+          <div className="md:hidden block overflow-x-auto w-full mt-2">
+            <div className="flex gap-3">
+              {props.buttons.map((item, index) => {
                 return (
                   <div
+                    key={index}
                     className={`${
                       selectedPage &&
                       selectedPage.id &&
                       selectedPage.id === item.id
-                        ? "bg-color_5 text-[white] px-5"
-                        : "text-text_1"
-                    } p-2 m-2 rounded-3xl duration-200 hover:bg-color_5 hover:text-[white] whitespace-nowrap cursor-pointer font-semibold rounded`}
+                        ? "bg-color_7 text-[white] px-5"
+                        : "text-text_1  border px-3"
+                    } p-2  rounded-3xl snap-center  duration-200 ease-in-out  whitespace-nowrap cursor-pointer  rounded`}
                     onClick={() => {
                       handleButtonClick(item);
                     }}
@@ -148,8 +157,15 @@ function UpdatePage(props) {
               })}
             </div>
           </div>
-          <div className="p-3 md:p-5 rounded-md ">
+          <div className="p-3 md:p-5 rounded-md scroll-smooth">
             {selectedPage && selectedPage.pageData ? selectedPage.pageData : ""}
+            {/* {showSkeleton && (
+              <Box sx={{ width: 300 }}>
+                <Skeleton />
+                <Skeleton animation="wave" />
+                <Skeleton animation={false} />
+              </Box>
+            )} */}
           </div>
         </div>
       </div>

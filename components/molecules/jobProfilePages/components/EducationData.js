@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-
 import Checkbox from "@mui/material/Checkbox";
 import {
   Radio,
@@ -13,6 +12,7 @@ import {
 } from "@mui/material";
 import AddIcon from "@mui/icons-material/Add";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
+import ButtonPrimary from "../../../atoms/input/ButtonPrimary";
 function EducationData(props) {
   const [institution, setInstitution] = useState("");
   const [education, setEducation] = useState("none");
@@ -20,15 +20,29 @@ function EducationData(props) {
   const [checkBox, setCheckBox] = useState(false);
   const [error, setError] = useState("");
   const [success, setSuccess] = useState("");
+  const [course, setCourse] = useState("");
+  const [from, setFrom] = useState(null);
 
   const onSubmit = () => {
-    if (institution && education && education !== "none" && clearedOn) {
+    if (
+      institution &&
+      education &&
+      education !== "none" &&
+      course &&
+      (clearedOn || checkBox) &&
+      from
+    ) {
       const data = {
         institution,
         education,
         attending: checkBox,
-        clearedOn,
+        from,
+        to: clearedOn,
+        course,
       };
+      // const el = document.getElementsByName("operationButton");
+      // el.id = "operationButton";
+      // el.click();
       setError("");
       if (!props.edited) {
         setSuccess("education added");
@@ -53,13 +67,25 @@ function EducationData(props) {
       setCheckBox(
         props.educationData.attending && props.educationData.attending
       );
-      const attendYear = new Date(props.educationData.clearedOn).getFullYear();
-      let attendMonth = new Date(props.educationData.clearedOn).getMonth() + 1;
+      const attendYear = new Date(props.educationData.to).getFullYear();
+      let attendMonth = new Date(props.educationData.to).getMonth() + 1;
       if (attendMonth <= 9) {
         attendMonth = "0" + attendMonth;
       }
       setClearedOn(`${attendYear}-${attendMonth}`);
+      const attendYearFrom = new Date(props.educationData.from).getFullYear();
+      let attendMonthFrom = new Date(props.educationData.from).getMonth() + 1;
+      if (attendMonthFrom <= 9) {
+        attendMonthFrom = "0" + attendMonthFrom;
+      }
+      setFrom(`${attendYearFrom}-${attendMonthFrom}`);
     }
+    setCourse(
+      props.educationData &&
+        props.educationData.course &&
+        props.educationData.course
+    );
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
@@ -124,62 +150,38 @@ function EducationData(props) {
               </Select>
             </FormControl>
           </div>
-          {/* <div className="font-semibold mt-2 text-text_1  mb-1">
-            Course <span className="text-[red]">*</span>{" "}
-          </div>
-          <div>
-            <FormControl className="flex w-full justify-end w-full mt-1 text-left">
-              <Select
-                labelId="demo-simple-select-label"
-                id="demo-simple-select"
-                value={course}
-                onChange={(e) => {
-                  setCourse(e.target.value);
-                  console.log(e.target.value);
-                }}
-                name="zodiac"
-              >
-                <MenuItem value="none">None</MenuItem>
-                <MenuItem value="ba">B.A</MenuItem>
-                <MenuItem value="bams">B.A.M.S</MenuItem>
-                <MenuItem value="bbm">B.B.M</MenuItem>
-                <MenuItem value="bca">B.C.A </MenuItem>
-                <MenuItem value="bcom">B.Com</MenuItem>
-                <MenuItem value="be">B.E</MenuItem>
-                <MenuItem value="bed"> B.Ed</MenuItem>
-                <MenuItem value="bfa">B.F.A</MenuItem>
-                <MenuItem value="bhms">B.H.M.S</MenuItem>
-                <MenuItem value="bsc">B.Sc</MenuItem>
-                <MenuItem value="btech">B.Tech</MenuItem>
-                <MenuItem value="bums">B.U.M.S</MenuItem>
-                <MenuItem value="bva">B.V.A</MenuItem>
-                <MenuItem value="bd">BACHELORS DEGREE</MenuItem>
-                <MenuItem value="bhm">BHM </MenuItem>
-                <MenuItem value="bms">BMS </MenuItem>
-                <MenuItem value="graduation">Graduation </MenuItem>
-                <MenuItem value="llb">LLB </MenuItem>
-                <MenuItem value="ma">M.A </MenuItem>
-                <MenuItem value="mba">M.B.A</MenuItem>
-                <MenuItem value="mca">M.C.A </MenuItem>
-                <MenuItem value="mcom">M.Com </MenuItem>
-                <MenuItem value="me">M.E </MenuItem>
-                <MenuItem value="msc">M.Sc</MenuItem>
-                <MenuItem value="mtech">M.Tech</MenuItem>
-              </Select>
-            </FormControl> */}
-          {/* </div> */}
-          <div className="text-md font-semibold">
-            <Checkbox
-              checked={checkBox}
-              onChange={(e) => {
-                setCheckBox(!checkBox);
-              }}
-              size="small"
-            />
-            attending
-          </div>
           <div className="font-semibold mt-2 text-text_1  mb-1">
-            Cleared on <span className="text-[red]">*</span>{" "}
+            Course <span className="text-[red]">*</span>
+          </div>
+          <input
+            className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
+            maxlength={30}
+            onChange={(e) => {
+              setCourse(e.target.value);
+            }}
+            placeholder="Ex: Computer Science,  Human Resources"
+            value={course}
+            type="text"
+            name="company"
+            //   onChange={onChange}
+          />
+          <div className="font-semibold text-text_1  mb-1 mt-3">
+            From <span className="text-[red]">*</span>
+          </div>
+          <input
+            className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
+            value={from}
+            type="month"
+            onChange={(e) => {
+              setFrom(e.target.value);
+            }}
+            name="from"
+            //   onChange={onChange}
+          />
+          <div className="font-semibold mt-2 text-text_1  mb-1">
+            {checkBox && `Expected to clear `}
+            {!checkBox && `Cleared on`}
+            <span className="text-[red]">*</span>
           </div>
           <input
             className="border w-full rounded p-3  mt-1 focus:outline-color_1 focus:outline"
@@ -190,6 +192,17 @@ function EducationData(props) {
             }}
             name="from"
           />
+
+          <div className="text-md font-semibold">
+            <Checkbox
+              checked={checkBox}
+              onChange={(e) => {
+                setCheckBox(!checkBox);
+              }}
+              size="small"
+            />
+            attending
+          </div>
         </div>
         <div className="">
           <div className="flex justify-center p-3 text-maroon">
@@ -198,12 +211,24 @@ function EducationData(props) {
           <div className="flex justify-center p-3 text-[green]">
             {success && success}
           </div>
-          <div
+          <ButtonPrimary
+            disabled={
+              !(
+                institution &&
+                education !== "none" &&
+                course &&
+                (clearedOn || checkBox) &&
+                from
+              )
+            }
+            id="operationButton"
             onClick={onSubmit}
-            className="w-full p-4 justify-center bg-color_5 hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center"
-          >
-            {props.edited ? `update education` : `add education`}
-          </div>
+            disabledClass="w-full p-4 justify-center  rounded-none bg-color_6 hover:bg-color_6 text-md font-semibold flex items-center"
+            className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
+            text={props.edited ? `update education` : `add education`}
+          />
+          {/* {props.edited ? `update education` : `add education`} */}
+          {/* </ButtonPrimary> */}
         </div>
       </div>
     </>

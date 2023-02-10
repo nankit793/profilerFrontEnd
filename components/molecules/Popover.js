@@ -13,16 +13,17 @@ function PopOver(props) {
   const handleClose = () => {
     setAnchorEl(null);
   };
-  const onClick = () => {
-    // const el = document.getElementById("data");
-    // el.style.display = "none";
+  const onClick = (e) => {
+    if (e.target.id === "operationButton") {
+      handleClose();
+    }
   };
   const open = Boolean(anchorEl);
   const id = open ? "simple-popover" : undefined;
   return (
     <div>
       <div
-        className="px-[2px] py-[1px] hover:bg-color_5 duration-200 cursor-pointer hover:text-color_2 rounded-full mt-1"
+        className="px-[2px] w-min text-right py-[1px] hover:bg-color_6 duration-200 cursor-pointer  rounded-full mt-1"
         aria-describedby={id}
         onClick={handleClick}
       >

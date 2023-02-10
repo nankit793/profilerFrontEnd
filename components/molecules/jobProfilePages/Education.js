@@ -6,18 +6,23 @@ import Popover from "../Popover";
 import MoreHorizIcon from "@mui/icons-material/MoreHoriz";
 
 import DeleteIcon from "@mui/icons-material/Delete";
+import Skeleton from "@mui/material/Skeleton";
+import Box from "@mui/material/Box";
 
 function Education(props) {
   const [jobEducationData, setJobEducationData] = useState();
+  const [showSkeleton, setShowSkeleton] = useState(true);
 
   useEffect(() => {
     setJobEducationData(props.data);
-  }, []);
+  }, [props.data]);
 
   useEffect(() => {
-    // console.log(jobEducationData);
-    // setJobEducationData(props.data);
+    if (jobEducationData && jobEducationData["education"]) {
+      setShowSkeleton(false);
+    }
   }, [jobEducationData]);
+
   const onClick = (data, edited, index) => {
     if (!edited) {
       jobEducationData["education"].push(data);
@@ -29,12 +34,13 @@ function Education(props) {
       ...prevState,
       ["education"]: jobEducationData["education"],
     }));
-    console.log(data);
+
     props.onChange({
       name: "education",
       value: jobEducationData["education"],
     });
   };
+
   const removeEducation = (index) => {
     jobEducationData["education"].splice(index, 1);
     setJobEducationData((prevState) => ({
@@ -49,12 +55,13 @@ function Education(props) {
   return (
     <>
       <div className="">
-        <div className="flex justify-between flex-wrap w-full">
+        <div className="flex justify-between  w-full items-center">
           <div className="text-lg text-text_2 font-semibold ">Education</div>
+          <div className="h-[2px] bg-color_6 w-full rounded-full mx-5 md:block hidden"></div>
           <SwipeableTemporaryDrawer
             anchor="right"
             click={
-              <div className="p-2 rounded lowercase bg-color_5 hover:bg-color_7 px-3 cursor-pointer text-[white] flex items-center duration-200">
+              <div className="p-2 rounded lowercase bg-color_5 whitespace-nowrap hover:bg-color_7 px-3 cursor-pointer text-[white] flex items-center duration-200">
                 <AddIcon fontSize="small" sx={{ color: "white" }} /> add
                 Education
               </div>
@@ -69,13 +76,20 @@ function Education(props) {
               You have not added any graduation details
             </div>
           )}
+        {showSkeleton && (
+          <Box sx={{ width: "100%" }} className="mt-10">
+            <Skeleton />
+            <Skeleton animation="wave" />
+            <Skeleton animation={false} />
+          </Box>
+        )}
         {jobEducationData && jobEducationData["education"] && (
-          <div className="md:flex justify-start gap-5 flex-wrap ">
+          <div className="md:flex justify-start gap-5 flex-wrap mt-5">
             {jobEducationData["education"].map((item, index) => {
               return (
                 <div
                   key={index}
-                  className="border px-2 pb-3  bg-color_2 drop-shadow w-full md:w-[35%] md:my-0 my-5"
+                  className="border px-2 pb-3 h-min  bg-color_2 drop-shado-sm w-full md:w-[45%] md:my-0 my-5"
                 >
                   <div className="text-right">
                     <Popover
@@ -84,7 +98,7 @@ function Education(props) {
                           <SwipeableTemporaryDrawer
                             anchor="right"
                             click={
-                              <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer flex items-center p-1 ">
+                              <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer w-min flex items-center p-1 ">
                                 Edit
                               </div>
                             }
@@ -103,36 +117,46 @@ function Education(props) {
                             onClick={() => {
                               removeEducation(index);
                             }}
+                            id="operationButton"
                             className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
                           >
                             Delete
                           </div>
                         </>
                       }
-                      text={<MoreHorizIcon />}
+                      text={
+                        <div className="">
+                          <MoreHorizIcon />
+                        </div>
+                      }
                     />
                   </div>
                   <div className="w-full flex justify-between flex-wrap items-center my-2 gap-2">
-                    <div className="mx-3 font-semibold  whitespace-nowrap  flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
+                    <div className="mx-3 font-semibold   flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
                       {item.institution && item.institution}
                     </div>
                   </div>
-                  <div className="mx-3 my-2 flex flex-wrap justify-start gap-2 whitespace-nowrap">
+                  <div className="mx-3 my-2 flex flex-wrap justify-start gap-2 whitespace-nowrap text-text_2">
                     <div>{item.education && item.education},</div>
-                    <div>{item.institution && item.institution},</div>
+                    <div>{item.course && item.course}</div>
                   </div>
-                  <div className="mx-3 flex gap-5 justify-start items-end">
+                  <div className="mx-3 flex gap-5 flex-wrap justify-start items-end text-text_2">
                     {item.attending && (
                       <div className="font-medium whitespace-nowrap text-text_2 italic text-[15px]">
                         currently attending
                       </div>
                     )}
-                    <div className="text-sm">
-                      {item.clearedOn
-                        ? `${
-                            new Date(item.clearedOn).getMonth() + 1
-                          }/${new Date(item.clearedOn).getFullYear()} `
-                        : ""}
+                    <div className="text-sm flex">
+                      {item.from
+                        ? `${new Date(item.from).getMonth() + 1}/${new Date(
+                            item.from
+                          ).getFullYear()} `
+                        : "start"}{" "}
+                      {item.to
+                        ? `- ${new Date(item.to).getMonth() + 1}/${new Date(
+                            item.to
+                          ).getFullYear()} `
+                        : "- end"}
                     </div>
                   </div>
                 </div>

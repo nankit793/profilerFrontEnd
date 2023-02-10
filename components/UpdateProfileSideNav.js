@@ -7,25 +7,8 @@ import CloseIcon from "@mui/icons-material/Close";
 function UpdateProfileSideNav(props) {
   return (
     <>
-      <div className="  h-full bg-color_3 overflow-h-scroll">
-        {/* <div className="flex justify-between items-center px-3 py-3 drop-shadow-sm" >
-                    <div className="h-[100px] w-[100px] rounded-full bg-[blue]"></div>
-                    <div className="flex flex-col justify-between text-right">
-                        <div className="font-bold text-[20px]">
-                            {props.data.userBasicData.name ? props.data.userBasicData.name : ""}
-                        </div>
-                        <div className="font-semibold text-[15px] text-text_1">
-                            {props.data.userBasicData.userid ? props.data.userBasicData.userid : ""}
-                        </div>
-                    </div>
-                </div> */}
-        <div className=" mx-3 pt-3">
-          <div
-            className={`w-full rounded text-color_7 cursor-pointer hover:bg-color_3 px-3 py-5 font-semibold text-[16px] `}
-          >
-            Overview
-          </div>
-
+      <div className="  h-full bg-color_3 ">
+        <div className=" mr-5 pt-3 ">
           {props.data.buttons.map((item) => {
             return (
               <>
@@ -35,9 +18,9 @@ function UpdateProfileSideNav(props) {
                   }}
                   className={`  ${
                     props.selectedPage && props.selectedPage.id === item.id
-                      ? "bg-color_5 text-[white]"
-                      : "bg-color_3 text-color_7  "
-                  } duration-100  w-full cursor-pointer hover:bg-color_5 hover:text-[white] rounded px-3 py-5 my-1 
+                      ? "bg-color_5 text-[white]  pl-7"
+                      : "bg-color_3 text-text_1 pl-2 "
+                  } duration-200  w-full cursor-pointer py-4 hover:bg-color_5  hover:text-[white] rounded-r-full my-3 
                          font-semibold text-[16px]`}
                 >
                   {item.name}

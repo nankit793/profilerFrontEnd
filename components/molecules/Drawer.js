@@ -17,7 +17,7 @@ import ClearIcon from "@mui/icons-material/Clear";
 export default function SwipeableTemporaryDrawer(props) {
   const [open, setOpen] = React.useState(false);
   const toggleDrawer = (anchor, open) => (event) => {
-    console.log(event);
+    // console.log(event);
     if (
       event &&
       event.type === "keydown" &&
@@ -46,7 +46,15 @@ export default function SwipeableTemporaryDrawer(props) {
       // onClick={toggleDrawer(anchor, false)}
       // onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="flex  justify-between h-full flex-col">
+      <div
+        onClick={(e) => {
+          console.log(e.target);
+          if (e.target.id === "operationButton") {
+            setOpen(false);
+          }
+        }}
+        className="flex  justify-between h-full flex-col"
+      >
         <div
           onClick={() => {
             // toggleDrawer("right", false);

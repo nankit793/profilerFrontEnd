@@ -3,11 +3,18 @@ import UserInputFields from "../UserInputFields";
 import AddIcon from "@mui/icons-material/Add";
 import CloseIcon from "@mui/icons-material/Close";
 import InputField from "../../atoms/input/InputField";
+
+import Box from "@mui/material/Box";
+import Skeleton from "@mui/material/Skeleton";
+
 function BasicInfo(props) {
   const [jobBasicData, setJobBasicData] = useState();
   const [skill, setSkill] = useState("");
   const [hobby, setHobby] = useState("");
   const [showAddField, setShowAddField] = useState(false);
+  const [showSkeletonSkills, setShowSkeletonSkills] = useState(true);
+  const [showSkeletonHobbies, setShowSkeletonHobbies] = useState(true);
+
   const [addField, setAddField] = useState({
     name: "",
     value: "",
@@ -16,6 +23,16 @@ function BasicInfo(props) {
     setJobBasicData(props.data);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
+  useEffect(() => {
+    if (jobBasicData && jobBasicData["skills"]) {
+      setShowSkeletonSkills(false);
+    }
+    if (jobBasicData && jobBasicData["hobbies"]) {
+      setShowSkeletonHobbies(false);
+    }
+  }, [jobBasicData]);
+
   const onChange = (e) => {
     const { name, value } = e.target;
     setJobBasicData((prevState) => ({
@@ -80,14 +97,14 @@ function BasicInfo(props) {
             />
           </div>
           <div className="">
-            <div className="font-semibold text-color_7 text-md">Skills:</div>
-            <div className="w-full rounded mt-1 bg-color_6 text-color_7 flex flex-wrap ">
+            <div className="font-semibold text-text_1 text-md">Skills</div>
+
+            <div className="w-full rounded-xl mt-1 bg-color_8 p-2 flex flex-wrap">
               <div className="w-full flex justify-between align-center">
-                <div className="m-2">
+                <div className="mx-4 font-semibold text-text_1">
                   {jobBasicData &&
                     jobBasicData.skills &&
-                    jobBasicData.skills.length}
-                  /10
+                    `${jobBasicData.skills.length}/10`}
                 </div>
                 {jobBasicData &&
                   jobBasicData.skills &&
@@ -97,15 +114,20 @@ function BasicInfo(props) {
                     </div>
                   )}
               </div>
+              {showSkeletonSkills && (
+                <Box sx={{ width: "100%" }} className="p-2">
+                  <Skeleton animation="wave" />
+                </Box>
+              )}
               {jobBasicData && jobBasicData.skills ? (
                 <>
                   {jobBasicData.skills.map((skill, index) => {
                     return (
                       <div
                         key={index}
-                        className=" bg-color_2 px-5 h-min py-2  drop-shadow-sm rounded-3xl m-2"
+                        className=" bg-color_2 px-3 h-min py-2  drop-shadow rounded-3xl m-2"
                       >
-                        <div className="flex justify-center align-center">
+                        <div className="flex justify-center text-text_1 items-center">
                           {skill}
                           <div
                             className="cursor-pointer"
@@ -113,7 +135,7 @@ function BasicInfo(props) {
                               handleCloseTag(skill, "skills");
                             }}
                           >
-                            <CloseIcon sx={{ fontSize: 15, marginLeft: 1 }} />{" "}
+                            <CloseIcon sx={{ fontSize: 15, marginLeft: 1 }} />
                           </div>
                         </div>
                       </div>
@@ -133,7 +155,7 @@ function BasicInfo(props) {
                         setSkill("");
                       }
                     }}
-                    className="w-full drop-shadow m-3 rounded-3xl bg-white border flex"
+                    className="w-full drop-shadow-sm m-3 rounded-3xl bg-white border flex"
                   >
                     <input
                       type="text"
@@ -159,13 +181,12 @@ function BasicInfo(props) {
           </div>
           <div className="">
             <div className="font-semibold text-color_7 text-md ">Hobbies:</div>
-            <div className="w-full rounded bg-color_6 text-color_7 flex flex-wrap mt-1">
+            <div className="w-full rounded-xl bg-color_8 flex flex-wrap mt-1 drop-shadow p-2">
               <div className="w-full flex justify-between">
-                <div className="m-2">
+                <div className="mx-4 font-semibold text-text_1">
                   {jobBasicData &&
                     jobBasicData.hobbies &&
-                    jobBasicData.hobbies.length}
-                  /10
+                    `${jobBasicData.hobbies.length}/10`}
                 </div>
                 {jobBasicData &&
                   jobBasicData.hobbies &&
@@ -175,6 +196,11 @@ function BasicInfo(props) {
                     </div>
                   )}
               </div>
+              {showSkeletonHobbies && (
+                <Box sx={{ width: "100%" }} className="p-2">
+                  <Skeleton animation="wave" />
+                </Box>
+              )}
               {jobBasicData && jobBasicData.hobbies ? (
                 <>
                   {jobBasicData.hobbies.map((hobby, index) => {
@@ -182,7 +208,7 @@ function BasicInfo(props) {
                       <>
                         <div
                           key={index}
-                          className=" bg-color_2 px-5 h-min py-2  drop-shadow-sm rounded-3xl m-2"
+                          className=" bg-color_2 px-5 h-min py-2  drop-shadow rounded-3xl m-2"
                         >
                           <div className="flex justify-center align-center">
                             {hobby}
@@ -213,7 +239,7 @@ function BasicInfo(props) {
                         setHobby("");
                       }
                     }}
-                    className="w-full m-3 drop-shadow rounded-3xl bg-white border flex"
+                    className="w-full m-3 drop-shadow-sm rounded-3xl bg-white border flex"
                   >
                     <input
                       type="text"

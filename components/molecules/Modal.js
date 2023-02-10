@@ -13,7 +13,7 @@ export default function BasicModal(props) {
     width: 400 || props.width,
     bgcolor: "background.paper",
     boxShadow: 24,
-    p: 4,
+    p: 2,
   };
   // console.log(props.hideBackdrop);
   return (
@@ -28,7 +28,7 @@ export default function BasicModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="rounded-xl outline-none">
+        <Box sx={style} className="rounded outline-none">
           <div>{props.data}</div>
         </Box>
       </Modal>

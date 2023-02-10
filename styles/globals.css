@@ -17,3 +17,11 @@ body{
 .colorBg{
     background: linear-gradient(to bottom left, #009999 0%, #99ccff 122%);;
 }
+
+
+.textRemove .react-pdf__Page__textContent  {
+    display: none;
+}
+.textRemove .react-pdf__Page__annotations  {
+    display: none;
+}

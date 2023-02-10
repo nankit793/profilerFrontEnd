@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import InputField from "../../../atoms/input/InputField";
 import AddIcon from "@mui/icons-material/Add";
-
+import ButtonPrimary from "../../../atoms/input/ButtonPrimary";
 import UpgradeIcon from "@mui/icons-material/Upgrade";
 import Checkbox from "@mui/material/Checkbox";
 function ExperienceData(props) {
@@ -43,11 +43,43 @@ function ExperienceData(props) {
         props.onClick(data, false, false);
         setSuccess("Experience added");
       }
+      setCompany("");
+      setCheckBox(false);
+      setDesignation("");
+      setError("");
+      setSuccess("");
+      setFrom(null);
+      setTo(null);
+      setRoleDesc("");
     } else {
       setSuccess("");
       setError("enter all required fields");
     }
   };
+  useEffect(() => {
+    if (props.edit) {
+      setCompany(props.jobExperienceData.company);
+      setDesignation(props.jobExperienceData.designation);
+      const fromYear = new Date(props.jobExperienceData.from).getFullYear();
+      let fromMonth = new Date(props.jobExperienceData.from).getMonth() + 1;
+      if (fromMonth <= 9) {
+        fromMonth = "0" + fromMonth;
+      }
+      setFrom(`${fromYear}-${fromMonth}`);
+
+      if (!props.jobExperienceData.working) {
+        const toYear = new Date(props.jobExperienceData.to).getFullYear();
+        let toMonth = new Date(props.jobExperienceData.to).getMonth() + 1;
+        if (toMonth <= 9) {
+          toMonth = "0" + toMonth;
+        }
+        setTo(`${toYear}-${toMonth}`);
+      }
+      setCheckBox(props.jobExperienceData.working ? true : false);
+      setRoleDesc(props.jobExperienceData.description);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
   if (!props.edit) {
     return (
       <>
@@ -86,12 +118,11 @@ function ExperienceData(props) {
             </div>
             <input
               className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
-              value={from}
               type="month"
+              value={from ? from : 0}
               onChange={(e) => {
                 setFrom(e.target.value);
               }}
-              name="from"
               //   onChange={onChange}
             />
             {!checkBox && (
@@ -101,7 +132,7 @@ function ExperienceData(props) {
                 </div>
                 <input
                   className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
-                  value={to}
+                  value={to ? to : 0}
                   type="month"
                   onChange={(e) => {
                     setTo(e.target.value);
@@ -113,7 +144,8 @@ function ExperienceData(props) {
             )}
             <div className="text-md font-semibold">
               <Checkbox
-                onChange={(e) => {
+                checked={checkBox}
+                onChange={() => {
                   setCheckBox(!checkBox);
                 }}
                 size="small"
@@ -143,42 +175,21 @@ function ExperienceData(props) {
             <div className=" relative  w-full text-[green] text-center text-md ">
               {success && success}
             </div>
-            <div
+
+            <ButtonPrimary
+              disabled={!(company && designation && from && (to || checkBox))}
+              id="operationButton"
               onClick={onClick}
-              className="w-full cursor-pointer hover:bg-color_5 duration-200 bg-color_7 flex items-center p-4 mt-5 text-[white] font-semibold justify-center"
-            >
-              {" "}
-              <AddIcon fontSize="small" sx={{ marginRight: "5px" }} />
-              Add
-            </div>
+              disabledClass="w-full p-4 justify-center  rounded-none bg-[gray] text-md font-semibold flex items-center"
+              className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
+              text={props.edited ? `update experience` : `add experience`}
+            />
           </div>
         </div>
       </>
     );
   }
   if (props.edit) {
-    useEffect(() => {
-      setCompany(props.jobExperienceData.company);
-      setDesignation(props.jobExperienceData.designation);
-      const fromYear = new Date(props.jobExperienceData.from).getFullYear();
-      let fromMonth = new Date(props.jobExperienceData.from).getMonth() + 1;
-      if (fromMonth <= 9) {
-        fromMonth = "0" + fromMonth;
-      }
-      setFrom(`${fromYear}-${fromMonth}`);
-
-      if (!props.jobExperienceData.working) {
-        const toYear = new Date(props.jobExperienceData.to).getFullYear();
-        let toMonth = new Date(props.jobExperienceData.to).getMonth() + 1;
-        if (toMonth <= 9) {
-          toMonth = "0" + toMonth;
-        }
-        setTo(`${toYear}-${toMonth}`);
-      }
-      setCheckBox(props.jobExperienceData.working ? true : false);
-      setRoleDesc(props.jobExperienceData.description);
-    }, []);
-
     return (
       <>
         <div className="flex justify-between flex-col h-full">
@@ -274,14 +285,14 @@ function ExperienceData(props) {
             <div className=" relative w-full text-[green] text-center text-md ">
               {success && success}
             </div>
-
-            <div
+            <ButtonPrimary
+              disabled={!(company && designation && from && (to || checkBox))}
+              id="operationButton"
               onClick={onClick}
-              className="w-full cursor-pointer hover:bg-color_5 duration-200 bg-color_7 flex items-center p-4 mt-5 text-[white] font-semibold justify-center"
-            >
-              <UpgradeIcon fontSize="small" sx={{ marginRight: "5px" }} />
-              update
-            </div>
+              disabledClass="w-full p-4 justify-center  rounded-none bg-color_4 hover:bg-color_4 text-md font-semibold flex items-center"
+              className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
+              text={props.edited ? `update experience` : `add experience`}
+            />
           </div>
         </div>
       </>

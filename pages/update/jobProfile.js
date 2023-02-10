@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import NavbarLogged from "../../components/navbar/NavbarLogged";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import ButtonPrimary from "../../components/atoms/input/ButtonPrimary";
-
 import { authenticate } from "../../components/authentication";
 import Footer from "../../components/footer/Footer";
 import UserInputFields from "../../components/molecules/UserInputFields";
@@ -18,9 +17,13 @@ import Projects from "../../components/molecules/jobProfilePages/Projects";
 import BasicInfo from "../../components/molecules/jobProfilePages/BasicInfo";
 import Education from "../../components/molecules/jobProfilePages/Education";
 import Experience from "../../components/molecules/jobProfilePages/Experience";
-import Certificates from "../../components/molecules/jobProfilePages/Certificates";
-
+import Resume from "../../components/molecules/jobProfilePages/Resume";
 import { NotificationContainer } from "react-notifications";
+import Overview from "../../components/molecules/jobProfilePages/Overview";
+import {
+  errorNotification,
+  successNotification,
+} from "../../components/atoms/AlertMessage";
 
 import {
   Radio,
@@ -34,10 +37,6 @@ import {
 } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "react-datepicker/dist/react-datepicker.css";
-import {
-  errorNotification,
-  successNotification,
-} from "../../components/atoms/AlertMessage";
 
 function JobProfile() {
   const [userBasicData, setUserBasicData] = useState({});
@@ -80,14 +79,19 @@ function JobProfile() {
 
   const onChange = (e) => {
     const { name, value } = e;
-    // console.log(name, value);
+    console.log(name, value);
     setUserBasicData((prevState) => ({
       ...prevState,
       [name]: value,
     }));
   };
+
+  useEffect(() => {
+    console.log(userBasicData);
+  }, [userBasicData]);
+
   const pages = [
-    { pageData: <div>Overview</div>, id: 0 },
+    { pageData: <Overview />, id: 0 },
     {
       pageData: (
         <BasicInfo
@@ -126,7 +130,9 @@ function JobProfile() {
       id: 4,
     },
     {
-      pageData: <Certificates data={userBasicData ? userBasicData : ""} />,
+      pageData: (
+        <Resume onChange={onChange} data={userBasicData ? userBasicData : ""} />
+      ),
       id: 5,
     },
   ];
@@ -141,9 +147,11 @@ function JobProfile() {
         {userBasicData && (
           <div className="h-[100%] ">
             <UpdatePage
+              mediaFiles="resume"
               data={userBasicData}
               onSave="http://localhost:5000/updateJobProfile"
               buttons={[
+                { name: "Overview", id: 0 },
                 { name: "Details", id: 1 },
                 { name: "Experience", id: 2 },
                 { name: "Education", id: 3 },
