@@ -5,7 +5,7 @@ import basicDataReducer from "./getUserBasic/reducer";
 import basicDataUploadReducer from "./uploadDataBasic/reducer";
 import profileListReducer from "./profileList/reducer";
 import jobProfileReducer from "./getJobProfile/reducer";
-
+import profilePictureReducer from "./profilePhoto/reducer";
 const appReducer = combineReducers({
   registerReducer,
   loginUserReducers,
@@ -13,6 +13,7 @@ const appReducer = combineReducers({
   basicDataUploadReducer,
   profileListReducer,
   jobProfileReducer,
+  profilePictureReducer,
 });
 
 const rootReducer = (state, action) => {

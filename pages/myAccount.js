@@ -60,9 +60,6 @@ function MyAccount() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <div className=" w-full">
-        <NavbarLogged />
-      </div>
       <div className="md:mx-20 mx-3 mb-10">
         <div className="text-[20px] font-bold my-2 font-inter text-color_7">
           MY ACCOUNT

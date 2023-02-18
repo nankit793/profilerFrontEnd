@@ -48,7 +48,6 @@ export default function SwipeableTemporaryDrawer(props) {
     >
       <div
         onClick={(e) => {
-          console.log(e.target);
           if (e.target.id === "operationButton") {
             setOpen(false);
           }

@@ -5,13 +5,13 @@ export default async function getOTP(body) {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({
-      userRegistration: userRegistration,
-      isOTP: isOTP,
+      // userRegistration: userRegistration,
+      // isOTP: isOTP,
       userid: userid,
     }),
   };
   const result = await fetch(
-    "http://localhost:5000/user/isUserRegistered",
+    "http://localhost:5000/user/forgotPassword/regenrateOTP",
     requestOptions
   );
   return result;

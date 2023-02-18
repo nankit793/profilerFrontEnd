@@ -3,47 +3,29 @@ import NavbarLogged from "../../components/navbar/NavbarLogged";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import ButtonPrimary from "../../components/atoms/input/ButtonPrimary";
 import { useRouter } from "next/router";
-
-// import UserInputFields onChange={onChange} from "../../components/molecules/UserInputFields onChange={onChange}";
-// dependencies
-// import ModeEditOutlineIcon from "@mui/icons-material/ModeEditOutline";
 import Button from "@mui/material/Button";
 import { authenticate } from "../../components/authentication";
 import Footer from "../../components/footer/Footer";
 import UserInputFields from "../../components/molecules/UserInputFields";
 import * as basicUploadAction from "../../redux-next/uploadDataBasic/action";
 import BasicUpdateInfo from "../../components/molecules/jobProfilePages/BasicUpdateInfo";
+import Image from "next/image";
 // dependencies
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
-import DatePicker from "react-datepicker";
 import { NotificationContainer } from "react-notifications";
 import CircularProgresser from "../../components/atoms/CircularProgresser";
 
-import {
-  Radio,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  InputLabel,
-} from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+import { FormControl, MenuItem, Select } from "@mui/material";
 import "react-datepicker/dist/react-datepicker.css";
 import {
   errorNotification,
   successNotification,
 } from "../../components/atoms/AlertMessage";
-
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import * as getProfileLIst from "../../redux-next/profileList/action";
+import * as getProfilePhoto from "../../redux-next/profilePhoto/action";
 import EditIcon from "@mui/icons-material/Edit";
+import Croppered from "../../components/molecules/subMolecules/Cropper";
 
 function BasicDetails() {
   const router = useRouter();
@@ -52,7 +34,10 @@ function BasicDetails() {
   const [loading, setLoading] = useState(false);
   // const [value, setValue] = useState("");
   const [profilesList, setProfilesList] = useState({});
+  const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+  const [showUploaderMessage, setShowUploaderMessage] = useState(new Date());
+  const [croppedImage, setCroppedImage] = useState(null);
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -64,6 +49,7 @@ function BasicDetails() {
   const userData = useSelector((state) => state.basicDataReducer);
   const userBasicUpload = useSelector((state) => state.basicDataUploadReducer);
   const profileList = useSelector((state) => state.profileListReducer);
+  const profilePic = useSelector((state) => state.profilePictureReducer);
 
   useEffect(() => {
     const auth = async () => {
@@ -83,6 +69,39 @@ function BasicDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => {
+    if (profilePic.isFetched && profilePic.profilePhoto) {
+      setImage(profilePic.profilePhoto.data);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profilePic]);
+
+  const changeImage = async (e) => {
+    const file = e.target.files[0];
+    // setCroppedImage(file);
+    if (file) {
+      const accesstoken = localStorage.getItem("accessToken");
+      const refreshtoken = localStorage.getItem("idToken");
+      const userid = localStorage.getItem("userid");
+      let formData = new FormData();
+      formData.append("image", file);
+      const save = await fetch("http://localhost:5000/profilePhoto/uploads", {
+        method: "POST",
+        body: formData,
+        headers: {
+          accesstoken: accesstoken,
+          refreshtoken: refreshtoken,
+          userid: userid,
+        },
+      });
+      if (save && save.status === 200 && save.statusText === "OK") {
+        // setImage(null);
+        dispatch(getProfilePhoto.getProfilePicture("data"));
+      } else {
+        setShowUploaderMessage("error occured try again");
+      }
+    }
+  };
   useEffect(() => {
     if (
       userData &&
@@ -153,18 +172,32 @@ function BasicDetails() {
   return (
     <>
       <div className="min-h-screen flex flex-col justify-start mb-10 ">
-        <div className="w-full">
-          <NavbarLogged />
-        </div>
+        {/* <Croppered croppedImage={croppedImage} /> */}
         <form onSubmit={handleSubmit}>
-          <div className="bg-white mt-5 drop-shadow-md rounded-xl mx-2 md:mx-7 pb-3">
+          <div className="bg-white mt-3 drop-shadow-md rounded-xl mx-2 md:mx-7 pb-3">
             <div className="px-3 py-5 md:py-10 gap-10 md:flex flex-wrap justify-center items-center">
-              <div className="">
-                <div className="w-[200px] mx-auto h-[200px] bg-color_7 rounded"></div>
+              <div className="flex flex-col items-center ">
+                {image && (
+                  <div className="border border-dashed border-color_7 bg-color_3 max-h-[200px] max-w-[200px] min-h-[200px] min-w-[200px] overflow-hidden rounded-full flex justify-center items-center p-1">
+                    <Image
+                      unoptimized
+                      // fill
+                      src={`data:image/png;base64,` + image}
+                      alt="Picture of the author"
+                      // objectFit="none"
+                      objectPosition="50% bottom"
+                      width="300px"
+                      className=" bg-color_8 rounded-full"
+                      height="300px"
+                    />
+                  </div>
+                )}
+                {/* <div className="w-[200px] mx-auto h-[200px] bg-color_7 rounded"></div> */}
                 <Button
                   variant="text"
                   disableRipple={true}
                   component="label"
+                  onChange={changeImage}
                   className="text-[blue] flex justify-center my-2 text-md lowercase"
                 >
                   change

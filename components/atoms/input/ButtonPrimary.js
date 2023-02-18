@@ -20,7 +20,7 @@ function ButtonPrimary(props) {
           }  `}
           onClick={props.onClick ? props.onClick : null}
           disableFocusRipple={props.disableFocusRipple || true}
-          disabled={props.disabled}
+          disabled={props.disabled == "true" ? true : false}
           type={props.type}
         >
           {props.icon}

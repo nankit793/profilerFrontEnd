@@ -57,9 +57,7 @@ function Index() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <div className=" w-full">
-        <NavbarLogged />
-      </div>
+
       <div className="md:mx-20">
         <div className="text-[25px] mx-8 font-bold my-4 font-inter text-color_2">
           Settings

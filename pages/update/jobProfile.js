@@ -139,11 +139,6 @@ function JobProfile() {
   return (
     <>
       <div className="md:h-screen  flex flex-col justify-start md:overflow-y-hidden">
-        <div className="">
-          <div className="w-full">
-            <NavbarLogged />
-          </div>
-        </div>
         {userBasicData && (
           <div className="h-[100%] ">
             <UpdatePage

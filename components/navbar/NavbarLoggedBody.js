@@ -15,7 +15,9 @@ import {
   successNotification,
   warningNotification,
 } from "../atoms/AlertMessage";
-function NavbarLoggedBody() {
+import Image from "next/image";
+
+function NavbarLoggedBody(props) {
   const [userBasicData, setUserBasicData] = useState({});
   const loginData = useSelector((state) => state.loginUserReducers);
   const registerData = useSelector((state) => state.registerReducer);
@@ -61,7 +63,7 @@ function NavbarLoggedBody() {
     <>
       <div className="w-full h-screen flex flex-col items-center justify-between">
         <div
-          className="flex justify-between items-center border rounded-lg m-2 cursor-pointer gap-5 w-[90%] p-3 bg-color_6"
+          className="flex flex-col justify-between items-center border rounded m-2 cursor-pointer gap-5 w-[90%] p-3  md:bg-color_2 bg-color_8 hover:bg-color_8 duration-200"
           onClick={() => {
             const user = localStorage.getItem("userid") || "";
             if (user) {
@@ -71,16 +73,29 @@ function NavbarLoggedBody() {
             }
           }}
         >
-          <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-color_1 text-color_2">
-            <PersonIcon />
+          <div className="rounded-full min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
+            {props.image ? (
+              <Image
+                unoptimized
+                // fill
+                src={`data:image/jpeg;base64,` + props.image}
+                alt="Picture of the author"
+                objectFit="revert"
+                width={100}
+                className="rounded-full"
+                height={100}
+              />
+            ) : (
+              <PersonIcon fontSize="large" />
+            )}
           </div>
-          <div className="flex flex-col justify-between text-right ">
-            <div className="text-text_1 font-bold text-[16px]  ">
+          <div className="flex flex-col justify-between text-center ">
+            <div className="text-text_1 font-semibold text-[16px]  ">
               {/* {userBasicData.name ? userBasicData.name : ""} */}
-              name here
+              Ankit Negi
             </div>
-            <div className="text-text_1 text-[16px] ">
-              email here
+            <div className="text-text_2 text-sm ">
+              nankit793@gmai.com
               {/* {userBasicData.name && localStorage.getItem("userid")} */}
             </div>
           </div>
@@ -130,7 +145,7 @@ function NavbarLoggedBody() {
                       : ""
                   } `}
                 >
-                  About
+                  Hire
                 </a>
               </Link>
               <Link href="/">
@@ -141,7 +156,7 @@ function NavbarLoggedBody() {
                       : "text-color_black "
                   } `}
                 >
-                  Contact
+                  API
                 </a>
               </Link>
               <Link href="/">
@@ -152,7 +167,7 @@ function NavbarLoggedBody() {
                       : "text-color_black "
                   } `}
                 >
-                  FAQs
+                  About
                 </a>
               </Link>
             </div>

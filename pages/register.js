@@ -53,16 +53,19 @@ function Register() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-      <div className=" h-screen flex flex-col items-center ">
-        <div className="w-full">
-          <Navbar />
+
+      <div className="h-[50vh] w-full bg-color_9 text-center">
+        <div className="text-text_1 font-semibold pt-10 text-[30px]">
+          Sign up / Register
         </div>
-        <div className="w-full flex items-center flex-col h-full justify-center">
-          <Link href="/">
+      </div>
+      <div className="md:mx-0 mx-2">
+        <div className="md:w-max max-w-[500px] md:max-w-full mx-auto p-4 relative  top-[-200px] rounded-md border-color_10 bg-color_2 drop-shadow">
+          {/* <Link href="/">
             <a className="cursor-pointer  mb-10 text-4xl font-semibold text-[black]">
               PROFILER
             </a>
-          </Link>
+          </Link> */}
           <RegisterForm />
         </div>
       </div>

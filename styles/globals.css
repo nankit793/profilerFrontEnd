@@ -9,16 +9,12 @@
     background: url(https://img.freepik.com/free-vector/ocean-sea-waves-with-ripples_1017-30742.jpg?w=2000) no-repeat;
     object-fit: fill;
 }
-body{
+/* body{
     background: #f5fbff;
-    
-/* overflow-y: scroll !important; */
-}
+    } */
 .colorBg{
     background: linear-gradient(to bottom left, #009999 0%, #99ccff 122%);;
 }
-
-
 .textRemove .react-pdf__Page__textContent  {
     display: none;
 }

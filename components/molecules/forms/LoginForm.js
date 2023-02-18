@@ -10,8 +10,6 @@ import {
   warningNotification,
 } from "../../atoms/AlertMessage";
 import CircularProgresser from "../../atoms/CircularProgresser";
-// dependencies
-
 import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
@@ -22,21 +20,11 @@ function LoginForm() {
   const [loading, setLoading] = useState(false);
   const [userid, setUserid] = useState("");
   const [password, setPassword] = useState("");
+  const [showVerification, setShowVerification] = useState(false);
 
   const dispatch = useDispatch();
   const loginData = useSelector((state) => state.loginUserReducers);
   const isRegistered = useSelector((state) => state.registerReducer);
-  useEffect(() => {
-    if (isRegistered && isRegistered.user) {
-      if (isRegistered.isPosted && isRegistered.user.status === 200) {
-        successNotification(
-          "You have registered",
-          "Login with same credentials"
-        );
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isRegistered && isRegistered.user && isRegistered.isPosted]);
 
   useEffect(() => {
     if (
@@ -45,18 +33,35 @@ function LoginForm() {
       loginData.loggedInUser.status === 200
     ) {
       successNotification("Successfully Logged In", "redirecting");
-      router.push("/home");
+      setTimeout(() => {
+        router.push("/home");
+      }, 2000);
     } else if (
       loginData &&
       loginData.loggedInUser &&
       loginData.loggedInUser.status === 400
     ) {
-      warningNotification(
-        loginData.loggedInUser.data.message
-          ? loginData.loggedInUser.data.message
-          : "Enter Valid Username/Password",
-        "Try again"
-      );
+      warningNotification(loginData.loggedInUser.data.message, "Try again");
+      loginData.loggedInUser = {};
+      loginData.isLoggedIn = false;
+    } else if (
+      loginData &&
+      loginData.loggedInUser &&
+      loginData.loggedInUser.data
+    ) {
+      if (!loginData.loggedInUser.data.verification) {
+        warningNotification(
+          loginData.loggedInUser.data.message,
+          "Please verify first"
+        );
+        localStorage.setItem("verifyId", userid);
+        setTimeout(() => {
+          router.push("/verifyUser");
+        }, 2000);
+      } else {
+        warningNotification(loginData.loggedInUser.data.message, "Try again");
+      }
+
       loginData.loggedInUser = {};
       loginData.isLoggedIn = false;
     }
@@ -85,19 +90,21 @@ function LoginForm() {
 
   return (
     <>
-      <div className="md:min-w-[500px] md:w-[40%] w-[90%]">
+      <div className="md:min-w-[500px] mx-auto md:w-[40%] w-[100%]">
         <ThirdPartyAuthentication />
-
         <form onSubmit={onSubmit} method="POST">
-          <div
-            className="w-full text-right text-[blue] underline cursor-pointer pr-2"
-            onClick={() => {
-              router.push("/register");
-            }}
-          >
-            Create Account
+          <div className="mt-2 text-right">
+            {`don't have an account? `}
+            <span
+              className="w-full text-right text-[blue] cursor-pointer pr-2"
+              onClick={() => {
+                router.push("/register");
+              }}
+            >
+              Create Account
+            </span>
           </div>
-          <div className="pt-2">
+          <div className="">
             <InputField
               label="Email"
               type="text"
@@ -116,7 +123,7 @@ function LoginForm() {
             />
           </div>
           <div
-            className="w-full text-right text-[blue] underline  cursor-pointer pr-2"
+            className="w-full text-right text-[blue]  cursor-pointer pr-2"
             onClick={() => {
               router.push("/forgotPassword");
             }}
@@ -126,9 +133,9 @@ function LoginForm() {
           <div className="pt-2">
             <ButtonPrimary
               type="submit"
-              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 font-semibold text-[16px]"
+              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 text-[16px]"
               color="primary"
-              disabled={loading ? true : false}
+              disabled={loading && userid && password ? true : false}
               disableFocusRipple={false}
               text={loading ? <CircularProgresser key="key" /> : "Login"}
             />

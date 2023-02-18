@@ -53,9 +53,6 @@ export default function Home() {
         />
       </Head>
       <div className="h-screen imageBackground overflow-hidden flex flex-col items-center max-h-[800px] justify-between">
-        <div className="w-full">
-          <Navbar />
-        </div>
         <div className="flex flex-col md:flex-row">
           <div className="">
             <span className="whitespace-nowrap text-[25px]">

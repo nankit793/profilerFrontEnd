@@ -16,7 +16,6 @@ import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import CircularProgresser from "../../components/atoms/CircularProgresser";
 
 function Index() {
-  const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [isUserFound, setIsUserFound] = useState(false);
   const [loading, setLoading] = useState(true);
   const [userid, setUserid] = useState("");
@@ -47,24 +46,9 @@ function Index() {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData]);
-
-  useEffect(() => {
-    const token = localStorage.getItem("idToken");
-    const accesstoken = localStorage.getItem("accessToken");
-    const userid = localStorage.getItem("userid");
-    if (token && accesstoken && userid) {
-      setIsLoggedInUser(true);
-    } else {
-      setIsLoggedInUser(false);
-    }
-    const uid = router.query.uid;
-    setUserid(uid);
-  }, [router, router.query]);
   return (
     <>
       <div className="md:h-screen flex flex-col justify-between">
-        {!isLoggedInUser && <Navbar />}
-        {isLoggedInUser && <NavbarLogged />}
         {loading && (
           <div className="w-full h-screen flex justify-center items-center">
             <CircularProgresser />

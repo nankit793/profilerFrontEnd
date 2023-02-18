@@ -5,6 +5,8 @@ import getUserBasicSaga from "./getUserBasic/saga";
 import uploaderBAsicDataSaga from "./uploadDataBasic/saga";
 import getProfilesListSaga from "./profileList/saga";
 import userJobProfile from "./getJobProfile/saga";
+import getProfilePicSaga from "./profilePhoto/saga";
+
 export default function* rootSaga() {
   yield all([
     registerSaga(),
@@ -13,5 +15,6 @@ export default function* rootSaga() {
     uploaderBAsicDataSaga(),
     getProfilesListSaga(),
     userJobProfile(),
+    getProfilePicSaga(),
   ]);
 }

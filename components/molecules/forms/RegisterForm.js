@@ -63,33 +63,46 @@ export default function RegisterForm() {
 
   useEffect(() => {
     if (data && data.user) {
-      if (data.isPosted) {
+      if (data.isPosted && data.user.data && data.user.data.redirectToVerify) {
         setPassword("");
         setConfirmPassword("");
         setUserid("");
-        router.push("/login");
+        successNotification(
+          data.user.data.message,
+          "Redirecting to verification"
+        );
+        localStorage.setItem("verifyId", userid);
+        setTimeout(() => {
+          router.push("/verifyUser");
+        }, 2000);
       } else if (data.user.status === 409) {
         setLoading(false);
         warningNotification(data.user.data.message, "Enter valid details");
       }
+      data.user = {};
+      data.isPosted = false;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [data && data.user]);
 
   return (
     <>
-      <div className=" md:min-w-[500px] md:w-[40%] w-[90%]">
+      <div className=" md:min-w-[500px] md:w-[40%] ">
         <ThirdPartyAuthentication />
         <form onSubmit={onSubmit} method="POST">
-          <div
-            className="w-full text-right text-[blue] underline  cursor-pointer pr-2"
-            onClick={() => {
-              router.push("/login");
-            }}
-          >
-            Login
+          <div className="mt-2 text-mds text-right">
+            already have account?
+            <span
+              className="w-full text-right text-[blue]  cursor-pointer pr-2"
+              onClick={() => {
+                router.push("/login");
+              }}
+            >
+              {" "}
+              Login{" "}
+            </span>
           </div>
-          <div className="pt-2">
+          <div className="">
             <InputField
               label="Email"
               onChange={onInputChangeHandler}
@@ -119,14 +132,13 @@ export default function RegisterForm() {
           <div className="pt-2">
             <ButtomPrimary
               type="submit"
-              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 font-semibold text-[16px]"
+              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 rounded-md text-[16px]"
               color="primary"
               text={loading ? [<CircularProgresser key="key" />] : "Register"}
               disableFocusRipple={false}
             />
           </div>
         </form>
-
         <NotificationContainer />
       </div>
     </>

@@ -61,10 +61,10 @@ function InputField(props) {
             />
           </div>
         ) : (
-          <div className="w-full bg-color_2 subpixel-antialiased ">
+          <div className="w-full bg-color_2 text-color_9">
             <TextField
               id=""
-              className=""
+              className="font-semibold"
               value={props.value}
               required={props.required || false}
               type={props.type ? props.type : "text"}

@@ -37,12 +37,6 @@ function Resume(props) {
       let finalSave = await save.json();
       setShowLoader(false);
       if (save && save.status === 200 && save.statusText === "OK") {
-        console.log(
-          finalSave &&
-            finalSave.media &&
-            finalSave.media.resume &&
-            finalSave.media.autoResume
-        );
         if (finalSave && finalSave.media && finalSave.media.resume) {
           if (finalSave.media.autoResume) {
             setShowTab(true);

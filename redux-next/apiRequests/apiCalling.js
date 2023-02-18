@@ -35,7 +35,8 @@ class apiCalling {
       return axios.get(params.url, {
         headers: {
           userid: params.body.userid,
-          requirement: params.body.requirement ? params.body.requirement : null
+          requirement: params.body.requirement ? params.body.requirement : null,
+          responseType: params.responseType,
         },
       });
     }

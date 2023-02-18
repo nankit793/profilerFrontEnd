@@ -2,12 +2,12 @@ import React from "react";
 
 function ThirdPartyAuthentication() {
   return (
-    <div className="flex w-full justify-between">
-      <div className=" w-full  text-center p-2 py-3 md:py-4  bg-color_1  font-semibold cursor-pointer text-[black] border-black rounded-sm">
-        Login with Google
+    <div className=" md:flex-row flex-col flex w-full justify-end mb-2 gap-4 ">
+      <div className="px-4 text-center p-2 font-semibold cursor-pointer text-text_1 border rounded-3xl border-maroon">
+        login with Google
       </div>
-      <div className=" w-full ml-2 text-center py-3 p-2 md:py-4 bg-color_1 font-semibold cursor-pointer text-[black]  border-black rounded-sm">
-        Login with GitHub
+      <div className="px-4 text-center p-2 font-semibold cursor-pointer text-text_1 border rounded-3xl border-color_9">
+        login with Linkdin
       </div>
     </div>
   );

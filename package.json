@@ -31,6 +31,8 @@
     "react-custom-scrollbars": "^4.2.1",
     "react-datepicker": "^4.8.0",
     "react-dom": "18.2.0",
+    "react-easy-crop": "^4.6.3",
+    "react-image-crop": "^10.0.9",
     "react-notifications": "^1.7.4",
     "react-pdf": "^6.2.2",
     "react-redux": "^8.0.4",
