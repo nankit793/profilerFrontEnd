@@ -26,7 +26,7 @@ module.exports = {
         black: "black",
         color_6: "#f0f5f5",
         text_1: "#36454f",
-        text_2: "#808080",
+        text_2: "#979797",
       },
     },
   },

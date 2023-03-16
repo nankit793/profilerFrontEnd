@@ -9,17 +9,29 @@ import store from "../redux-next/store";
 import NavbarLogged from "../components/navbar/NavbarLogged";
 import Navbar from "../components/navbar/Navbar";
 import { useRouter } from "next/router";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import * as getFollowingList from "../redux-next/followerList/actions";
+import * as getBookMarksList from "../redux-next/getBookmarks/actions";
+
+import LinearProgress from "@mui/material/LinearProgress";
 
 function MyApp({ Component, pageProps }) {
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
+  const [progress, setProgress] = useState(20);
   const router = useRouter();
+  const dispatch = useDispatch();
+  const followingList = useSelector((state) => state.followingListReducer);
 
-  // const store = createStore(reducer);
-  // const token = localStorage.getItem("idToken")
   useEffect(() => {
-    const token = localStorage && localStorage.getItem("idToken");
-    const accesstoken = localStorage && localStorage.getItem("accessToken");
+    const token = localStorage.getItem("idToken");
+    const accesstoken = localStorage.getItem("accessToken");
     const userid = localStorage.getItem("userid");
+
+    if (token && accesstoken && userid && router.query.uid === userid) {
+      dispatch(getFollowingList.getFollowingList(""));
+      dispatch(getBookMarksList.getUserBookmarks("data"));
+    }
     if (token && accesstoken && userid) {
       setIsLoggedInUser(true);
     } else {
@@ -27,12 +39,24 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router]);
 
+  useEffect(() => {
+    dispatch(getBookMarksList.getUserBookmarks("data"));
+    dispatch(getFollowingList.getFollowingList(""));
+  }, []);
+
   return (
     <>
       <div className="">
-        <div className="w-full z-10">
+        <div className="w-full z-20">
           {!isLoggedInUser && <Navbar />}
           {isLoggedInUser && <NavbarLogged />}
+          <div className=" top-0 ">
+            {/* <LinearProgress
+              className="z-50"
+              variant="indeterminate"
+              value={progress}
+            /> */}
+          </div>
         </div>
         <Component {...pageProps} />
       </div>

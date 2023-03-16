@@ -2,11 +2,11 @@ import React from "react";
 import { CircularProgress } from "@mui/material";
 import { Height } from "@mui/icons-material";
 
-function CircularProgresser() {
+function CircularProgresser(props) {
   return (
     <>
       <div className="flex justify-center h-min w-min items-center">
-        <CircularProgress />
+        <CircularProgress size={props.size ? props.size : 40} />
       </div>
     </>
   );

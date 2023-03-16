@@ -39,7 +39,7 @@ function Register() {
   });
 
   return (
-    <>
+    <div>
       <Head>
         <title>Profiler - Get yourself registered for Free</title>
         <meta
@@ -53,23 +53,24 @@ function Register() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-
-      <div className="h-[50vh] w-full bg-color_9 text-center">
-        <div className="text-text_1 font-semibold pt-10 text-[30px]">
-          Sign up / Register
+      <div className="pt-12">
+        <div className="h-[50vh] w-full bg-color_9 text-center">
+          <div className="text-text_1 font-semibold pt-10 text-[30px]">
+            Sign up / Register
+          </div>
         </div>
-      </div>
-      <div className="md:mx-0 mx-2">
-        <div className="md:w-max max-w-[500px] md:max-w-full mx-auto p-4 relative  top-[-200px] rounded-md border-color_10 bg-color_2 drop-shadow">
-          {/* <Link href="/">
+        <div className="md:mx-0 mx-2">
+          <div className="md:w-max max-w-[500px] md:max-w-full mx-auto p-4 relative  top-[-200px] rounded-md border-color_10 bg-color_2 drop-shadow">
+            {/* <Link href="/">
             <a className="cursor-pointer  mb-10 text-4xl font-semibold text-[black]">
               PROFILER
             </a>
           </Link> */}
-          <RegisterForm />
+            <RegisterForm />
+          </div>
         </div>
       </div>
-    </>
+    </div>
   );
 }
 export default Register;

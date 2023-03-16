@@ -144,6 +144,7 @@ function JobProfile() {
             <UpdatePage
               mediaFiles="resume"
               data={userBasicData}
+              request="PATCH"
               onSave="http://localhost:5000/updateJobProfile"
               buttons={[
                 { name: "Overview", id: 0 },

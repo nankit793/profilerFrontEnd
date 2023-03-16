@@ -86,7 +86,7 @@ function VerifyUser() {
   };
   return (
     <>
-      <div className="h-[50vh] w-full bg-color_9 text-center">
+      <div className="pt-12 h-[50vh] w-full bg-color_9 text-center">
         <div className="text-text_1 font-semibold pt-10 text-[30px]">
           verify yourself
         </div>

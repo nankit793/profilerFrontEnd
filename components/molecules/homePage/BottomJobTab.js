@@ -28,7 +28,7 @@ function BottomJobTab(props) {
   return (
     <>
       {userBasicData && userBasicData.generated ? (
-        <div className="rounded-xl border bg-color_2 rounded p-3 ">
+        <div className="rounded ">
           <div className="flex justify-between items-center  pr-3">
             <div className="text-text_1 text-[20px] font-semibold">
               Portfolio
@@ -67,23 +67,24 @@ function BottomJobTab(props) {
           </div>
           <div className="my-2 text-text_2">
             {userBasicData && userBasicData.about && userBasicData.about}
-            {userBasicData && userBasicData.about && userBasicData.about}
-            {userBasicData && userBasicData.about && userBasicData.about}
           </div>
-          <div className="my-2 text-text_2 flex gap-2 flex-wrap">
+          <div className="my-3 text-text_2 flex gap-2 flex-wrap">
             {userBasicData &&
               userBasicData.skills &&
               userBasicData.skills.map((item) => {
                 return (
                   <>
-                    <div className=" border rounded-full text-text_2 bg-color_2 px-3 py-[2px]">
+                    <div className=" border rounded-full text-text_2 bg-color_2 px-5 py-[3px]">
                       {item}
                     </div>
                   </>
                 );
               })}
           </div>
-          <div className="flex justify-start gap-3 flex-wrap mt-5">
+          <div className="  rounded-md text-[blue] text-sm cursor-pointer w-min whitespace-nowrap">
+            View Resume
+          </div>
+          <div className="flex justify-start gap-3 flex-wrap mt-2">
             <div className="text-text_1 font-semibold border-r flex justify-center items-center gap-2 pr-2">
               <RemoveRedEyeIcon fontSize="small" />
               <span className="font-normal text-text_2"> 1.2K </span>

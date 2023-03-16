@@ -99,7 +99,7 @@ function ForgotPassword() {
   };
   return (
     <>
-      <div className="h-screen flex flex-col items-center max-h-[1000px]">
+      <div className="h-screen flex flex-col items-center max-h-[1000px] pt-14">
         <div className="h-[50vh] w-full bg-color_9 text-center">
           <div className="text-color_7  pt-10 text-[30px]">
             Forgot Password?

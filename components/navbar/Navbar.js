@@ -18,7 +18,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="md:block hidden py-2 bg-color_7 w-full ">
+      <div className="md:block hidden py-2 bg-color_7 w-full absolute top-0 z-20">
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">PROFILER</div>
           <div className="flex items-center">
@@ -62,7 +62,7 @@ function Navbar() {
           </div>
         </div>
       </div>
-      <div className=" w-full flex justify-between items-center md:hidden block py-5  bg-color_7 w-full">
+      <div className=" w-full flex justify-between items-center md:hidden block py-4  bg-color_7 w-full absolute top-0 z-20 ">
         <div className="ml-2  w-min text-white font-semibold">PROFILER</div>
         <div className="flex items-center">
           <SwipeableTemporaryDrawer

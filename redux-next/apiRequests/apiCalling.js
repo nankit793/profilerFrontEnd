@@ -34,9 +34,24 @@ class apiCalling {
     if (params.method === "get") {
       return axios.get(params.url, {
         headers: {
-          userid: params.body.userid,
-          requirement: params.body.requirement ? params.body.requirement : null,
+          userid: params.body && params.body.userid ? params.body.userid : "",
+          requirement:
+            params.body && params.body.requirement
+              ? params.body.requirement
+              : null,
           responseType: params.responseType,
+        },
+      });
+    }
+  }
+
+  async makeLoggedGetRequest(params) {
+    if (params.method === "get") {
+      return axios.get(params.url, {
+        headers: {
+          userid: localStorage.getItem("userid"),
+          accesstoken: localStorage.getItem("accessToken"),
+          refreshtoken: localStorage.getItem("idToken"),
         },
       });
     }

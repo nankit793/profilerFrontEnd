@@ -1,75 +1,93 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useRouter } from "next/router";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
-import Navbar from "../../components/navbar/Navbar";
-import NavbarLogged from "../../components/navbar/NavbarLogged";
 import { useDispatch } from "react-redux";
 import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import { logout } from "../../components/logout";
 import Footer from "../../components/footer/Footer";
-import verifyId from "../../redux-next/otp";
-import { errorNotification } from "../../components/atoms/AlertMessage";
+import {
+  errorNotification,
+  successNotification,
+} from "../../components/atoms/AlertMessage";
 import ProfileListDesktop from "../../components/molecules/ProfileListDesktop";
 // dependencies
-import MaleIcon from "@mui/icons-material/Male";
-import FemaleIcon from "@mui/icons-material/Female";
-import TransgenderIcon from "@mui/icons-material/Transgender";
 import { Avatar } from "@mui/material";
-import ReactCountryFlag from "react-country-flag";
 import CircularProgresser from "../../components/atoms/CircularProgresser";
-import UserField from "../../components/molecules/UserField";
 import Image from "next/image";
 import PersonIcon from "@mui/icons-material/Person";
 import BottomNav from "../../components/molecules/homePage/BottomNav";
-
 import { Scrollbars } from "react-custom-scrollbars";
 // import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
-import LocalPhoneIcon from "@mui/icons-material/LocalPhone";
-import EmailIcon from "@mui/icons-material/Email";
-import EditIcon from "@mui/icons-material/Edit";
-import ShareIcon from "@mui/icons-material/Share";
-import Accordion from "@mui/material/Accordion";
-import AccordionSummary from "@mui/material/AccordionSummary";
-import AccordionDetails from "@mui/material/AccordionDetails";
-import Typography from "@mui/material/Typography";
-import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import * as getProfilePhoto from "../../redux-next/profilePhoto/action";
-
+import * as getFollowingList from "../../redux-next/followerList/actions";
+import axios from "axios";
+import FollowersDetails from "../../components/molecules/subMolecules/FollowersDetails";
+import SelfAccountFollow from "../../components/molecules/subMolecules/SelfAccountFollow";
+import { initialState } from "../../redux-next/followerList/reducer";
 function Uid(props) {
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
   const [isUserFound, setIsUserFound] = useState(false);
   const [userid, setUserid] = useState("");
   const [userBasicData, setUserBasicData] = useState({});
   const [profileLoading, setProfileLoading] = useState(true);
+  const [followersCount, setFollowersCount] = useState(0);
+  const [followingCount, setFollowingCount] = useState(0);
   const [image, setImage] = useState(null);
+  const [followingListState, setFollowingListState] = useState([]);
+  const [blogsCount, setBlogsCount] = useState(0);
 
   const router = useRouter();
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.basicDataReducer);
   const profilePic = useSelector((state) => state.profilePictureReducer);
+  const followingList = useSelector((state) => state.followingListReducer);
 
   useEffect(() => {
-    const token = localStorage.getItem("idToken");
-    const accesstoken = localStorage.getItem("accessToken");
-    const userid = localStorage.getItem("userid");
-    if (token && accesstoken && userid) {
-      setIsLoggedInUser(true);
-    } else {
-      setIsLoggedInUser(false);
-    }
+    console.log("entered in uid");
     const uid = router.query.uid;
     setUserid(uid);
-  }, [router, router.query]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.uid]);
+
+  useEffect(() => {
+    if (
+      followingList &&
+      followingList.isFecthed &&
+      followingList.userFollowingList
+    ) {
+      setFollowingListState(followingList.userFollowingList);
+    }
+  }, [
+    followingList && followingList.isFecthed && followingList.userFollowingList,
+  ]);
 
   useEffect(() => {
     const effectHandler = async () => {
       if (userid) {
         dispatch(getBasicDataActions.getBasicData({ userid: userid }));
       }
-      if (!profilePic.isFetched) {
-        dispatch(getProfilePhoto.getProfilePicture(""));
+      if (userid && userid === localStorage.getItem("userid")) {
+        if (profilePic.isFetched && profilePic.profilePhoto) {
+          setImage(profilePic.profilePhoto.data);
+        } else {
+          setImage(null);
+        }
+      } else if (userid && userid !== localStorage.getItem("userid")) {
+        axios
+          .get(`http://localhost:5000/profilePhoto?userid=${userid}`)
+          .then(function (response) {
+            if (response.status === 200) {
+              setImage(response.data);
+            } else {
+              setImage(null);
+            }
+          })
+          .catch(function (error) {
+            setImage(null);
+          });
       }
     };
     effectHandler();
@@ -83,7 +101,10 @@ function Uid(props) {
         userData.userData.data.registered
       ) {
         setUserBasicData(userData.userData.data.newData);
+        setFollowersCount(userData.userData.data.followersCount);
+        setFollowingCount(userData.userData.data.followingCount);
         setIsUserFound(true);
+        setBlogsCount(userData.userData.data.blogsCount);
       } else if (!userData.userData.data.registered) {
         setIsUserFound(false);
       }
@@ -92,12 +113,85 @@ function Uid(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
 
-  useEffect(() => {
-    if (profilePic.isFetched && profilePic.profilePhoto) {
-      setImage(profilePic.profilePhoto.data);
+  const follow = () => {
+    if (
+      userBasicData._id &&
+      localStorage.getItem("accessToken") &&
+      localStorage.getItem("idToken") &&
+      localStorage.getItem("userid")
+    ) {
+      const headers = {
+        accesstoken: localStorage.getItem("accessToken"),
+        refreshtoken: localStorage.getItem("idToken"),
+        userid: localStorage.getItem("userid"),
+      };
+      let id = userBasicData._id;
+      axios
+        .post(`http://localhost:5000/follow?id=${id}`, headers, {
+          headers: {
+            accesstoken: localStorage.getItem("accessToken"),
+            refreshtoken: localStorage.getItem("idToken"),
+            userid: localStorage.getItem("userid"),
+          },
+        })
+        .then(function (response) {
+          if (response.status === 200) {
+            const newArr = followingListState.concat(id);
+            dispatch(getFollowingList.updateFollowingList(newArr));
+            setFollowingListState(newArr);
+            setFollowersCount(followersCount + 1);
+          }
+        })
+        .catch(function (error) {
+          console.log(error.message);
+          // setImage(null);
+        });
+    } else {
+      errorNotification("can't follow now", "try again later");
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profilePic && profilePic.profilePhoto && profilePic.isFetched]);
+  };
+  const unfollow = () => {
+    if (
+      userBasicData._id &&
+      localStorage.getItem("accessToken") &&
+      localStorage.getItem("idToken") &&
+      localStorage.getItem("userid")
+    ) {
+      const headers = {
+        accesstoken: localStorage.getItem("accessToken"),
+        refreshtoken: localStorage.getItem("idToken"),
+        userid: localStorage.getItem("userid"),
+      };
+      let id = userBasicData._id;
+      axios
+        .post(`http://localhost:5000/unfollow?id=${id}`, headers, {
+          headers: {
+            accesstoken: localStorage.getItem("accessToken"),
+            refreshtoken: localStorage.getItem("idToken"),
+            userid: localStorage.getItem("userid"),
+          },
+        })
+        .then(function (response) {
+          if (response.status === 200) {
+            let a = [];
+            for (let index = 0; index < followingListState.length; index++) {
+              const element = followingListState[index];
+              if (element !== id) {
+                a.push(element);
+              }
+            }
+            setFollowersCount(followersCount - 1);
+            setFollowingListState(a);
+            dispatch(getFollowingList.updateFollowingList(a));
+          }
+        })
+        .catch(function (error) {
+          console.log(error.message);
+        });
+    } else {
+      errorNotification("can't follow now", "try again later");
+    }
+  };
 
   return (
     <>
@@ -111,11 +205,6 @@ function Uid(props) {
           content="With imProfile, you can easily create a professional portfolio and express your thoughts, ideas, and insights through its built-in blogging feature"
         ></meta>
         <link rel="canonical" href="/" />
-
-        {/* <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
-        /> */}
       </Head>
       <div className="max-w-[1500px] h-[100%]">
         {profileLoading && (
@@ -124,60 +213,59 @@ function Uid(props) {
           </div>
         )}
         {!profileLoading && isUserFound && (
-          <div className="md:px-5 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3">
-            <div className="h-min md:w-[35%] w-[100%] scrollbar-hide overflow-y-auto bg-color_2 rounded-t-xl  flex flex-col justify-start items-center">
+          <div className="md:px-5 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3 pt-14">
+            <div className="h-min md:min-w-[300px] md:w-[30%] w-[100%]  overflow-y-auto bg-color_2 rounded-t-xl  flex flex-col justify-start items-center">
               <div className="my-3 rounded-full drop-shadow h-[150px] w-[150px] overflow-hidden flex justify-center items-center bg-color_8 text-color_2">
-                {image ? (
-                  <Image
-                    unoptimized
-                    // fill
-                    src={`data:image/jpeg;base64,` + image}
-                    alt="Picture of the author"
-                    // objectFit="revert"
-                    width={150}
-                    className="rounded-full"
-                    height={150}
-                  />
+                <Image
+                  unoptimized
+                  // fill
+                  src={`http://localhost:5000/profilePhoto?userid=${userBasicData.userid}`}
+                  alt="Picture of the author"
+                  // objectFit="revert"
+                  width={150}
+                  className="rounded-full"
+                  height={150}
+                />
+                {/* {image ? (
                 ) : (
                   <PersonIcon fontSize="large" sx={{ fontSize: "40px" }} />
-                )}
+                )} */}
               </div>
               <div className=" w-full text-center px-4 ">
-                <div className="text-text_1 capitalize text-xl font-semibold">
+                <div className="text-text_1 capitalize text-xl gap-2  flex justify-center items-end">
                   {userBasicData.name ? userBasicData.name : ""}
-                </div>
-                <div className="text-text_2 text-md text-[16px] ">
-                  <EmailIcon
-                    // size="small"
-                    sx={{ fontSize: 17, marginRight: "5px" }}
-                  />
-                  {userBasicData.userid ? userBasicData.userid : ""}
+                  {/* <div className="w-min text-[13px] text-text_2  whitespace-nowrap w-full ">
+                    flag, country, gender, age
+                  </div> */}
                 </div>
 
                 {userBasicData.userid === localStorage.getItem("userid") ? (
                   <>
-                    <div className="flex gap-2 items-center mt-2">
-                      <div
-                        className="w-full duration-200 text-text_1 text-[16px] font-semibold rounded-3xl flex items-center justify-center text-text_1 cursor-pointer p-2 bg-color_2 border border-color_9"
-                        onClick={() => {
-                          router.push("/update/basicDetails");
-                        }}
-                      >
-                        {/* <EditIcon sx={{ fontSize: 18, marginRight: "5px" }} /> */}
-                        edit profile
-                      </div>
-                      <div className="cursor-pointer text-text_1">
-                        <ShareIcon />
-                      </div>
+                    <div className="">
+                      <SelfAccountFollow
+                        followersCount={followersCount}
+                        blogsCount={blogsCount}
+                        // followingCount={ }
+                      />
                     </div>
                   </>
                 ) : (
-                  ""
+                  <>
+                    <div className="flex gap-2 items-center mt-2 justify-center">
+                      <FollowersDetails
+                        followersCount={followersCount}
+                        followingCount={followingCount}
+                        blogsCount={blogsCount}
+                        id={userBasicData._id}
+                        currentUserFollowingList={followingListState}
+                        follow={follow}
+                        unfollow={unfollow}
+                      />
+                    </div>
+                  </>
                 )}
               </div>
-              <div className=" text-text_2 py-2 w-min text-[16px]  whitespace-nowrap w-full ">
-                flag, country, gender, age
-              </div>
+
               <div className="w-full px-3">
                 <div className="w-full my-2  py-1 px-4 rounded ">
                   {!userBasicData.facebook &&
@@ -192,7 +280,7 @@ function Uid(props) {
                   <div className=" flex-wrap flex gap-4">
                     {userBasicData.facebook ? (
                       <div
-                        className="mx-auto p-1 hover:bg-color_1 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer"
                         onClick={() => {
                           window.open(userBasicData.facebook, "_blank");
                         }}
@@ -208,7 +296,7 @@ function Uid(props) {
                     )}
                     {userBasicData.instagram ? (
                       <div
-                        className="mx-auto p-1 hover:bg-color_1 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer"
                         onClick={() => {
                           window.open(userBasicData.instagram, "_blank");
                         }}
@@ -224,7 +312,7 @@ function Uid(props) {
                     )}
                     {userBasicData.youtube ? (
                       <div
-                        className="mx-auto p-1 hover:bg-color_1 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer"
                         onClick={() => {
                           window.open(userBasicData.youtube, "_blank");
                         }}
@@ -240,7 +328,7 @@ function Uid(props) {
                     )}
                     {userBasicData.github ? (
                       <div
-                        className="mx-auto p-1 hover:bg-color_1 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer"
                         onClick={() => {
                           window.open(userBasicData.github, "_blank");
                         }}
@@ -256,7 +344,7 @@ function Uid(props) {
                     )}
                     {userBasicData.linkdn ? (
                       <div
-                        className="mx-auto p-1 hover:bg-color_1 flex justify-center items-center rounded-full duration-300 cursor-pointer"
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer"
                         onClick={() => {
                           window.open(userBasicData.linkdn, "_blank");
                         }}
@@ -273,18 +361,20 @@ function Uid(props) {
                   </div>
                 </div>
               </div>
-            </div>
-            {/* side panel end  */}
-            <div className="h-auto md:mt-0 mt-5 w-full flex rounded-t-xl border border-color_9 flex-col py-3 px-2 justify-start gap-5 h-full ">
-              <div className="p-3  rounded  text-text_2 text-md">
-                {userBasicData && userBasicData.slogan && userBasicData.slogan}
-                {userBasicData && userBasicData.slogan && userBasicData.slogan}
+              <div className="p-3  rounded  text-text_2 text-center text-md">
                 {userBasicData && userBasicData.slogan && userBasicData.slogan}
               </div>
+            </div>
+            {/* side panel end  */}
+            <div className=" md:mt-0 mt-4 pb-2 w-full flex rounded-md  bg-color_8 flex-col  justify-start gap-1 md:w-[80%] w-full">
               <BottomNav
+                data={userBasicData}
+                id={userBasicData._id}
+                setBlogsCount={setBlogsCount}
                 buttons={[
-                  { name: "Portfolio", id: 0 },
                   { name: "Blogs", id: 1 },
+                  { name: "Portfolio", id: 0 },
+                  { name: "Bookmarks", id: 2, loginRequired: true },
                 ]}
               />
             </div>

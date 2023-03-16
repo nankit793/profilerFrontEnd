@@ -1,9 +1,21 @@
 import React, { useState, useEffect } from "react";
 import BlogsTab from "./BlogsTab";
 import BottomJobTab from "./BottomJobTab";
+import Bookmarks from "../../Bookmarks";
+import axios from "axios";
+import { useDispatch } from "react-redux";
+import { useRouter } from "next/router";
+import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
 function BottomNav(props) {
   const [selectedPage, setSelectedPage] = useState();
   const [pageData, setPageData] = useState();
+  const dispatch = useDispatch();
+  const router = useRouter();
+
+  useEffect(() => {
+    dispatch(getAuthorBlogs.getAuthorBlogs(props.id));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [props.id, router.query.uid]);
 
   useEffect(() => {
     if (localStorage.getItem("bottomPageNav")) {
@@ -26,8 +38,12 @@ function BottomNav(props) {
       id: 0,
     },
     {
-      pageData: <BlogsTab />,
+      pageData: <BlogsTab setBlogsCount={props.setBlogsCount} />,
       id: 1,
+    },
+    {
+      pageData: <Bookmarks data={props.id} />,
+      id: 2,
     },
   ];
   const select = (id) => {
@@ -40,7 +56,7 @@ function BottomNav(props) {
   };
   return (
     <>
-      <div className="w-full bg-color_8 drop-shadow-sm rounded flex justify-start">
+      <div className="w-full bg-color_8 rounded-t flex justify-start border-b  ">
         {props.buttons.map((button, index) => {
           return (
             <div
@@ -50,10 +66,9 @@ function BottomNav(props) {
               }}
               className={` ${
                 selectedPage && selectedPage.id === button.id
-                  ? "border-b-color_1 border-b-[3px] bg-color_2 text-text_1 font-semibold"
-                  : "bg-color_6 border text-color_7"
+                  ? "border-b-color_4 border-b-[3px] bg-color_8 text-color_4"
+                  : "bg-color_8  text-color_7"
               } 
-              ${button.id === 0 ? "rounded-l" : ""}
                py-3 duration-100  px-5 cursor-pointer `}
             >
               {button.name}
@@ -61,7 +76,7 @@ function BottomNav(props) {
           );
         })}
       </div>
-      <div className="slideUp">
+      <div className="slideUp px-1 md:px-3">
         {selectedPage && selectedPage.pageData && selectedPage.pageData}
       </div>
     </>

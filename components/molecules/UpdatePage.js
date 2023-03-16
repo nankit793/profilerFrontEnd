@@ -65,17 +65,22 @@ function UpdatePage(props) {
     const refreshtoken = localStorage.getItem("idToken");
     const userid = localStorage.getItem("userid");
     try {
+      let formData = new FormData();
+      if (props.image && props.image.file) {
+        formData.append("image", props.image.file);
+      }
+      formData.append("data", JSON.stringify(props.data));
       const save = await fetch(props.onSave, {
-        method: "PATCH",
-        body: JSON.stringify({
-          headers: {
-            accesstoken: accesstoken,
-            refreshtoken: refreshtoken,
-            userid: userid,
-          },
-          jobProfile: props.data,
-        }),
-        headers: { "Content-Type": "application/json" },
+        method: props.request,
+        body: formData,
+        // mode: "no-cors",
+        headers: {
+          // "Content-Type": "multipart/form-data",
+          accesstoken: accesstoken,
+          refreshtoken: refreshtoken,
+          userid: userid,
+        },
+        // body: props.data,
       });
       const finalSave = await save.json();
       if (save && save.status === 200 && save.statusText === "OK") {
@@ -84,12 +89,13 @@ function UpdatePage(props) {
         errorNotification("chages not saved", "Error");
       }
     } catch (error) {
+      console.log(error.message);
       errorNotification("chages not saved", "Error");
     }
   };
   return (
     <>
-      <div className="z-10 fixed  flex-wrap bottom-0 right-0 p-4 flex justify-end gap-2 w-fit px-5 ">
+      <div className="z-10 fixed flex-wrap bottom-0 right-0 p-4 flex justify-end gap-2 w-fit px-5 ">
         <div className="py-1 flex justify-center items-center drop-shadow-lg bg-color_2  rounded text-[16px] text-color_7 font-bold px-5 cursor-pointer">
           {selectedPage && selectedPage.id !== null && maxPages ? (
             <div>
@@ -117,12 +123,16 @@ function UpdatePage(props) {
           {/* Next */}
           <NavigateNextIcon />
         </div>
-        <div
-          onClick={onSave}
-          className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
-        >
-          Save
-        </div>
+        {!(selectedPage && selectedPage.displayOption === "false") ? (
+          <div
+            onClick={onSave}
+            className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
+          >
+            Save
+          </div>
+        ) : (
+          ""
+        )}
       </div>
 
       <div className="md:flex justify-start h-full bg-color_2">

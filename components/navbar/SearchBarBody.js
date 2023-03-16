@@ -23,17 +23,17 @@ function SearchBarBody() {
     <>
       <div className="w-[100%] h-full  text-center px-2">
         <div className="mt-2">
-          <TextField
-            className="focus:outline-none"
+          <input
+            className="focus:outline-none border py-3 px-1 border-dashed rounded-md w-full"
             onChange={(e) => {
               search(e);
             }}
-            id="standard-search"
+            // id="standard-search"
             placeholder="Search Username/User Id"
             autoComplete="off"
             type="text"
-            fullWidth={true}
-            variant="outlined"
+            // fullWidth={true}
+            // variant="outlined"
           />
         </div>
         <div className="">
@@ -46,7 +46,8 @@ function SearchBarBody() {
                   onClick={() => {
                     router.push(`/home/${user.id}`);
                   }}
-                  className="w-full min-h-[60px] cursor-pointer flex justify-start  align-center  hover:bg-color_3  border rounded  my-2">
+                  className="w-full min-h-[60px] cursor-pointer flex justify-start  align-center  hover:bg-color_3  border rounded  my-2"
+                >
                   <div className="w-[40%]">
                     <div className="w-[50px] h-full bg-color_5 rounded-l"></div>
                   </div>
@@ -54,7 +55,9 @@ function SearchBarBody() {
                     <div className=" font-semibold text-text_1">
                       {user.name}
                     </div>
-                    <div className="text-text_2 overflow-x-auto scrollbar-hide ">{user.id}</div>
+                    <div className="text-text_2 overflow-x-auto scrollbar-hide ">
+                      {user.id}
+                    </div>
                   </div>
                 </div>
               );

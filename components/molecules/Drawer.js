@@ -41,6 +41,7 @@ export default function SwipeableTemporaryDrawer(props) {
       sx={{
         width: anchor === "top" || anchor === "bottom" ? "auto" : 250,
         height: "100%",
+        // background: "#f0f5f5",
       }}
       role="presentation"
       // onClick={toggleDrawer(anchor, false)}
@@ -71,7 +72,6 @@ export default function SwipeableTemporaryDrawer(props) {
     <ClickAwayListener
       onClickAway={(e) => {
         if (open) {
-          console.log("field");
           setOpen(true);
           toggleDrawer(anchor, true);
         }

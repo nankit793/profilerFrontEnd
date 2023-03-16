@@ -18,6 +18,7 @@ import CircularProgresser from "../../components/atoms/CircularProgresser";
 
 import { FormControl, MenuItem, Select } from "@mui/material";
 import "react-datepicker/dist/react-datepicker.css";
+import PersonIcon from "@mui/icons-material/Person";
 import {
   errorNotification,
   successNotification,
@@ -171,13 +172,13 @@ function BasicDetails() {
 
   return (
     <>
-      <div className="min-h-screen flex flex-col justify-start mb-10 ">
+      <div className="pt-14 min-h-screen flex flex-col justify-start mb-10 ">
         {/* <Croppered croppedImage={croppedImage} /> */}
         <form onSubmit={handleSubmit}>
           <div className="bg-white mt-3 drop-shadow-md rounded-xl mx-2 md:mx-7 pb-3">
             <div className="px-3 py-5 md:py-10 gap-10 md:flex flex-wrap justify-center items-center">
               <div className="flex flex-col items-center ">
-                {image && (
+                {image ? (
                   <div className="border border-dashed border-color_7 bg-color_3 max-h-[200px] max-w-[200px] min-h-[200px] min-w-[200px] overflow-hidden rounded-full flex justify-center items-center p-1">
                     <Image
                       unoptimized
@@ -191,6 +192,12 @@ function BasicDetails() {
                       height="300px"
                     />
                   </div>
+                ) : (
+                  <>
+                    <div className="rounded-full w-[150px] h-[150px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
+                      <PersonIcon fontSize="large" />
+                    </div>
+                  </>
                 )}
                 {/* <div className="w-[200px] mx-auto h-[200px] bg-color_7 rounded"></div> */}
                 <Button
@@ -205,14 +212,12 @@ function BasicDetails() {
                 </Button>
               </div>
               <div className="md:w-[35%] w-full ">
-                {profilesList.jobProfile && (
+                {profilesList.jobProfile ? (
                   <>
                     <div className="flex justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
-                      <div className="text-text_1 font-semibold">
-                        Job Profile
-                      </div>
+                      <div className="text-text_1 ">Job Profile</div>
                       <div
-                        className="text-linkBlue underline cursor-pointer"
+                        className="text-linkBlue cursor-pointer"
                         onClick={() => {
                           router.push(`/update/jobProfile`);
                         }}
@@ -222,14 +227,28 @@ function BasicDetails() {
                       </div>
                     </div>
                   </>
+                ) : (
+                  <>
+                    <div className="flex justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
+                      <div className="text-text_1 ">Job Profile</div>
+                      <div
+                        className="text-linkBlue  cursor-pointer"
+                        // onClick={() => {
+                        //   router.push(`/update/jobProfile`);
+                        // }}
+                      >
+                        Create
+                      </div>
+                    </div>
+                  </>
                 )}
                 <div className="flex mt-2 justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
-                  <div className="text-text_1 font-semibold">Username</div>
+                  <div className="text-text_1">Username</div>
                   <div className="flex justify-end">
                     <div className="pr-2 text-text_2">@</div>
                     <input
                       type="text"
-                      className="outline-none w-[50%] text-text_2"
+                      className="outline-none border-b border-dashed w-[50%] text-text_2"
                       placeholder="username"
                     />
                   </div>

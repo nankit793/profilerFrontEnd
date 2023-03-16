@@ -13,7 +13,6 @@ function CertificateData(props) {
   const [checkBox, setCheckBox] = useState(false);
 
   const onSubmit = () => {
-    console.log(checkBox || recievedOn);
     if (title && organization && (checkBox || recievedOn)) {
       let data;
       if (checkBox) {
