@@ -76,7 +76,7 @@ function BlogsTab(props) {
   return (
     <>
       <div className="">
-        <div className="flex justify-between items-center mt-1 gap-2 flex-wrap">
+        <div className="flex justify-between items-start  mt-1 gap-2 md:flex-row flex-col">
           <input
             type="text"
             onChange={(e) => {
@@ -86,23 +86,26 @@ function BlogsTab(props) {
             value={searchText}
             name=""
             placeholder="search in blogs of user"
-            className="bg-color_2 w-full mx-auto md:min-w-[500px] md:w-[70%] rounded border p-2 focus:outline-none"
+            className="bg-color_2 w-full md:min-w-[50%] mx-auto  rounded border p-2 focus:outline-none"
           />
-          <div className="flex gap-2 md:mx-0 mx-3 flex-wrap md:justify-center justify-between grow">
+          <div className="flex gap-2 md:mx-0 mx-3 justify-end ">
             <div className="cursor-pointer hover:px-6 duration-200 w-min whitespace-nowrap text-text_1 bg-color_2 py-2 px-5 rounded-md border">
               Sort by
             </div>
-            <div
-              onClick={() => {
-                router.push("/addBlog");
-              }}
-              className="p-2 cursor-pointer w-min whitespace-nowrap text-color_2 rounded bg-color_7  flex items-center justify-center hover:px-6 px-5 duration-200"
-            >
-              <div className="">
-                <AddIcon fontSize="small" />
-              </div>
-              <div>Create blog</div>
-            </div>
+            {ifLogged() &&
+              router.query.uid === localStorage.getItem("userid") && (
+                <div
+                  onClick={() => {
+                    router.push("/addBlog");
+                  }}
+                  className="p-2 cursor-pointer w-min whitespace-nowrap text-color_2 rounded bg-color_7  flex items-center justify-center hover:px-6 px-5 duration-200"
+                >
+                  <div className="">
+                    <AddIcon fontSize="small" />
+                  </div>
+                  <div>Create blog</div>
+                </div>
+              )}
           </div>
         </div>
         <div className="overflow-y-auto max-h-screen flex justify-center flex-wrap md:max-h-[80vh] md:pr-2 mt-2">
@@ -119,7 +122,7 @@ function BlogsTab(props) {
               return (
                 <div
                   key={index}
-                  className="w-full rounded border border md:w-[45%] min-w-[300px] grow  bg-color_2 mb-2 hover:drop-shadow-md md:mx-2 cursor-pointer duration-200 hover:border-color_9"
+                  className="w-full rounded border border md:w-[45%] md:max-w-[500px] md:min-w-[300px] grow  bg-color_2 mb-2 hover:drop-shadow-md md:mx-2 cursor-pointer duration-200 hover:border-color_9"
                 >
                   <div className="absolu">
                     <Image

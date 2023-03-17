@@ -101,7 +101,7 @@ function BottomJobTab(props) {
         </div>
       ) : (
         <div className="text-text_1 font-semibold flex justify-center my-5">
-          user has created portfolio yet
+          user has not created portfolio yet
         </div>
       )}
     </>

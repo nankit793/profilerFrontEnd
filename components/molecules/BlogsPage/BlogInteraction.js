@@ -139,7 +139,7 @@ function BlogInteraction(props) {
   };
   return (
     <>
-      <div className="w-full min-h-[40vh] bg-color_3 border border-color_9 rounded-t-xl p-3 mb-10 mt-2">
+      <div className="w-full md:min-h-[40vh] bg-color_3 border border-color_9 rounded-t-xl p-3 mb-10 mt-2">
         <div className="flex justify-start items-center gap-10  text-color_7">
           <div className="text-center">
             <div className="cursor-pointer text-text_1">

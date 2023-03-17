@@ -255,6 +255,7 @@ function BlogComments(props) {
                           <InputField
                             className="border w-full rounded p-1 focus:outline-color_1 focus:outline"
                             value={editComment.text}
+                            length={500}
                             type="text"
                             multiline={true}
                             onChange={(e) => {

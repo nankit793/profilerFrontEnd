@@ -4,11 +4,12 @@ import React, { useEffect, useState } from "react";
 import ButtonPrimary from "../../atoms/input/ButtonPrimary";
 import { useRouter } from "next/router";
 import { useSelector } from "react-redux";
+import { ifLogged } from "../../ifLogged";
 
 function SelfAccountFollow(props) {
   const [followingCount, setFollowingCount] = useState(0);
   const followingList = useSelector((state) => state.followingListReducer);
-
+  const [isLoggedUser, setIsLoggedUser] = useState(false);
   useEffect(() => {
     if (
       followingList &&
@@ -21,6 +22,14 @@ function SelfAccountFollow(props) {
   }, [
     followingList && followingList.isFecthed && followingList.userFollowingList,
   ]);
+
+  useEffect(() => {
+    if (ifLogged()) {
+      setIsLoggedUser(true);
+    } else {
+      setIsLoggedUser(false);
+    }
+  }, []);
 
   return (
     <>
@@ -41,11 +50,13 @@ function SelfAccountFollow(props) {
         </div>
       </div>
       <div className="flex gap-3 justify-center items-center mt-4">
+        {isLoggedUser && (
+          <div className="px-5 py-2 rounded-md border text-text_1 cursor-pointer">
+            Edit profile
+          </div>
+        )}
         <div className="px-5 py-2 rounded-md border text-text_1 cursor-pointer">
-          Edit profile
-        </div>
-        <div className="px-5 py-2 rounded-md border text-text_1 cursor-pointer">
-          Share profile
+          copy link
         </div>
       </div>
     </>

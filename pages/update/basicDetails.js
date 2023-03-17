@@ -72,7 +72,9 @@ function BasicDetails() {
 
   useEffect(() => {
     if (profilePic.isFetched && profilePic.profilePhoto) {
-      setImage(profilePic.profilePhoto.data);
+      const base = profilePic.profilePhoto.data.toString("base64");
+      console.log(base, "base");
+      setImage(base);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [profilePic]);

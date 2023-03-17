@@ -6,10 +6,13 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
 import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
+import { ifLogged } from "../../ifLogged";
 function BottomNav(props) {
   const [selectedPage, setSelectedPage] = useState();
   const [pageData, setPageData] = useState();
   const dispatch = useDispatch();
+  const [isLoggedUser, setIsLoggedUser] = useState(false);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -32,13 +35,26 @@ function BottomNav(props) {
     }
   }, [props.userBasicData]);
 
+  useEffect(() => {
+    if (ifLogged()) {
+      setIsLoggedUser(true);
+    } else {
+      setIsLoggedUser(false);
+    }
+  }, []);
+
   const pages = [
     {
       pageData: <BottomJobTab jobDetails={pageData && pageData} />,
       id: 0,
     },
     {
-      pageData: <BlogsTab setBlogsCount={props.setBlogsCount} />,
+      pageData: (
+        <BlogsTab
+          setBlogsCount={props.setBlogsCount}
+          userid={props.data.userid}
+        />
+      ),
       id: 1,
     },
     {
@@ -59,20 +75,25 @@ function BottomNav(props) {
       <div className="w-full bg-color_8 rounded-t flex justify-start border-b  ">
         {props.buttons.map((button, index) => {
           return (
-            <div
-              key={index}
-              onClick={() => {
-                select(button.id);
-              }}
-              className={` ${
-                selectedPage && selectedPage.id === button.id
-                  ? "border-b-color_4 border-b-[3px] bg-color_8 text-color_4"
-                  : "bg-color_8  text-color_7"
-              } 
+            ((button.loginRequired &&
+              isLoggedUser &&
+              props.data.userid === localStorage.getItem("userid")) ||
+              !button.loginRequired) && (
+              <div
+                key={index}
+                onClick={() => {
+                  select(button.id);
+                }}
+                className={` ${
+                  selectedPage && selectedPage.id === button.id
+                    ? "border-b-color_4 border-b-[3px] bg-color_8 text-color_4"
+                    : "bg-color_8  text-color_7"
+                } 
                py-3 duration-100  px-5 cursor-pointer `}
-            >
-              {button.name}
-            </div>
+              >
+                {button.name}
+              </div>
+            )
           );
         })}
       </div>

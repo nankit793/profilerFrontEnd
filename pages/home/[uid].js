@@ -46,7 +46,6 @@ function Uid(props) {
   const followingList = useSelector((state) => state.followingListReducer);
 
   useEffect(() => {
-    console.log("entered in uid");
     const uid = router.query.uid;
     setUserid(uid);
     // eslint-disable-next-line react-hooks/exhaustive-deps

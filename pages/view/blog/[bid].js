@@ -24,6 +24,7 @@ import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import * as getFollowingList from "../../../redux-next/followerList/actions";
 import BlogsFromUser from "../../../components/molecules/BlogsPage/BlogsFromUser";
 import Footer from "../../../components/footer/Footer";
+import CircularProgresser from "../../../components/atoms/CircularProgresser";
 function Blog() {
   const [blogData, setBlogData] = useState();
   const [image, setImage] = useState(null);
@@ -72,6 +73,7 @@ function Blog() {
         }
       })
       .catch(function (error) {
+        setFetchingFailed(true);
         console.log(error.message);
         // setImage(null);
       });
@@ -208,11 +210,7 @@ function Blog() {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      {fetchingFailed && (
-        <div className="h-[80vh] w-full flex justufy-center items-center">
-          Error! Eigther blog was not found or you have network issue
-        </div>
-      )}
+
       {!fetchingFailed && blogData ? (
         <>
           <div className="flex md:flex-row flex-col-reverse flex-col justify-start items-start ">
@@ -486,13 +484,24 @@ function Blog() {
               </>
             </div>
           </div>
+          <Footer />
         </>
       ) : (
-        "not blog was found"
+        <>
+          {fetchingFailed ? (
+            <div className="">
+              <div className="h-[90vh] w-full flex justify-center items-center">
+                Eighter blog does not exist or you have lost Internet connection
+              </div>
+              <Footer />
+            </div>
+          ) : (
+            <div className="h-[90vh] w-full flex justify-center items-center">
+              <CircularProgresser />
+            </div>
+          )}
+        </>
       )}
-      <div className="">
-        <Footer />
-      </div>
     </>
   );
 }

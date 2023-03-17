@@ -15,6 +15,7 @@ import Image from "next/image";
 import AccountCircleIcon from "@mui/icons-material/AccountCircle";
 import MessageIcon from "@mui/icons-material/Message";
 import NotificationsIcon from "@mui/icons-material/Notifications";
+import Popover from "../molecules/Popover";
 function NavbarLogged() {
   const [image, setImage] = useState(null);
   const router = useRouter();
@@ -94,11 +95,32 @@ function NavbarLogged() {
                 data={<SearchBarBody />}
               />
             </div>
-            <div
-              className={`max-w-[40px] max-h-[40px]  rounded-full overflow-hidden ml-3 
-             ${image ? " " : "flex justify-center items-center"}`}
-            >
-              <SwipeableTemporaryDrawer
+            <div className="pl-2">
+              <Popover
+                data={
+                  <div className="">
+                    <NavbarLoggedBody image={image} />
+                  </div>
+                }
+                text={
+                  <div className="w-[45px] h-[45px] overflow-hidden bg-color_8 rounded-full ">
+                    <Image
+                      unoptimized
+                      fill={true}
+                      // fill
+                      src={`http://localhost:5000/profilePhoto?userid=${localStorage.getItem(
+                        "userid"
+                      )}`}
+                      alt="Picture of the author"
+                      // objectFit="revert"
+                      width={50}
+                      className="rounded-full"
+                      height={50}
+                    />
+                  </div>
+                }
+              />
+              {/* <SwipeableTemporaryDrawer
                 anchor="right"
                 click={
                   <Image
@@ -113,23 +135,23 @@ function NavbarLogged() {
                     className="rounded-full"
                     height={100}
                   />
-                  // image ? (
-                  //   <Image
-                  //     unoptimized
-                  //     // fill
-                  //     src={`data:image/jpeg;base64,` + image}
-                  //     alt="Picture of the author"
-                  //     objectFit="revert"
-                  //     width={100}
-                  //     className="rounded-full"
-                  //     height={100}
-                  //   />
-                  // ) : (
-                  //   <AccountCircleIcon sx={{ width: "40px", height: "40px" }} />
-                  // )
+                  image ? (
+                    <Image
+                      unoptimized
+                      // fill
+                      src={`data:image/jpeg;base64,` + image}
+                      alt="Picture of the author"
+                      objectFit="revert"
+                      width={100}
+                      className="rounded-full"
+                      height={100}
+                    />
+                  ) : (
+                    <AccountCircleIcon sx={{ width: "40px", height: "40px" }} />
+                  )
                 }
                 data={<NavbarLoggedBody image={image} />}
-              />
+              /> */}
             </div>
           </div>
         </div>

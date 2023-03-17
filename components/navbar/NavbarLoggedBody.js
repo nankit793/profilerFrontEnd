@@ -35,6 +35,7 @@ function NavbarLoggedBody(props) {
       (registerData.isPosted = false),
       logout();
     router.push("/login");
+    router.reload();
   };
 
   useEffect(() => {
@@ -49,21 +50,15 @@ function NavbarLoggedBody(props) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
 
-  {
-    /* <div className="flex flex-col justify-center items-center w-full mt-10">
-    <div className="rounded-full w-[50px] h-[50px] flex justify-center items-center bg-color_1 text-color_2">
-      <PersonIcon />
-    </div>
-    <div className="text-text_1 font-bold text-xl mt-5">
-      {userBasicData.name ? userBasicData.name : ""}
-    </div>
-  </div> */
-  }
   return (
     <>
-      <div className="w-full h-screen flex flex-col items-center justify-between">
+      <div className="w-full px-5 py-3">
         <div
-          className="flex flex-col justify-between items-center border rounded m-2 cursor-pointer gap-5 w-[90%] p-3  md:bg-color_2 bg-color_8 hover:bg-color_8 duration-200"
+          className={`cursor-pointer text-md text-right whitespace-nowrap ${
+            router.query.uid === localStorage.getItem("userid")
+              ? "text-color_5"
+              : ""
+          } `}
           onClick={() => {
             const user = localStorage.getItem("userid") || "";
             if (user) {
@@ -72,71 +67,27 @@ function NavbarLoggedBody(props) {
               router.push("/home");
             }
           }}
+          id="operationButton"
         >
-          <div className="rounded-full min-w-[60px] min-h-[60px] max-w-[60px] max-h-[60px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
-            {props.image ? (
-              <Image
-                unoptimized
-                // fill
-                src={`data:image/jpeg;base64,` + props.image}
-                alt="Picture of the author"
-                objectFit="revert"
-                width={100}
-                className="rounded-full"
-                height={100}
-              />
-            ) : (
-              <PersonIcon fontSize="large" />
-            )}
-          </div>
-          <div className="flex flex-col justify-between text-center ">
-            <div className="text-text_1 font-semibold text-[16px]  ">
-              {/* {userBasicData.name ? userBasicData.name : ""} */}
-              Ankit Negi
-            </div>
-            <div className="text-text_2 text-sm ">
-              nankit793@gmai.com
-              {/* {userBasicData.name && localStorage.getItem("userid")} */}
-            </div>
-          </div>
+          My profile
         </div>
         <div className="w-full">
-          <div className="flex flex-col justify-center w-full items-center border-color_2">
-            <Link href="/myAccount">
-              <a
-                className={`cursor-pointer py-3  hover:text-color_5 w-full text-center ${
-                  router.pathname === "/myAccount"
-                    ? "font-semibold text-color_5"
-                    : "text-color_black "
-                } `}
-              >
-                My Account
-              </a>
-            </Link>
-            <a className="w-full">
-              <Modal
-                onClick={handleOpen}
-                onClose={handleClose}
-                text="Create Profile"
-                open={open}
-                data={<CreateProfileModal />}
-                textClass="cursor-pointer capitalize py-3 text-color_black hover:text-color_5 w-full text-center"
-              />
-            </a>
+          <div className="pt-3 pb-2">
             <Link href="/update/basicDetails">
               <a
-                className={`cursor-pointer py-3 hover:text-color_5 w-full text-center  ${
+                className={`cursor-pointer py-2 whitespace-nowrap text-md hover:text-color_5 w-full text-center  ${
                   router.pathname === "/update/basicDetails"
-                    ? " font-semibold text-color_5"
+                    ? "  text-color_5"
                     : "text-color_black "
                 } `}
+                id="operationButton"
               >
-                Edit Profile
+                Edit profile
               </a>
             </Link>
           </div>
           <div className="md:hidden block">
-            <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
+            <div className="flex flex-col justify-start w-full items-end border-color_2 border border-x-0 border-b-0 border-t-1">
               <Link href="/">
                 <a
                   className={`cursor-pointer  py-3 text-color_black  ${
@@ -172,7 +123,7 @@ function NavbarLoggedBody(props) {
               </Link>
             </div>
           </div>
-          <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
+          {/* <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
             <Link href="/setting">
               <a
                 className={`cursor-pointer font-semibold py-3 w-full text-center text-color_black  ${
@@ -183,13 +134,13 @@ function NavbarLoggedBody(props) {
                 Setings
               </a>
             </Link>
-          </div>
+          </div> */}
           <div
             onClick={handleLogOut}
-            className="p-5 font-bold cursor-pointer bg-[#880808] text-white w-full flex justify-center items-center"
+            className="text-right text-md pt-1 cursor-pointer text-[#880808] "
           >
-            <ExitToAppIcon sx={{ marginRight: 1 }} />
-            Log Out
+            {/* <ExitToAppIcon sx={{ marginRight: 1 }} /> */}
+            Log out
           </div>
         </div>
       </div>
