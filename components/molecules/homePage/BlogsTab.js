@@ -20,15 +20,19 @@ import CircularProgresser from "../../atoms/CircularProgresser";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
+
+import { FormControl, MenuItem, Select } from "@mui/material";
+
 function BlogsTab(props) {
   const router = useRouter();
   const [deleteData, setDeleteData] = useState({});
   const [searchText, setSearchText] = useState("");
-  const [searchedBlogs, setSearchedBlogs] = useState([]);
+  const [selectedSorting, setSelectedSorting] = useState("ud");
   const [deleteBlogLoading, setDeleteBlogLoading] = useState({
     id: "",
     state: false,
   });
+
   const dispatch = useDispatch();
 
   const blogs = useSelector((state) => state.authorBlogsReducer);
@@ -41,7 +45,6 @@ function BlogsTab(props) {
     const deleted = await axiosDelete(
       `http://localhost:5000/deleteBlog?blogId=${blog._id}`
     );
-    console.log(deleted);
     if (deleted && deleted.state) {
       successNotification("blog has been deleted");
       const a = [];
@@ -61,22 +64,73 @@ function BlogsTab(props) {
       state: false,
     });
   };
+  const sortingOfBLogs = (e) => {
+    console.log(e);
+    if (e === "likes") {
+      blogs &&
+        blogs.blogs.sort(
+          (a, b) => b.activities.numLikes - a.activities.numLikes
+        );
+    }
+    if (e === "views") {
+      blogs &&
+        blogs.blogs.sort((a, b) => b.activities.views - a.activities.views);
+    }
+    if (e === "ud") {
+      blogs &&
+        blogs.blogs.sort(
+          (a, b) =>
+            new Date(
+              b.activities &&
+                b.activities.blogUpload &&
+                b.activities.blogUpload.split("T")[0]
+            ) -
+            new Date(
+              a.activities &&
+                a.activities.blogUpload &&
+                a.activities.blogUpload.split("T")[0]
+            )
+        );
+      // setSearchedBlogs(sortedByLikes);
+    }
+  };
+  useEffect(() => {
+    if (blogs && blogs.isFetched && blogs.blogs.length !== 0 && blogs.blogs) {
+      sortingOfBLogs("ud");
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [blogs]);
+
   const inBlogsSearch = (e) => {
     if (e) {
       const searched =
         blogs &&
         blogs.isFetched &&
         blogs.blogs.length !== 0 &&
-        blogs.blogs.filter((b) => b.heading.match(e, "gi"));
-      setSearchedBlogs(searched);
+        blogs.blogs.sort((a, b) => {
+          const aMatching = (
+            a.heading.toLowerCase().match(new RegExp(e.toLowerCase(), "g")) ||
+            []
+          ).length;
+          const bMatching = (
+            b.heading.toLowerCase().match(new RegExp(e.toLowerCase(), "g")) ||
+            []
+          ).length;
+          if (aMatching === bMatching) {
+            return b.likes - a.likes;
+          } else {
+            return bMatching - aMatching;
+          }
+        });
     } else {
-      setSearchedBlogs([]);
+      setSelectedSorting("ud");
+      sortingOfBLogs("ud");
     }
   };
   return (
     <>
       <div className="">
-        <div className="flex justify-between items-start  mt-1 gap-2 md:flex-row flex-col">
+        <div className="flex justify-between flex-wrap items-start  mt-1 gap-2 md:flex-row flex-col">
           <input
             type="text"
             onChange={(e) => {
@@ -86,19 +140,37 @@ function BlogsTab(props) {
             value={searchText}
             name=""
             placeholder="search in blogs of user"
-            className="bg-color_2 w-full md:min-w-[50%] mx-auto  rounded border p-2 focus:outline-none"
+            className="bg-color_2 w-full grow md:w-[60%] min-w-[50%]  rounded border md:py-[10px] p-2 focus:outline-none overflow-x-scroll"
           />
-          <div className="flex gap-2 md:mx-0 mx-3 justify-end ">
-            <div className="cursor-pointer hover:px-6 duration-200 w-min whitespace-nowrap text-text_1 bg-color_2 py-2 px-5 rounded-md border">
+          <div className="flex gap-2  md:justify-end justify-between">
+            <FormControl className="min-w-[150px] bg-color_2 flex w-full justify-end w-full   text-left">
+              <Select
+                labelId="demo-simple-select-label"
+                // label="Sort by"
+                id="demo-simple-select"
+                className="h-[45px] pr-[20px]"
+                onChange={(e) => {
+                  setSelectedSorting(e.target.value);
+                  sortingOfBLogs(e.target.value);
+                }}
+                value={selectedSorting}
+              >
+                <MenuItem value="likes"> likes </MenuItem>
+                <MenuItem value="views">views</MenuItem>
+                <MenuItem value="ud">new first</MenuItem>
+                {/* <MenuItem value="">prefer not to say</MenuItem> */}
+              </Select>
+            </FormControl>
+            {/* <div className="cursor-pointer hover:px-6 duration-200 w-min whitespace-nowrap text-text_1 bg-color_2 py-2 px-5 rounded-md border">
               Sort by
-            </div>
+            </div> */}
             {ifLogged() &&
               router.query.uid === localStorage.getItem("userid") && (
                 <div
                   onClick={() => {
                     router.push("/addBlog");
                   }}
-                  className="p-2 cursor-pointer w-min whitespace-nowrap text-color_2 rounded bg-color_7  flex items-center justify-center hover:px-6 px-5 duration-200"
+                  className="p-2 w-[50%] cursor-pointer w-min whitespace-nowrap text-color_2 rounded bg-color_7  flex items-center justify-center hover:bg-color_5 px-5 duration-200"
                 >
                   <div className="">
                     <AddIcon fontSize="small" />
@@ -108,14 +180,13 @@ function BlogsTab(props) {
               )}
           </div>
         </div>
-        <div className="overflow-y-auto max-h-screen flex justify-center flex-wrap md:max-h-[80vh] md:pr-2 mt-2">
-          {searchedBlogs &&
+        <div className="md:pb-20 overflow-y-auto max-h-screen flex justify-center flex-wrap md:max-h-[80vh] md:pr-2 mt-2">
+          {/* {searchedBlogs &&
             searchedBlogs.length !== 0 &&
             searchedBlogs.map((blog) => {
               return blog.heading;
-            })}
-          {!searchText &&
-            blogs &&
+            })} */}
+          {blogs &&
             blogs.isFetched &&
             blogs.blogs.length !== 0 &&
             blogs.blogs.map((blog, index) => {
@@ -159,6 +230,10 @@ function BlogsTab(props) {
                                 <>
                                   <div
                                     onClick={(e) => {
+                                      router.push(
+                                        `/update/blog?bid=${blog._id}`
+                                      );
+
                                       // removeEducation(index);
                                     }}
                                     id="operationButton"

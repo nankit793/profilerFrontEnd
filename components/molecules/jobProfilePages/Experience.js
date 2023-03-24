@@ -86,14 +86,16 @@ function Experience(props) {
         open={open}
         data={<div>hello there</div>}
       />
-      {jobExperienceData && jobExperienceData.experience.length === 0 && (
-        <div className="text-semibold text-center my-10 text-md text-text_2">
-          <div>
-            <SentimentDissatisfiedIcon />
+      {jobExperienceData &&
+        jobExperienceData.experience &&
+        jobExperienceData.experience.length === 0 && (
+          <div className="text-semibold text-center my-10 text-md text-text_2">
+            <div>
+              <SentimentDissatisfiedIcon />
+            </div>
+            You have not added any experience yet.
           </div>
-          You have not added any experience yet.
-        </div>
-      )}
+        )}
       {showSkeleton && (
         <Box sx={{ width: "100%" }} className="mt-10">
           <Skeleton />

@@ -214,16 +214,18 @@ function Uid(props) {
         {!profileLoading && isUserFound && (
           <div className="md:px-5 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3 pt-14">
             <div className="h-min md:min-w-[300px] md:w-[30%] w-[100%]  overflow-y-auto bg-color_2 rounded-t-xl  flex flex-col justify-start items-center">
-              <div className="my-3 rounded-full drop-shadow h-[150px] w-[150px] overflow-hidden flex justify-center items-center bg-color_8 text-color_2">
+              <div className="my-3 rounded-full drop-shadow h-[150px] w-[150px]  flex justify-center items-center bg-color_8 text-color_2">
                 <Image
                   unoptimized
                   // fill
                   src={`http://localhost:5000/profilePhoto?userid=${userBasicData.userid}`}
                   alt="Picture of the author"
                   // objectFit="revert"
-                  width={150}
+                  width={1350}
                   className="rounded-full"
-                  height={150}
+                  // layout="responsive"
+                  objectFit="cover"
+                  height={1350}
                 />
                 {/* {image ? (
                 ) : (

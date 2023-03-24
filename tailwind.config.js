@@ -19,6 +19,7 @@ module.exports = {
         color_8: "#F5F5F5",
         color_9: "#ADD8E6",
         color_10: "#B0C4DE",
+        color_11: "#65aed9",
         linkBlue: "#0047ab",
         maroon: "#541e1b",
         color_4: "#6987ab",

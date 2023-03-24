@@ -113,9 +113,11 @@ function NavbarLogged() {
                       )}`}
                       alt="Picture of the author"
                       // objectFit="revert"
-                      width={50}
-                      className="rounded-full"
-                      height={50}
+                      width="100%"
+                      height="120%"
+                      layout="responsive"
+                      objectFit="cover"
+                      object-position="center"
                     />
                   </div>
                 }

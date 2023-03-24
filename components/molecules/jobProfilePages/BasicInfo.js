@@ -179,7 +179,7 @@ function BasicInfo(props) {
                 )}
             </div>
           </div>
-          <div className="">
+          {/* <div className="">
             <div className="font-semibold text-color_7 text-md ">Hobbies:</div>
             <div className="w-full rounded-xl bg-color_8 flex flex-wrap mt-1 drop-shadow p-2">
               <div className="w-full flex justify-between">
@@ -262,7 +262,7 @@ function BasicInfo(props) {
                   </div>
                 )}
             </div>
-          </div>
+          </div> */}
         </div>
         <div className="w-full md:w-[50%] mt-5 md:mt-0">
           <div className="font-semibold text-text_1 text-md mb-1">

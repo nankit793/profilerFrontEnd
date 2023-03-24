@@ -28,12 +28,12 @@ function Resume(props) {
   useEffect(() => {
     const caller = async () => {
       const userid = localStorage.getItem("userid");
-      const save = await fetch("http://localhost:5000/jobResume", {
-        method: "GET",
-        headers: {
-          userid: userid,
-        },
-      });
+      const save = await fetch(
+        `http://localhost:5000/jobResume?pid=${props.pid}`,
+        {
+          method: "GET",
+        }
+      );
       let finalSave = await save.json();
       setShowLoader(false);
       if (save && save.status === 200 && save.statusText === "OK") {
@@ -55,7 +55,6 @@ function Resume(props) {
   const onChange = (e) => {
     const file = e.target.files[0];
     if (true) {
-      setImage(file);
       onClick(file);
     }
   };
@@ -70,7 +69,7 @@ function Resume(props) {
       let formData = new FormData();
       formData.append("resume", image);
       const save = await fetch(
-        "http://localhost:5000/updateJobProfile/resume",
+        "http://localhost:5000/portfolio/update/resume",
         {
           method: "PATCH",
           body: formData,
@@ -79,11 +78,13 @@ function Resume(props) {
             refreshtoken: refreshtoken,
             userid: userid,
             change: "resume",
+            pid: props.pid,
           },
         }
       );
       if (save && save.status === 200 && save.statusText === "OK") {
         setShowUploaderMessage("resume uploaded");
+        setImage(image);
       } else {
         setShowUploaderMessage("error occured try again");
       }
@@ -98,15 +99,15 @@ function Resume(props) {
     const userid = localStorage.getItem("userid");
     let formData = new FormData();
     formData.append("resume", null);
-    const save = await fetch("http://localhost:5000/updateJobProfile/resume", {
+    const save = await fetch("http://localhost:5000/portfolio/update/resume", {
       method: "PATCH",
       body: formData,
       headers: {
         accesstoken: accesstoken,
         refreshtoken: refreshtoken,
         userid: userid,
-        // change: "resume",
         removeResume: true,
+        pid: props.pid,
       },
     });
     if (save && save.status === 200 && save.statusText === "OK") {
@@ -119,7 +120,7 @@ function Resume(props) {
   };
   return (
     <div className="mb-20 w-full">
-      <div className="flex justify-between items-center flex-wrap">
+      <div className="flex justify-between items-start flex-wrap">
         <div className="text-lg font-semibold text-text_1 whitespace-nowrap">
           Upload Resume
         </div>
@@ -128,7 +129,7 @@ function Resume(props) {
             onClick={() => {
               setShowTab(true);
             }}
-            className="p-4 cursor-pointer whitespace-nowrap bg-color_7 hover:bg-color_5 duration-200 rounded w-fit  text-[white] "
+            className="px-4 py-3 md:w-fit w-full cursor-pointer whitespace-nowrap bg-color_7 hover:bg-color_5 duration-200 rounded max-w-[300px] text-center text-[white]"
           >
             Let imProfile create your resume
           </div>

@@ -34,7 +34,7 @@ function BasicDetails() {
   const [userBasicData, setUserBasicData] = useState({});
   const [loading, setLoading] = useState(false);
   // const [value, setValue] = useState("");
-  const [profilesList, setProfilesList] = useState({});
+  const [portfolioList, setPortfolioList] = useState([]);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
   const [showUploaderMessage, setShowUploaderMessage] = useState(new Date());
@@ -49,7 +49,7 @@ function BasicDetails() {
   const registerData = useSelector((state) => state.registerReducer);
   const userData = useSelector((state) => state.basicDataReducer);
   const userBasicUpload = useSelector((state) => state.basicDataUploadReducer);
-  const profileList = useSelector((state) => state.profileListReducer);
+  // const profileList = useSelector((state) => state.profileListReducer);
   const profilePic = useSelector((state) => state.profilePictureReducer);
 
   useEffect(() => {
@@ -60,24 +60,18 @@ function BasicDetails() {
           userid: localStorage.getItem("userid"),
         })
       );
-      dispatch(
-        getProfileLIst.getProfilesList({
-          userid: localStorage.getItem("userid"),
-        })
-      );
     };
     auth();
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  useEffect(() => {
-    if (profilePic.isFetched && profilePic.profilePhoto) {
-      const base = profilePic.profilePhoto.data.toString("base64");
-      console.log(base, "base");
-      setImage(base);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profilePic]);
+  // useEffect(() => {
+  //   if (profilePic.isFetched && profilePic.profilePhoto) {
+  //     const base = profilePic.profilePhoto.data.toString("base64");
+  //     setImage(base);
+  //   }
+  //   // eslint-disable-next-line react-hooks/exhaustive-deps
+  // }, [profilePic]);
 
   const changeImage = async (e) => {
     const file = e.target.files[0];
@@ -99,7 +93,7 @@ function BasicDetails() {
       });
       if (save && save.status === 200 && save.statusText === "OK") {
         // setImage(null);
-        dispatch(getProfilePhoto.getProfilePicture("data"));
+        // dispatch(getProfilePhoto.getProfilePicture("data"));
       } else {
         setShowUploaderMessage("error occured try again");
       }
@@ -113,22 +107,10 @@ function BasicDetails() {
       userData.userData.status === 200
     ) {
       setUserBasicData(userData.userData.data.newData);
+      setPortfolioList(userData.userData.data.newData.portfolios);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
-
-  useEffect(() => {
-    if (
-      profileList &&
-      profileList.profileList &&
-      profileList.isList &&
-      profileList.profileList.data &&
-      profileList.profileList.status === 200
-    ) {
-      setProfilesList(profileList.profileList.data);
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [profileList]);
 
   useEffect(() => {
     if (userBasicData && userBasicData.dob) {
@@ -174,11 +156,11 @@ function BasicDetails() {
 
   return (
     <>
-      <div className="pt-14 min-h-screen flex flex-col justify-start mb-10 ">
+      <div className="pt-14 min-h-screen flex flex-col justify-start">
         {/* <Croppered croppedImage={croppedImage} /> */}
         <form onSubmit={handleSubmit}>
-          <div className="bg-white mt-3 drop-shadow-md rounded-xl mx-2 md:mx-7 pb-3">
-            <div className="px-3 py-5 md:py-10 gap-10 md:flex flex-wrap justify-center items-center">
+          <div className="bg-white mt-3  rounded-xl  pb-3">
+            <div className="px-3 py-5 md:py-10 w-full md:flex flex-wrap justify-evenly  w-full items-start">
               <div className="flex flex-col items-center ">
                 {image ? (
                   <div className="border border-dashed border-color_7 bg-color_3 max-h-[200px] max-w-[200px] min-h-[200px] min-w-[200px] overflow-hidden rounded-full flex justify-center items-center p-1">
@@ -213,26 +195,39 @@ function BasicDetails() {
                   <input hidden onChange={onChange} type="file" />
                 </Button>
               </div>
-              <div className="md:w-[35%] w-full ">
-                {profilesList.jobProfile ? (
-                  <>
-                    <div className="flex justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
-                      <div className="text-text_1 ">Job Profile</div>
-                      <div
-                        className="text-linkBlue cursor-pointer"
-                        onClick={() => {
-                          router.push(`/update/jobProfile`);
-                        }}
-                      >
-                        <EditIcon sx={{ fontSize: 18, marginRight: "5px" }} />
-                        update
-                      </div>
-                    </div>
-                  </>
+              <div className="flex flex-wrap justify-end">
+                {portfolioList && portfolioList.length > 0 ? (
+                  portfolioList.map((portfolio, index) => {
+                    return (
+                      <>
+                        <div
+                          key={index}
+                          className="flex m-1 gap-3  w-full  justify-between p-5 h-min border bg-color_2  w-full rounded-lg "
+                        >
+                          <div className="text-text_1 ">
+                            Portfolio {index + 1}
+                          </div>
+                          <div
+                            className="text-linkBlue cursor-pointer pl-10"
+                            onClick={() => {
+                              router.push(
+                                `/update/jobProfile?pid=${portfolio._id}`
+                              );
+                            }}
+                          >
+                            <EditIcon
+                              sx={{ fontSize: 18, marginRight: "5px" }}
+                            />
+                            update
+                          </div>
+                        </div>
+                      </>
+                    );
+                  })
                 ) : (
                   <>
                     <div className="flex justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
-                      <div className="text-text_1 ">Job Profile</div>
+                      <div className="text-text_1 ">Portfolio</div>
                       <div
                         className="text-linkBlue  cursor-pointer"
                         // onClick={() => {
@@ -244,7 +239,7 @@ function BasicDetails() {
                     </div>
                   </>
                 )}
-                <div className="flex mt-2 justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
+                {/* <div className="md:w-[35%] w-full flex-col flex  justify-between  h-min border bg-color_2  w-full rounded-lg ">
                   <div className="text-text_1">Username</div>
                   <div className="flex justify-end">
                     <div className="pr-2 text-text_2">@</div>
@@ -254,18 +249,18 @@ function BasicDetails() {
                       placeholder="username"
                     />
                   </div>
-                </div>
-                <div className="flex justify-end">
-                  <div className=" p-2 whitespace-nowrap cursor-pointer py-3 my-3 w-min rounded px-5 bg-color_7 hover:bg-color_5 duration-200 cursor-pointe text-[white] ">
+                </div> */}
+                {/* <div className="flex justify-end"> */}
+                {/* <div className=" p-2 whitespace-nowrap cursor-pointer py-3 my-3 w-min rounded px-5 bg-color_7 hover:bg-color_5 duration-200 cursor-pointe text-[white] ">
                     save username
-                  </div>
-                </div>
+                  </div> */}
+                {/* </div> */}
               </div>
               <div className="">
                 <BasicUpdateInfo />
               </div>
             </div>
-            <div className="md:px-10 px-4 flex  rounded-t-xl w-full justify-between items-center">
+            <div className="bg-[#fafafa] md:px-10 px-4 flex pt-3 w-full justify-between items-center">
               <div className="text-text_1 font-semibold my-4 text-lg whitespace-nowrap">
                 Edit details
               </div>
@@ -280,7 +275,7 @@ function BasicDetails() {
                 />
               </div>
             </div>
-            <div className="w-full md:flex justify-between gap-5 mt-5 px-4 md:px-10">
+            <div className="bg-[#fafafa] pb-10 w-full md:flex justify-between gap-5 pt-5 px-4 md:px-10">
               <div className="w-full">
                 <div className="text-text_1 font-bold text-[18px]  py-1">
                   Basic Information

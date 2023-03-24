@@ -20,7 +20,7 @@ function BlogsFromUser(props) {
 
   return (
     <>
-      <div className="bg-color_2 my-2 mx-2 rounded-xl md:h-[80vh] scrollbar-hide overflow-auto ">
+      <div className="bg-color_2 my-2 mx-2 rounded-xl md:h-[80vh]  overflow-auto ">
         {blogs &&
           blogs.isFetched &&
           blogs.blogs.length !== 0 &&

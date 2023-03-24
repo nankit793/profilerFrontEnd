@@ -65,23 +65,44 @@ function UpdatePage(props) {
     const refreshtoken = localStorage.getItem("idToken");
     const userid = localStorage.getItem("userid");
     try {
-      let formData = new FormData();
-      if (props.image && props.image.file) {
-        formData.append("image", props.image.file);
+      let save;
+      if (props.bodyData) {
+        console.log("normal flow");
+        save = await fetch(props.onSave, {
+          method: props.request,
+          body: JSON.stringify(props.data),
+          // mode: "no-cors",
+          headers: {
+            ...props.headers,
+            Accept: "application/json",
+            "Content-Type": "application/json",
+            accesstoken: accesstoken,
+            refreshtoken: refreshtoken,
+            userid: userid,
+          },
+          // body: props.data,
+        });
+      } else {
+        let formData = new FormData();
+        if (props.image && props.image.file) {
+          formData.append("image", props.image.file);
+        }
+        formData.append("data", JSON.stringify(props.data));
+
+        save = await fetch(props.onSave, {
+          method: props.request,
+          body: formData,
+          // mode: "no-cors",
+          headers: {
+            ...props.headers,
+            ContentType: "multipart/form-data",
+            accesstoken: accesstoken,
+            refreshtoken: refreshtoken,
+            userid: userid,
+          },
+          // body: props.data,
+        });
       }
-      formData.append("data", JSON.stringify(props.data));
-      const save = await fetch(props.onSave, {
-        method: props.request,
-        body: formData,
-        // mode: "no-cors",
-        headers: {
-          // "Content-Type": "multipart/form-data",
-          accesstoken: accesstoken,
-          refreshtoken: refreshtoken,
-          userid: userid,
-        },
-        // body: props.data,
-      });
       const finalSave = await save.json();
       if (save && save.status === 200 && save.statusText === "OK") {
         successNotification(finalSave.message, "Success");

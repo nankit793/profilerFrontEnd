@@ -3,6 +3,8 @@ import Button from "@mui/material/Button";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
 import { Avatar } from "@mui/material";
 import InputField from "../../atoms/input/InputField";
+import { useRouter } from "next/router";
+
 function AddBlog(props) {
   const [selectedRedirection, setSelectedRedirection] = useState({
     web: true,
@@ -25,6 +27,8 @@ function AddBlog(props) {
   const [heading, setHeading] = useState("");
   const [image, setImage] = useState(null);
   const [redirectURL, setRedirectURL] = useState("");
+  const router = useRouter();
+
   useEffect(() => {
     const el = {
       target: {
@@ -70,6 +74,64 @@ function AddBlog(props) {
     setImage(file);
     props.onImageChange(file);
   };
+  useEffect(() => {
+    if (props.editPage && router.query.bid && !props.blogStructure) {
+      const fetcher = async () => {
+        const data = await fetch(
+          `http://localhost:5000/blogPost/get/${router.query.bid}`
+        );
+        const saveData = await data.json();
+        if (
+          data.status == 200 &&
+          saveData &&
+          saveData.blog &&
+          saveData.blog.author &&
+          saveData.blog.author.userid === localStorage.getItem("userid")
+        ) {
+          console.log("yes you can");
+          props.setBlogStructure(saveData.blog);
+          setHeading(saveData.blog.heading);
+          setParagraphs(saveData.blog.paragraphs);
+          setImage(saveData.blog.imageURL && saveData.blog.imageURL);
+          props.setImage({
+            name: "blog_image",
+            url: saveData.blog.imageURL && saveData.blog.imageURL,
+          });
+          setRedirectURL(
+            saveData.blog.redirectURL && saveData.blog.redirectURL
+          );
+          if (
+            saveData.blog.selectedRedirection &&
+            saveData.blog.selectedRedirection === "youtube"
+          ) {
+            setSelectedRedirection({
+              web: false,
+              youtube: true,
+            });
+          } else if (
+            saveData.blog.selectedRedirection &&
+            saveData.blog.selectedRedirection === "website"
+          ) {
+            setSelectedRedirection({
+              web: true,
+              youtube: false,
+            });
+          }
+          setSelectedTag(saveData.blog.tag && saveData.blog.tag);
+          setImage({
+            url: saveData.blog.imageURL,
+            name: "blog_image",
+          });
+        } else {
+          router.push(`/home/${localStorage.getItem("userid")}`);
+        }
+      };
+      fetcher();
+    }
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router.query.bid]);
+
   useEffect(() => {
     if (props.blogStructure) {
       setHeading(props.blogStructure.heading);
@@ -128,6 +190,7 @@ function AddBlog(props) {
                   <div
                     onClick={() => {
                       setImage(null);
+                      props.setImage(null);
                     }}
                     className="px-3  cursor-pointer py-2 rounded bg-color_2 border text-text_7"
                   >

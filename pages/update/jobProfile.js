@@ -37,58 +37,72 @@ import {
 } from "@mui/material";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { useRouter } from "next/router";
+import { axiosGet } from "../../components/functions/axiosCall";
 function JobProfile() {
-  const [userBasicData, setUserBasicData] = useState({});
+  const [portfolioData, setPortfolioData] = useState({});
   const [userid, setUserid] = useState("");
   const [nameUser, setUserName] = useState("");
   const dispatch = useDispatch();
   const userData = useSelector((state) => state.basicDataReducer);
   const loginData = useSelector((state) => state.loginUserReducers);
   const registerData = useSelector((state) => state.registerReducer);
+  const router = useRouter();
+
+  useEffect(() => {
+    console.log(router.query.pid);
+    if (router.query.pid) {
+      const caller = async () => {
+        await axiosGet(
+          setPortfolioData,
+          `http://localhost:5000/portfolio/get?pid=${router.query.pid}`
+        );
+      };
+      caller();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, router.query.pid]);
+
+  useEffect(() => {
+    if (router.query.pid) {
+      const auth = async () => {
+        await authenticate(loginData, registerData);
+        const caller = async () => {
+          await axiosGet(
+            setPortfolioData,
+            `http://localhost:5000/portfolio/get?pid=${router.query.pid}`
+          );
+        };
+        caller();
+      };
+      auth();
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [router, router.query.pid]);
 
   useEffect(() => {
     if (
-      userData &&
-      userData.userData &&
-      userData.isUser == true &&
-      userData.userData.status === 200 &&
-      userData.userData.data.newData &&
-      userData.userData.data.newData.newData
+      (portfolioData &&
+        portfolioData.portfolio &&
+        portfolioData.portfolio.user &&
+        portfolioData.portfolio.user.userid !==
+          localStorage.getItem("userid")) ||
+      !portfolioData.state
     ) {
-      setUserBasicData(userData.userData.data.newData.newData);
-      setUserid(userData.userData.data.newData.userid);
-      setUserName(userData.userData.data.newData.name);
+      // router.push(`/home/${localStorage.getItem("userid")}`);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [userData && userData.userData]);
-
-  useEffect(() => {
-    const auth = async () => {
-      await authenticate(loginData, registerData);
-      dispatch(
-        getBasicDataActions.getBasicData({
-          userid: localStorage.getItem("userid"),
-          requirement: "jobProfile",
-        })
-      );
-    };
-    auth();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [portfolioData]);
 
   const onChange = (e) => {
     const { name, value } = e;
-    console.log(name, value);
-    setUserBasicData((prevState) => ({
-      ...prevState,
-      [name]: value,
+    setPortfolioData((prevState) => ({
+      portfolio: {
+        ...portfolioData.portfolio,
+        [name]: value,
+      },
     }));
   };
-
-  useEffect(() => {
-    console.log(userBasicData);
-  }, [userBasicData]);
 
   const pages = [
     { pageData: <Overview />, id: 0 },
@@ -97,7 +111,7 @@ function JobProfile() {
         <BasicInfo
           onChange={onChange}
           userid={userid}
-          data={userBasicData ? userBasicData : ""}
+          data={portfolioData.portfolio ? portfolioData.portfolio : {}}
         />
       ),
       id: 1,
@@ -106,7 +120,7 @@ function JobProfile() {
       pageData: (
         <Experience
           onChange={onChange}
-          data={userBasicData ? userBasicData : ""}
+          data={portfolioData.portfolio ? portfolioData.portfolio : {}}
         />
       ),
       id: 2,
@@ -115,7 +129,7 @@ function JobProfile() {
       pageData: (
         <Education
           onChange={onChange}
-          data={userBasicData ? userBasicData : ""}
+          data={portfolioData.portfolio ? portfolioData.portfolio : {}}
         />
       ),
       id: 3,
@@ -124,28 +138,35 @@ function JobProfile() {
       pageData: (
         <Projects
           onChange={onChange}
-          data={userBasicData ? userBasicData : ""}
+          data={portfolioData.portfolio ? portfolioData.portfolio : {}}
         />
       ),
       id: 4,
     },
     {
       pageData: (
-        <Resume onChange={onChange} data={userBasicData ? userBasicData : ""} />
+        <Resume
+          onChange={onChange}
+          pid={router.query.pid}
+          data={portfolioData ? portfolioData : ""}
+        />
       ),
       id: 5,
     },
   ];
   return (
     <>
-      <div className="md:h-screen  flex flex-col justify-start md:overflow-y-hidden">
-        {userBasicData && (
+      <div className="pt-14 md:h-screen  flex flex-col justify-start md:overflow-y-hidden">
+        {portfolioData && (
           <div className="h-[100%] ">
             <UpdatePage
-              mediaFiles="resume"
-              data={userBasicData}
+              bodyData={true}
+              data={portfolioData.portfolio}
               request="PATCH"
-              onSave="http://localhost:5000/updateJobProfile"
+              headers={{
+                pid: router.query.pid,
+              }}
+              onSave="http://localhost:5000/portfolio/update"
               buttons={[
                 { name: "Overview", id: 0 },
                 { name: "Details", id: 1 },

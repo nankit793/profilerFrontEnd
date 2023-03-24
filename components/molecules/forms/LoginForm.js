@@ -34,7 +34,7 @@ function LoginForm() {
     ) {
       successNotification("Successfully Logged In", "redirecting");
       setTimeout(() => {
-        router.push("/home");
+        router.push(`/home/${userid}`);
       }, 2000);
     } else if (
       loginData &&

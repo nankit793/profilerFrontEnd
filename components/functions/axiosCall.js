@@ -6,12 +6,13 @@ function axiosGet(setData, URL) {
     .get(URL)
     .then(function (response) {
       if (response.status === 200 && response.data) {
-        setData(response.data);
+        setData({ ...response.data, state: true });
         updateAccessToken(response.data);
       }
     })
     .catch(function (error) {
-      // console.log(error.message);
+      setData({ message: error.message, state: false });
+      console.log(error.message);
     });
 }
 

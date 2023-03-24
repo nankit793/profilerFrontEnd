@@ -46,37 +46,58 @@ function Blog() {
   useEffect(() => {
     const bid = router.query.bid;
     console.log("bid changed");
-    axios
-      .get(`http://localhost:5000/blogPost/get/${bid}`, {
-        headers: { userid: localStorage.getItem("userid") },
-      })
-      .then(function (response) {
-        if (response.status === 200) {
-          setBlogData(response.data.blog);
-          setIsLiked(response.data.liked);
-          setNumLikes(response.data.blog.activities.numLikes || 0);
-          setNumComments(response.data.blog.activities.numComments || 0);
-          setBlogDate(
-            response.data.blog &&
-              response.data.blog.activities &&
-              response.data.blog.activities.blogUpload &&
-              response.data.blog.activities.blogUpload.split("T")[0].split("-")
-          );
-          var regExp =
-            /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-          var match = response.data.blog.redirectURL.match(regExp);
-          setYoutubeVideoCode(
-            match && match[7].length == 11 ? match[7] : false
-          );
-        } else {
+    if (bid) {
+      axios
+        .get(`http://localhost:5000/blogPost/get/${bid}`, {
+          headers: { userid: localStorage.getItem("userid") },
+        })
+        .then(function (response) {
+          console.log(response);
+          if (response.status === 200) {
+            setBlogData(response && response.data && response.data.blog);
+            setIsLiked(response && response.data && response.data.liked);
+            setNumLikes(
+              (response &&
+                response.data &&
+                response.data.blog.activities.numLikes) ||
+                0
+            );
+            setNumComments(
+              (response &&
+                response.data &&
+                response.data.blog.activities.numComments) ||
+                0
+            );
+            setBlogDate(
+              response &&
+                response.data &&
+                response.data.blog &&
+                response.data.blog.activities &&
+                response.data.blog.activities.blogUpload &&
+                response.data.blog.activities.blogUpload
+                  .split("T")[0]
+                  .split("-")
+            );
+            var regExp =
+              /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+            var match =
+              response &&
+              response.data &&
+              response.data.blog.redirectURL.match(regExp);
+            setYoutubeVideoCode(
+              match && match[7].length == 11 ? match[7] : false
+            );
+          } else {
+            console.log("here");
+            setFetchingFailed(true);
+          }
+        })
+        .catch(function (error) {
           setFetchingFailed(true);
-        }
-      })
-      .catch(function (error) {
-        setFetchingFailed(true);
-        console.log(error.message);
-        // setImage(null);
-      });
+          console.log(error.message);
+          // setImage(null);
+        });
+    }
   }, [router.query.bid]);
   useEffect(() => {
     if (blogData && blogData.author && blogData.author) {
@@ -86,7 +107,7 @@ function Blog() {
         )
         .then(function (response) {
           if (response.status === 200) {
-            setImage(response.data);
+            setImage(response && response.data && response.data);
           } else {
             setImage(null);
           }
@@ -98,7 +119,7 @@ function Blog() {
         .get(`http://localhost:5000/blogPost/image/${blogData.imageURL}`)
         .then(function (response) {
           if (response.status === 200) {
-            setBlogImage(response.data);
+            setBlogImage(response && response.data && response.data);
           } else {
             setBlogImage(null);
           }
@@ -214,12 +235,12 @@ function Blog() {
       {!fetchingFailed && blogData ? (
         <>
           <div className="flex md:flex-row flex-col-reverse flex-col justify-start items-start ">
-            <div className="md:mt-0 mt-3 md:w-[25%] w-full h-[100vh] border-r md:pt-14 flex flex-col">
-              <div className="mt-2 flex justify-between rounded mx-3 ">
-                <div className="bg-color_2 rounded-l border  text-center py-3 text-color_7 w-[50%]">
+            <div className="md:mt-0 mt-3 md:min-w-[250px] md:w-[25%] w-full h-[100vh] border-r md:pt-14 flex flex-col">
+              <div className="mt-2  rounded mx-3 ">
+                <div className="bg-color_2 rounded-l border  text-center py-3 text-color_7 ">
                   Based on Blog
                 </div>
-                <div className="py-3 text-center text-color_4 border-t border-r border-b shadow-inner border-b-color_4 border-b-[3px] w-[50%]">
+                <div className="py-3 text-center text-color_4 border-t border-r border-b shadow-inner border-b-color_4 border-b-[3px] ">
                   {(blogData && blogData.author && blogData.author.name) ||
                     "user"}
                   {"'s "} blogs

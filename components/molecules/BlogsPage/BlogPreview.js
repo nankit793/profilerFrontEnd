@@ -1,28 +1,87 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 
 function BlogPreview(props) {
+  const [youtubeVideoCode, setYoutubeVideoCode] = useState(false);
+  useEffect(() => {
+    if (
+      props.blogStructure &&
+      props.blogStructure.selectedRedirection === "youtube"
+    ) {
+      var regExp =
+        /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
+      var match = props.blogStructure.redirectURL.match(regExp);
+      setYoutubeVideoCode(match && match[7].length == 11 ? match[7] : false);
+    }
+  }, []);
+
+  console.log(props.edited && !props.change, props.image);
   return (
     <>
       <div className="w-full text-text_1 font-semibold text-[30px]">
         {props.blogStructure.heading}
       </div>
       {props.image ? (
-        <div className="md:max-h-[500px] mt-2 max-w-[400px]  min-h-[200px] min-w-[200px] rounded overflow-hidden">
-          <Image
-            unoptimized
-            // fill
-            alt="image"
-            src={props.image.url}
-            width="100%"
-            height="100%"
-            layout="responsive"
-            objectFit="contain"
-          />
-        </div>
+        <>
+          {props.edited && !props.change ? (
+            <>
+              <div className=" mt-2 w-full bg-color_3 rounded md:block hidden">
+                <Image
+                  unoptimized
+                  fill={true}
+                  src={`http://localhost:5000/blogPost/image/${props.image.url}`}
+                  alt="image"
+                  width="100%"
+                  height="40%"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
+              <div className=" mt-2 w-full bg-color_3 rounded md:hidden block">
+                <Image
+                  unoptimized
+                  fill={true}
+                  src={`http://localhost:5000/blogPost/image/${props.image.url}`}
+                  alt="image"
+                  width="100%"
+                  height="100%"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
+            </>
+          ) : (
+            <>
+              <div className=" mt-2 w-full bg-color_3 rounded md:block hidden">
+                <Image
+                  unoptimized
+                  fill={true}
+                  src={props.image.url}
+                  alt="image"
+                  width="100%"
+                  height="40%"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
+              <div className=" mt-2 w-full bg-color_3 rounded md:hidden block">
+                <Image
+                  unoptimized
+                  fill={true}
+                  src={props.image.url}
+                  alt="image"
+                  width="100%"
+                  height="100%"
+                  layout="responsive"
+                  objectFit="cover"
+                />
+              </div>
+            </>
+          )}
+        </>
       ) : (
         ""
       )}
@@ -33,6 +92,9 @@ function BlogPreview(props) {
         {props.blogStructure.paragraphs.map((para) => {
           return (
             <>
+              <div className="font-serif  text-[20px] text-text_1">
+                {para.subHead && para.subHead}
+              </div>
               <div className="text-text_2 my-2 font-serif text-[18px] ">
                 {para.paragraph}
               </div>
@@ -56,11 +118,26 @@ function BlogPreview(props) {
               </span>{" "}
             </div>
           ) : (
-            <div>
+            <div className="text-text_1 mt-3">
+              view on youtube{" "}
+              <span
+                onClick={() => {
+                  window.open(props.blogStructure.redirectURL, "_blank");
+                }}
+                className="text-[blue] cursor-pointer"
+              >
+                {" "}
+                (click here){" "}
+              </span>
               <iframe
-                width="420"
-                height="315"
-                src="https://www.youtube.com/watch?v=_fWyWcZB7VA"
+                className="video"
+                title="Youtube player"
+                width="100%"
+                height="500px"
+                sandbox="allow-same-origin allow-forms allow-popups allow-scripts allow-presentation"
+                src={`https://youtube.com/embed/${
+                  youtubeVideoCode && youtubeVideoCode
+                }?autoplay=0`}
               ></iframe>
             </div>
           )}
