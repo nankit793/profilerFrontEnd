@@ -15,6 +15,10 @@ function AddBlog() {
     selectedRedirection: "website",
   });
   const [image, setImage] = useState(null);
+  const [otherImages, setOtherImages] = useState({});
+  const [p1, setP1] = useState(null);
+  const [p2, setP2] = useState(null);
+  const [p3, setP3] = useState(null);
   const onChange = (e) => {
     const { name, value } = e;
     if (name && value) {
@@ -25,17 +29,30 @@ function AddBlog() {
     }
   };
   const onImageChange = (image) => {
-    // let reader = new FileReader();
-    // reader.onload = (e) => {
-    //   console.log(e.target.result);
-    //   setImage({ image: e.target.result });
-    // };
     setImage({
       url: URL.createObjectURL(image),
       name: image.name,
       file: image,
     });
     // reader.readAsDataURL(image);
+  };
+  const onParaImageChange = (image, para) => {
+    console.log(otherImages);
+    if (image === null) {
+      setOtherImages((prev) => ({
+        ...prev,
+        [para]: null,
+      }));
+    } else {
+      setOtherImages((prev) => ({
+        ...prev,
+        [para]: {
+          imageURL: URL.createObjectURL(image),
+          name: image.name,
+          file: image,
+        },
+      }));
+    }
   };
 
   const loginData = useSelector((state) => state.loginUserReducers);
@@ -64,17 +81,25 @@ function AddBlog() {
           onChange={onChange}
           image={image}
           onImageChange={onImageChange}
+          otherImages={otherImages}
+          onParaImageChange={onParaImageChange}
         />
       ),
       id: 0,
       displayOption: "false",
     },
     {
-      pageData: <BlogPreview blogStructure={blogStructure} image={image} />,
+      pageData: (
+        <BlogPreview
+          otherImages={otherImages}
+          change={true}
+          blogStructure={blogStructure}
+          image={image}
+        />
+      ),
       id: 1,
     },
   ];
-
   return (
     <>
       <div className="md:h-screen pt-14 flex flex-col justify-start md:overflow-y-hidden">
@@ -83,6 +108,7 @@ function AddBlog() {
             mediaFiles="resume"
             data={blogStructure}
             image={image}
+            otherImages={otherImages}
             request="POST"
             onSave="http://localhost:5000/blogPost"
             buttons={[

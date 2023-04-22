@@ -9,6 +9,8 @@ import getProfilePicSaga from "./profilePhoto/saga";
 import getFollowingListSaga from "./followerList/saga";
 import userBookMarks from "./getBookmarks/saga";
 import authorBlogs from "./getAuthorBlogs/saga";
+import getTrendingBlogsSaga from "./GetTrendingBlogs/saga";
+import sessionStorageSaga from "./sessionStorage/saga";
 export default function* rootSaga() {
   yield all([
     registerSaga(),
@@ -21,5 +23,7 @@ export default function* rootSaga() {
     getFollowingListSaga(),
     userBookMarks(),
     authorBlogs(),
+    getTrendingBlogsSaga(),
+    sessionStorageSaga(),
   ]);
 }

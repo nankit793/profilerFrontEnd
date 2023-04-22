@@ -5,6 +5,7 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 
 function BlogPreview(props) {
+  console.log(props.otherImages, props.blogStructure.paragraphs);
   const [youtubeVideoCode, setYoutubeVideoCode] = useState(false);
   useEffect(() => {
     if (
@@ -17,8 +18,6 @@ function BlogPreview(props) {
       setYoutubeVideoCode(match && match[7].length == 11 ? match[7] : false);
     }
   }, []);
-
-  console.log(props.edited && !props.change, props.image);
   return (
     <>
       <div className="w-full text-text_1 font-semibold text-[30px]">
@@ -89,14 +88,52 @@ function BlogPreview(props) {
         {props.blogStructure.tag}
       </div>
       <div className="mt-2">
-        {props.blogStructure.paragraphs.map((para) => {
+        {props.blogStructure.paragraphs.map((para, index) => {
           return (
             <>
-              <div className="font-serif  text-[20px] text-text_1">
-                {para.subHead && para.subHead}
-              </div>
-              <div className="text-text_2 my-2 font-serif text-[18px] ">
-                {para.paragraph}
+              <div className="mb-8">
+                <div
+                  key={index}
+                  className="font-serif  text-[20px] text-text_1"
+                >
+                  {para.subHead && para.subHead}
+                </div>
+                <div className="text-text_2 my-2 font-serif text-[18px] ">
+                  {para.paragraph}
+                </div>
+                <div className=" mt-2 w-[50%] bg-color_3 rounded md:block hidden">
+                  {para.imageURL ? (
+                    <Image
+                      unoptimized
+                      fill={true}
+                      src={`http://localhost:5000/blogPost/image/${para.imageURL}`}
+                      alt="image"
+                      width="100%"
+                      height="40%"
+                      layout="responsive"
+                      objectFit="cover"
+                    />
+                  ) : (
+                    <>
+                      {props.otherImages[`p${index + 1}`] &&
+                        props.otherImages[`p${index + 1}`].imageURL && (
+                          <Image
+                            unoptimized
+                            fill={true}
+                            src={`${
+                              props.otherImages[`p${index + 1}`] &&
+                              props.otherImages[`p${index + 1}`].imageURL
+                            }`}
+                            alt="image"
+                            width="100%"
+                            height="40%"
+                            layout="responsive"
+                            objectFit="cover"
+                          />
+                        )}
+                    </>
+                  )}
+                </div>
               </div>
             </>
           );

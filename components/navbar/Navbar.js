@@ -24,33 +24,33 @@ function Navbar() {
           <div className="flex items-center">
             <Link href="/">
               <a
-                className={`cursor-pointer text-[14px] font-bold mx-2 text-[white] p-2 ${
+                className={`cursor-pointer text-[16px] font-semibold  mx-2 text-[white] p-2 ${
                   router.pathname === "/aboutUs"
                     ? "text-color_1"
                     : "text-[white]"
                 } `}
               >
-                ABOUT
+                About
               </a>
             </Link>
             <Link href="/login">
               <a
-                className={`cursor-pointer text-[14px] font-bold mx-2 text-[white] p-2 ${
+                className={`cursor-pointer text-[16px]  font-semibold  mx-2 text-[white] p-2 ${
                   router.pathname === "/login" ? "text-color_1" : "text-[white]"
                 } `}
               >
-                LOGIN
+                Login
               </a>
             </Link>
             <Link href="register">
               <a
-                className={`cursor-pointer text-[14px] font-bold mx-2 px-4 bg-color_2  rounded-3xl text-color_7  py-2 ${
+                className={`cursor-pointer text-[16px] font-semibold mx-2 px-4 bg-color_2  rounded text-color_7  py-2 ${
                   router.pathname === "/register"
                     ? "text-color_7  bg-color_1"
                     : ""
                 } `}
               >
-                REGISTER
+                Register
               </a>
             </Link>
             <SwipeableTemporaryDrawer

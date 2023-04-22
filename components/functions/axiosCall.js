@@ -66,11 +66,12 @@ async function axiosPost(URL, headers, body) {
     body,
   });
   const res = await result.json();
+  updateAccessToken(res);
   return res;
 }
 
 const updateAccessToken = (data) => {
-  if (data.newAccessToken) {
+  if (data && data.newAccessToken && data.newAccessToken) {
     localStorage.setItem("accessToken", data.newAccessToken);
   }
 };

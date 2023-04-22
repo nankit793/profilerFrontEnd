@@ -2,8 +2,8 @@ import React from "react";
 
 function Overview() {
   return (
-    <div className="bg-color_6 pb-10 rounded-xl drop-shadow ">
-      <div className="bg-color_4 p-5 rounded-t-xl">
+    <div className="bg-color_6 pb-10  drop-shadow ">
+      <div className="bg-color_4 p-5">
         <div className="text-[20px]  font-bold text-[white]">
           {/* BUILD YOU OWN PERSONALIZED PORTFOLIO FOR FREE */}
           Build your own personalized portfolio for free with imProfile

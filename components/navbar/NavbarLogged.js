@@ -50,10 +50,10 @@ function NavbarLogged() {
           </div>
           <div className="flex items-center mr-2 ">
             <div className="md:block hidden">
-              <Link href="/">
+              <Link href="/explore">
                 <a
                   className={`cursor-pointer text-[16px]  mx-2 text-color_2  ${
-                    router.pathname === "/aboutUs"
+                    router.pathname === "/explore"
                       ? "text-color_1"
                       : "text-color_2"
                   } `}
@@ -104,21 +104,28 @@ function NavbarLogged() {
                 }
                 text={
                   <div className="w-[45px] h-[45px] overflow-hidden bg-color_8 rounded-full ">
-                    <Image
-                      unoptimized
-                      fill={true}
-                      // fill
-                      src={`http://localhost:5000/profilePhoto?userid=${localStorage.getItem(
-                        "userid"
-                      )}`}
-                      alt="Picture of the author"
-                      // objectFit="revert"
-                      width="100%"
-                      height="120%"
-                      layout="responsive"
-                      objectFit="cover"
-                      object-position="center"
-                    />
+                    {image ? (
+                      <Image
+                        unoptimized
+                        // fill
+                        src={`data:image/png;base64,` + image}
+                        fill={true}
+                        // fill
+                        alt="Picture of the author"
+                        // objectFit="revert"
+                        width="100%"
+                        height="100%"
+                        layout="responsive"
+                        objectFit="cover"
+                        object-position="center"
+                      />
+                    ) : (
+                      <>
+                        <div className="rounded-full w-[150px] h-[150px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
+                          <PersonIcon fontSize="large" />
+                        </div>
+                      </>
+                    )}
                   </div>
                 }
               />

@@ -68,26 +68,6 @@ function Uid(props) {
       if (userid) {
         dispatch(getBasicDataActions.getBasicData({ userid: userid }));
       }
-      if (userid && userid === localStorage.getItem("userid")) {
-        if (profilePic.isFetched && profilePic.profilePhoto) {
-          setImage(profilePic.profilePhoto.data);
-        } else {
-          setImage(null);
-        }
-      } else if (userid && userid !== localStorage.getItem("userid")) {
-        axios
-          .get(`http://localhost:5000/profilePhoto?userid=${userid}`)
-          .then(function (response) {
-            if (response.status === 200) {
-              setImage(response.data);
-            } else {
-              setImage(null);
-            }
-          })
-          .catch(function (error) {
-            setImage(null);
-          });
-      }
     };
     effectHandler();
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -205,7 +185,7 @@ function Uid(props) {
         ></meta>
         <link rel="canonical" href="/" />
       </Head>
-      <div className="max-w-[1500px] h-[100%]">
+      <div className="max-w-[1500px] h-[100%] ">
         {profileLoading && (
           <div className="w-full h-screen flex justify-center items-center">
             <CircularProgresser />
@@ -214,26 +194,26 @@ function Uid(props) {
         {!profileLoading && isUserFound && (
           <div className="md:px-5 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3 pt-14">
             <div className="h-min md:min-w-[300px] md:w-[30%] w-[100%]  overflow-y-auto bg-color_2 rounded-t-xl  flex flex-col justify-start items-center">
-              <div className="my-3 rounded-full drop-shadow h-[150px] w-[150px]  flex justify-center items-center bg-color_8 text-color_2">
+              <div className=" bg-color_3 h-[160px] w-[160px] overflow-hidden rounded-full">
                 <Image
                   unoptimized
                   // fill
-                  src={`http://localhost:5000/profilePhoto?userid=${userBasicData.userid}`}
-                  alt="Picture of the author"
+                  src={`http://localhost:5000/profilePhoto/direct?userid=${userid}`}
+                  fill={true}
+                  // fill
+                  alt="pic"
                   // objectFit="revert"
-                  width={1350}
+                  width="100%"
+                  height="100%"
                   className="rounded-full"
-                  // layout="responsive"
+                  layout="responsive"
                   objectFit="cover"
-                  height={1350}
+                  object-position="center"
                 />
-                {/* {image ? (
-                ) : (
-                  <PersonIcon fontSize="large" sx={{ fontSize: "40px" }} />
-                )} */}
               </div>
-              <div className=" w-full text-center px-4 ">
-                <div className="text-text_1 capitalize text-xl gap-2  flex justify-center items-end">
+
+              <div className=" w-full text-center ">
+                <div className="text-text_1 capitalize text-xl gap-2 mt-1 flex justify-center items-end">
                   {userBasicData.name ? userBasicData.name : ""}
                   {/* <div className="w-min text-[13px] text-text_2  whitespace-nowrap w-full ">
                     flag, country, gender, age
@@ -362,8 +342,8 @@ function Uid(props) {
                   </div>
                 </div>
               </div>
-              <div className="p-3  rounded  text-text_2 text-center text-md">
-                {userBasicData && userBasicData.slogan && userBasicData.slogan}
+              <div className="pt-1  rounded  text-text_2 text-left text-md">
+                {userBasicData && userBasicData.bio ? userBasicData.bio : ""}
               </div>
             </div>
             {/* side panel end  */}
@@ -376,6 +356,7 @@ function Uid(props) {
                   { name: "Blogs", id: 1 },
                   { name: "Portfolio", id: 0 },
                   { name: "Bookmarks", id: 2, loginRequired: true },
+                  { name: "Stats", id: 3 },
                 ]}
               />
             </div>

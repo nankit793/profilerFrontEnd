@@ -52,17 +52,20 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-      <div className="h-screen imageBackground overflow-hidden flex flex-col items-center max-h-[800px] justify-between">
-        <div className="flex flex-col md:flex-row">
+      <div className="h-[50%] min-h-[300px] bg-color_9 flex flex-col items-start px-3 max-h-[700px] justify-center pt-14">
+        <div className="flex gap-5 flex-col ">
           <div className="">
             <span className="whitespace-nowrap text-[25px]">
-              Profiler makes it easy to manage <br />
+              Create Blogs and Portfolio <br />
             </span>
-            <strong className="text-color_2 text-[25px] font-bold">
-              different profiles
+            <strong className="text-text_1 text-[25px] font-bold">
+              FOR FREE!!!
             </strong>
           </div>
-          <div className="md:flex text-center justify-center items-center p-2 w-full">
+          <div className="px-6 py-2 bg-color_7 hover:bg-color_5 text-color_2 cursor-pointer w-fit rounded duration-200">
+            start exploring
+          </div>
+          {/* <div className="md:flex text-center justify-center items-center p-2 w-full">
             <div>
               <ButtonPrimary
                 type="button"
@@ -77,12 +80,12 @@ export default function Home() {
                 className="border-2 py-4 px-10 bg-[#a5eefa] text-[black]  font-semibold drop-shadow-sm rounded-xl"
               />
             </div>
-          </div>
+          </div> */}
         </div>
-        <div className="md:text-[25px] text-[18px] mb-5 text-color_2 text-center font-bold ">
+        {/* <div className="md:text-[25px] text-[18px] mb-5 text-color_2 text-center font-bold ">
           1Million People are using Profiler as their Portfolio <br />
           <span className="italic">Join the team Now!</span>
-        </div>
+        </div> */}
       </div>
       hyy
       {/* 

@@ -7,7 +7,7 @@ import Popover from "../Popover";
 // import * as getBasicDataActions from "../../redux-next/getUserBasic/actions";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
-
+import { ifLogged } from "../../ifLogged";
 function BottomJobTab(props) {
   const [portfolioData, setPortfolioData] = useState(null);
   const userData = useSelector((state) => state.basicDataReducer);
@@ -38,60 +38,70 @@ function BottomJobTab(props) {
                 key={index}
               >
                 <div className="flex justify-between items-center  pr-3">
-                  <div className="text-text_1 text-[20px] font-semibold text-[17px]">
-                    Portfolio {index + 1}
+                  <div
+                    onClick={() => {
+                      router.push(`/update/jobProfile?pid=${portfolio._id}`);
+                    }}
+                    className="text-text_1 text-[20px] font-semibold text-[17px]"
+                  >
+                    Portfolio
                   </div>
 
                   <div className=" rounded-full text-text_1 cursor-pointer">
-                    <Popover
-                      data={
-                        <div className="px-3 py-1 text-left">
-                          <div
-                            onClick={() => {
-                              router.push(
-                                `/update/jobProfile?pid=${portfolio._id}`
-                              );
-                            }}
-                            id="operationButton"
-                            className="text-text_1  duration-200 cursor-pointer flex items-center "
-                          >
-                            edit
-                          </div>
-                          <div
-                            onClick={() => {
-                              router.push(`/view/portfolio/${portfolio._id}`);
-                            }}
-                            id="operationButton"
-                            className="py-1  duration-200 cursor-pointer flex items-center "
-                          >
-                            visit
-                          </div>
-                          <div
-                            // onClick={() => {
-                            //   router.push(
-                            //     `/update/jobProfile?pid=${portfolio._id}`
-                            //   );
-                            // }}
-                            id="operationButton"
-                            className="text-text_1 text-[maroon] py-1 duration-200 cursor-pointer flex items-center "
-                          >
-                            deactivate
-                          </div>
-                        </div>
-                      }
-                      text={
-                        <div className="">
-                          <MoreHorizIcon />
-                        </div>
-                      }
-                    />
+                    {ifLogged() &&
+                      router.query.uid === localStorage.getItem("userid") && (
+                        <Popover
+                          data={
+                            <div className="px-3 py-1 text-left">
+                              <div
+                                onClick={() => {
+                                  router.push(
+                                    `/update/jobProfile?pid=${portfolio._id}`
+                                  );
+                                }}
+                                id="operationButton"
+                                className="text-text_1  duration-200 cursor-pointer flex items-center "
+                              >
+                                edit
+                              </div>
+                              <div
+                                onClick={() => {
+                                  router.push(
+                                    `/view/portfolio/${portfolio._id}`
+                                  );
+                                }}
+                                id="operationButton"
+                                className="py-1  duration-200 cursor-pointer flex items-center "
+                              >
+                                visit
+                              </div>
+                              <div
+                                // onClick={() => {
+                                //   router.push(
+                                //     `/update/jobProfile?pid=${portfolio._id}`
+                                //   );
+                                // }}
+                                id="operationButton"
+                                className="text-text_1 text-[maroon] py-1 duration-200 cursor-pointer flex items-center "
+                              >
+                                deactivate
+                              </div>
+                            </div>
+                          }
+                          text={
+                            <div className="">
+                              <MoreHorizIcon />
+                            </div>
+                          }
+                        />
+                      )}
                   </div>
                 </div>
                 <div className="my-2 text-text_2">
                   {portfolio && portfolio.about && portfolio.about}
                 </div>
                 <div className="my-3 text-text_2 flex gap-2 flex-wrap">
-                  {portfolio &&
+                  {/* {portfolio &&
                     portfolio.skills &&
                     portfolio.skills.map((item) => {
                       return (
@@ -99,7 +109,7 @@ function BottomJobTab(props) {
                           <div className=" text-color_4">{item}</div>
                         </>
                       );
-                    })}
+                    })} */}
                 </div>
                 <div className="  rounded-md text-[blue] text-sm cursor-pointer w-min whitespace-nowrap">
                   View Resume

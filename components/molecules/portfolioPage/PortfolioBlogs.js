@@ -4,6 +4,9 @@ import Image from "next/image";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
+
+import NavigateNextIcon from "@mui/icons-material/NavigateNext";
+import NavigateBeforeIcon from "@mui/icons-material/NavigateBefore";
 function PortfolioBlogs(props) {
   const [blogsData, setBlogsData] = useState([]);
   const [blogViewIndex, setBlogViewIndex] = useState({
@@ -32,11 +35,11 @@ function PortfolioBlogs(props) {
   }, [props.portfolioData]);
 
   return (
-    <div className="bg-[#fafafa] mt-4 w-full ">
-      <div className="text-center p-2 font-bold text-text_1 text-[25px]">
+    <div className=" bg-[#fafafa] mt-4 w-full ">
+      <div className="text-center pt-3 pb-2 font-bold text-text_1 text-[25px]">
         My Blogs
       </div>
-      <div className="md:flex px-6  gap-3">
+      <div className="md:flex justify-center flex-wrap px-2 md:px-6  gap-3">
         {blogsData &&
           blogsData
             .slice(blogViewIndex.start, blogViewIndex.end)
@@ -45,7 +48,7 @@ function PortfolioBlogs(props) {
                 <>
                   <div
                     key={index}
-                    className="border rounded md:max-w-[450px] md:w-[45%] bg-color_2"
+                    className="border grow md:my-0 my-2 rounded md:max-w-[400px] md:min-w-[400px] md:w-[45%] bg-color_2 "
                   >
                     <div className="absolu">
                       <Image
@@ -68,7 +71,7 @@ function PortfolioBlogs(props) {
                       >
                         {blog.heading && blog.heading}
                       </div>
-                      <div className="text-text_2  ">
+                      <div className="text-text_2  overflow-x-auto">
                         {blog.paragraphs &&
                           blog.paragraphs[0].paragraph.slice(0, 250)}
                       </div>
@@ -118,25 +121,39 @@ function PortfolioBlogs(props) {
       <div className="flex gap-3 justify-center py-5">
         <div
           onClick={() => {
-            setBlogViewIndex({
-              start: blogViewIndex.start - 3,
-              end: blogViewIndex.end - 3,
-            });
+            if (blogViewIndex.start > 1) {
+              setBlogViewIndex({
+                start: blogViewIndex.start - 3,
+                end: blogViewIndex.end - 3,
+              });
+            } else {
+              setBlogViewIndex({
+                start: blogsData.length - 3,
+                end: blogsData.length,
+              });
+            }
           }}
-          className="bg-color_4 rounded-md text-color_2  px-5 py-2 cursor-pointer"
+          className="bg-color_4 rounded-md text-color_2  px-2 rounded-full py-2 cursor-pointer"
         >
-          prev
+          <NavigateBeforeIcon />
         </div>
         <div
           onClick={() => {
-            setBlogViewIndex({
-              start: blogViewIndex.start + 3,
-              end: blogViewIndex.end + 3,
-            });
+            if (blogsData.length >= blogViewIndex.end + 3) {
+              setBlogViewIndex({
+                start: blogViewIndex.start + 3,
+                end: blogViewIndex.end + 3,
+              });
+            } else {
+              setBlogViewIndex({
+                start: 0,
+                end: 3,
+              });
+            }
           }}
-          className="bg-color_4 rounded-md text-color_2  px-5 py-2 cursor-pointer"
+          className="bg-color_4 rounded-md text-color_2  px-2 rounded-full py-2 cursor-pointer"
         >
-          Next
+          <NavigateNextIcon />
         </div>
       </div>
     </div>

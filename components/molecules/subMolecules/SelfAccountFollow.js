@@ -33,7 +33,7 @@ function SelfAccountFollow(props) {
 
   return (
     <>
-      <div className="flex text-text_1 gap-10 bg-color_2 mt-3 rounded-full w-full justify-center ">
+      <div className="flex text-text_1 gap-10 bg-color_2 mt-1 rounded-full w-full justify-center ">
         <div className="text-color_5 font-semibold text-[20px]">
           {props.followersCount}{" "}
           <div className="text-[15px] text-color_4 font-normal">Followers</div>

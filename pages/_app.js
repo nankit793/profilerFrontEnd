@@ -21,7 +21,7 @@ function MyApp({ Component, pageProps }) {
   const [progress, setProgress] = useState(20);
   const router = useRouter();
   const dispatch = useDispatch();
-  const followingList = useSelector((state) => state.followingListReducer);
+  // const followingList = useSelector((state) => state.followingListReducer);
 
   useEffect(() => {
     const token = localStorage.getItem("idToken");

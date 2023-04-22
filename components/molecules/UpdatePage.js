@@ -88,7 +88,16 @@ function UpdatePage(props) {
           formData.append("image", props.image.file);
         }
         formData.append("data", JSON.stringify(props.data));
-
+        if (props.otherImages) {
+          for (const i in props.otherImages) {
+            if (Object.hasOwnProperty.call(props.otherImages, i)) {
+              const element = props.otherImages[i];
+              console.log(element.file);
+              formData.append(i, element.file);
+            }
+          }
+        }
+        console.log(formData);
         save = await fetch(props.onSave, {
           method: props.request,
           body: formData,
@@ -103,12 +112,12 @@ function UpdatePage(props) {
           // body: props.data,
         });
       }
-      const finalSave = await save.json();
-      if (save && save.status === 200 && save.statusText === "OK") {
-        successNotification(finalSave.message, "Success");
-      } else {
-        errorNotification("chages not saved", "Error");
-      }
+      // const finalSave = await save.json();
+      // if (save && save.status === 200 && save.statusText === "OK") {
+      //   successNotification(finalSave.message, "Success");
+      // } else {
+      //   errorNotification("chages not saved", "Error");
+      // }
     } catch (error) {
       console.log(error.message);
       errorNotification("chages not saved", "Error");

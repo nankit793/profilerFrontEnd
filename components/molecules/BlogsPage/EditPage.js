@@ -5,7 +5,7 @@ import { Avatar } from "@mui/material";
 import InputField from "../../atoms/input/InputField";
 import { useRouter } from "next/router";
 
-function AddBlog(props) {
+function EditBlog(props) {
   const [selectedRedirection, setSelectedRedirection] = useState({
     web: true,
     youtube: false,
@@ -76,15 +76,12 @@ function AddBlog(props) {
     setImage(file);
     props.onImageChange(file);
   };
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
 
   useEffect(() => {
     if (props.editPage && router.query.bid && !props.blogStructure) {
       const fetcher = async () => {
         const data = await fetch(
-          `http://localhost:5000/blogPost/get/${router.query.bid}`
+          `http://localhost:5000/blogPost/noview/${router.query.bid}`
         );
         const saveData = await data.json();
         if (
@@ -349,7 +346,7 @@ function AddBlog(props) {
                         className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
                         length={60}
                         multiline={true}
-                        value={paragraphs[index].subHead}
+                        value={para.subHead}
                         type="text"
                         onChange={(e) => {
                           // console.log("first", index, paragraphs, e.target.value);
@@ -367,7 +364,7 @@ function AddBlog(props) {
                         className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
                         length={1000}
                         multiline={true}
-                        value={paragraphs[index].paragraph}
+                        value={para.paragraph}
                         type="text"
                         onChange={(e) => {
                           // console.log("first", index, paragraphs, e.target.value);
@@ -380,20 +377,22 @@ function AddBlog(props) {
                       />
                     </div>
                     <div className="mt-2">
-                      {props.editPage &&
-                        paragraphs[index].imageURL &&
-                        `para ${index + 1} image`}
-                      {props.otherImages &&
-                      props.otherImages[`p${index + 1}`] ? (
+                      {(props.otherImages &&
+                        props.otherImages[`p${index + 1}`]) ||
+                      para.imageURL ? (
                         <div className="w-full">
                           <div className="text-center my-3 text-text_2">
-                            {props.otherImages[`p${index + 1}`] &&
-                              props.otherImages[`p${index + 1}`].name}
+                            {(para.imageURL ||
+                              props.otherImages[`p${index + 1}`]) &&
+                              `para ${index + 1} image`}
                           </div>
                           <div className="flex justify-center gap-3 flex-wrap items-center">
                             <div
                               onClick={() => {
                                 props.onParaImageChange(null, `p${index + 1}`);
+                                const newArr = [...paragraphs];
+                                newArr[index].imageURL = null;
+                                setParagraphs(newArr);
                               }}
                               className="px-3  cursor-pointer py-2 rounded bg-color_2 border text-text_7"
                             >
@@ -405,6 +404,9 @@ function AddBlog(props) {
                               onChange={(e) => {
                                 if (e.target.files[0]) {
                                   console.log("reached");
+                                  const newArr = [...paragraphs];
+                                  newArr[index].imageURL = null;
+                                  setParagraphs(newArr);
                                   props.onParaImageChange(
                                     e.target.files[0],
                                     `p${index + 1}`
@@ -425,6 +427,9 @@ function AddBlog(props) {
                             component="label"
                             onChange={(e) => {
                               if (e.target.files[0]) {
+                                const newArr = [...paragraphs];
+                                newArr[index].imageURL = null;
+                                setParagraphs(newArr);
                                 console.log("reached");
                                 props.onParaImageChange(
                                   e.target.files[0],
@@ -467,4 +472,4 @@ function AddBlog(props) {
   );
 }
 
-export default AddBlog;
+export default EditBlog;

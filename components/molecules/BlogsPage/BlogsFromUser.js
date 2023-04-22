@@ -20,7 +20,7 @@ function BlogsFromUser(props) {
 
   return (
     <>
-      <div className="bg-color_2 my-2 mx-2 rounded-xl md:h-[80vh]  overflow-auto ">
+      <div className="bg-color_2  h-[45vh]  overflow-auto ">
         {blogs &&
           blogs.isFetched &&
           blogs.blogs.length !== 0 &&
@@ -28,10 +28,8 @@ function BlogsFromUser(props) {
             return (
               <>
                 <div
-                  className={`mx-2 my-3 flex justify-start gap-3  duration-200 hover:border-color_9 bg-color_2 cursor-pointer rounded-sm hover:border hover:border-color_9 p-2 hover:bg-color_3 duration-300 border  ${
-                    blog._id === props.currBlog
-                      ? "bg-color_3 border-color_9"
-                      : ""
+                  className={`flex justify-start gap-3  duration-200 hover:border-color_9 bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
+                    blog._id === props.currBlog ? "bg-color_3" : ""
                   } `}
                 >
                   {/* <div className="w-[20%] min-w-[100px]  h-full  h-full bg-color_3 rounded-full m-2 overflow-hidden">
@@ -47,7 +45,7 @@ function BlogsFromUser(props) {
                       objectFit="cover"
                     />
                   </div> */}
-                  <div>
+                  <div className="overflow-x-auto">
                     <div className="font-semibold text-text_1">
                       {blog.heading}
                     </div>
@@ -57,9 +55,11 @@ function BlogsFromUser(props) {
                         blog.activities &&
                         blog.activities.blogUpload.split("T")[0]}
                     </div>
-                    <div className="text-text_2 text-sm">
+                    <div className="text-text_2 text-sm ">
                       {blog.paragraphs &&
-                        blog.paragraphs[0].paragraph.slice(0, 100)}
+                        blog.paragraphs[0] &&
+                        blog.paragraphs[0].paragraph &&
+                        blog.paragraphs[0].paragraph.slice(0, 250)}
                     </div>
                   </div>
                 </div>

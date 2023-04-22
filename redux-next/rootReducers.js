@@ -9,6 +9,8 @@ import profilePictureReducer from "./profilePhoto/reducer";
 import followingListReducer from "./followerList/reducer";
 import bookmarksReducer from "./getBookmarks/reducer";
 import authorBlogsReducer from "./getAuthorBlogs/reducer";
+import trendinBlogsReducer from "./GetTrendingBlogs/reducer";
+import sessionStorageReducer from "./sessionStorage/reducer";
 const appReducer = combineReducers({
   registerReducer,
   loginUserReducers,
@@ -19,7 +21,9 @@ const appReducer = combineReducers({
   profilePictureReducer,
   followingListReducer,
   bookmarksReducer,
+  trendinBlogsReducer,
   authorBlogsReducer,
+  sessionStorageReducer,
 });
 
 const rootReducer = (state, action) => {

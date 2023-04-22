@@ -24,7 +24,6 @@ import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
 import { FormControl, MenuItem, Select } from "@mui/material";
 
 function BlogsTab(props) {
-  const router = useRouter();
   const [deleteData, setDeleteData] = useState({});
   const [searchText, setSearchText] = useState("");
   const [selectedSorting, setSelectedSorting] = useState("ud");
@@ -34,6 +33,7 @@ function BlogsTab(props) {
   });
 
   const dispatch = useDispatch();
+  const router = useRouter();
 
   const blogs = useSelector((state) => state.authorBlogsReducer);
 
@@ -224,47 +224,51 @@ function BlogsTab(props) {
                         </div>
                       ) : (
                         <>
-                          {ifLogged() && (
-                            <Popover
-                              data={
-                                <>
-                                  <div
-                                    onClick={(e) => {
-                                      router.push(
-                                        `/update/blog?bid=${blog._id}`
-                                      );
+                          {ifLogged() &&
+                            router.query.uid ===
+                              localStorage.getItem("userid") && (
+                              <Popover
+                                data={
+                                  <>
+                                    <div
+                                      onClick={(e) => {
+                                        router.push(
+                                          `/update/blog?bid=${blog._id}`
+                                        );
 
-                                      // removeEducation(index);
-                                    }}
-                                    id="operationButton"
-                                    className="text-text_1  duration-200 cursor-pointer flex items-center p-1 "
-                                  >
-                                    Edit
+                                        // removeEducation(index);
+                                      }}
+                                      id="operationButton"
+                                      className="text-text_1  duration-200 cursor-pointer flex items-center p-1 "
+                                    >
+                                      Edit
+                                    </div>
+                                    <div
+                                      onClick={() => {
+                                        // removeEducation(index);
+                                        deleteBlog(blog);
+                                      }}
+                                      id="operationButton"
+                                      className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
+                                    >
+                                      Delete
+                                    </div>
+                                  </>
+                                }
+                                text={
+                                  <div className="text-text_1">
+                                    <MoreHorizIcon />
                                   </div>
-                                  <div
-                                    onClick={() => {
-                                      // removeEducation(index);
-                                      deleteBlog(blog);
-                                    }}
-                                    id="operationButton"
-                                    className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
-                                  >
-                                    Delete
-                                  </div>
-                                </>
-                              }
-                              text={
-                                <div className="text-text_1">
-                                  <MoreHorizIcon />
-                                </div>
-                              }
-                            />
-                          )}
+                                }
+                              />
+                            )}
                         </>
                       )}
                     </div>
                     <div className="text-text_2 mt-3 my-2 ">
                       {blog.paragraphs &&
+                        blog.paragraphs[0] &&
+                        blog.paragraphs[0].paragraph &&
                         blog.paragraphs[0].paragraph.slice(0, 250)}
                     </div>
                     <div className="flex justify-between items-end ">

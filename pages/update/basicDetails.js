@@ -49,7 +49,7 @@ function BasicDetails() {
   const registerData = useSelector((state) => state.registerReducer);
   const userData = useSelector((state) => state.basicDataReducer);
   const userBasicUpload = useSelector((state) => state.basicDataUploadReducer);
-  // const profileList = useSelector((state) => state.profileListReducer);
+  const profileList = useSelector((state) => state.profileListReducer);
   const profilePic = useSelector((state) => state.profilePictureReducer);
 
   useEffect(() => {
@@ -65,13 +65,13 @@ function BasicDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // useEffect(() => {
-  //   if (profilePic.isFetched && profilePic.profilePhoto) {
-  //     const base = profilePic.profilePhoto.data.toString("base64");
-  //     setImage(base);
-  //   }
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, [profilePic]);
+  useEffect(() => {
+    if (profilePic.isFetched && profilePic.profilePhoto) {
+      const base = profilePic.profilePhoto.data.toString("base64");
+      setImage(base);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [profilePic]);
 
   const changeImage = async (e) => {
     const file = e.target.files[0];
@@ -93,7 +93,7 @@ function BasicDetails() {
       });
       if (save && save.status === 200 && save.statusText === "OK") {
         // setImage(null);
-        // dispatch(getProfilePhoto.getProfilePicture("data"));
+        dispatch(getProfilePhoto.getProfilePicture("data"));
       } else {
         setShowUploaderMessage("error occured try again");
       }
@@ -160,20 +160,24 @@ function BasicDetails() {
         {/* <Croppered croppedImage={croppedImage} /> */}
         <form onSubmit={handleSubmit}>
           <div className="bg-white mt-3  rounded-xl  pb-3">
-            <div className="px-3 py-5 md:py-10 w-full md:flex flex-wrap justify-evenly  w-full items-start">
+            <div className="px-3 py-5 md:py-5 w-full md:flex flex-wrap justify-evenly  w-full items-start">
               <div className="flex flex-col items-center ">
                 {image ? (
-                  <div className="border border-dashed border-color_7 bg-color_3 max-h-[200px] max-w-[200px] min-h-[200px] min-w-[200px] overflow-hidden rounded-full flex justify-center items-center p-1">
+                  <div className="border border-dashed border-color_7 bg-color_3 h-[200px] w-[200px] overflow-hidden rounded-full p-1">
                     <Image
                       unoptimized
                       // fill
                       src={`data:image/png;base64,` + image}
-                      alt="Picture of the author"
-                      // objectFit="none"
-                      objectPosition="50% bottom"
-                      width="300px"
-                      className=" bg-color_8 rounded-full"
-                      height="300px"
+                      fill={true}
+                      // fill
+                      alt="pic"
+                      // objectFit="revert"
+                      width="100%"
+                      height="100%"
+                      className="rounded-full"
+                      layout="responsive"
+                      objectFit="cover"
+                      object-position="center"
                     />
                   </div>
                 ) : (
@@ -202,22 +206,17 @@ function BasicDetails() {
                       <>
                         <div
                           key={index}
-                          className="flex m-1 gap-3  w-full  justify-between p-5 h-min border bg-color_2  w-full rounded-lg "
+                          className="flex m-1 gap-[100px]  w-full  justify-between px-5 py-3 h-min border bg-color_2  w-full rounded-lg "
                         >
-                          <div className="text-text_1 ">
-                            Portfolio {index + 1}
-                          </div>
+                          <div className="text-text_1 ">Portfolio</div>
                           <div
-                            className="text-linkBlue cursor-pointer pl-10"
+                            className="text-linkBlue cursor-pointer "
                             onClick={() => {
                               router.push(
                                 `/update/jobProfile?pid=${portfolio._id}`
                               );
                             }}
                           >
-                            <EditIcon
-                              sx={{ fontSize: 18, marginRight: "5px" }}
-                            />
                             update
                           </div>
                         </div>
@@ -226,15 +225,15 @@ function BasicDetails() {
                   })
                 ) : (
                   <>
-                    <div className="flex justify-between p-5 h-min border bg-color_2  w-full rounded-lg ">
+                    <div className="flex m-1 gap-[100px]  w-full  justify-between px-5 py-3 h-min border bg-color_2  w-full rounded-lg">
                       <div className="text-text_1 ">Portfolio</div>
                       <div
-                        className="text-linkBlue  cursor-pointer"
+                        className="text-linkBlue cursor-pointer pl-10"
                         // onClick={() => {
-                        //   router.push(`/update/jobProfile`);
+
                         // }}
                       >
-                        Create
+                        create
                       </div>
                     </div>
                   </>
@@ -633,6 +632,16 @@ function BasicDetails() {
                 {/* </Typography>
                   </AccordionDetails> */}
                 {/* </Accordion> */}
+                <div className="mt-2">
+                  <UserInputFields
+                    name="bio"
+                    onChange={onChange}
+                    keyName="Bio"
+                    multiline={true}
+                    length={500}
+                    value={userBasicData.bio}
+                  />
+                </div>
               </div>
               <div className="w-full mt-5 md:mt-0">
                 <div className="text-text_1 font-bold text-[18px] py-2">

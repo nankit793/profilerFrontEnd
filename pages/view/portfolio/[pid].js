@@ -29,16 +29,26 @@ import Footer from "../../../components/footer/Footer";
 import CircularProgresser from "../../../components/atoms/CircularProgresser";
 import PortfolioBlogs from "../../../components/molecules/portfolioPage/PortfolioBlogs";
 import Education from "../../../components/molecules/portfolioPage/Education";
+import PortfolioInteration from "../../../components/molecules/portfolioPage/PortfolioInteration";
 
 function Portfolio() {
   const [portfolioData, setPortfolioData] = useState({});
   const [portfolioActivities, setPortfolioActivities] = useState({});
+  const [numLikes, setNumLikes] = useState(0);
+  const [numComments, setNumComments] = useState(0);
+  const [isLiked, setIsLiked] = useState(false);
   const router = useRouter();
   useEffect(() => {
     if (router.query.pid) {
       const fetcher = async () => {
         const data = await fetch(
-          `http://localhost:5000/portfolio/get?pid=${router.query.pid}`
+          `http://localhost:5000/portfolio/get?pid=${router.query.pid}`,
+          {
+            meathod: "GET",
+            headers: {
+              userid: localStorage.getItem("userid"),
+            },
+          }
         );
         const saveData = await data.json();
         if (
@@ -50,16 +60,15 @@ function Portfolio() {
         ) {
           setPortfolioData(saveData.portfolio);
           setPortfolioActivities(saveData.portfolioAtActivities);
+          setIsLiked(saveData.isLiked);
+          setNumLikes(saveData.portfolioAtActivities.numLikes);
+          setNumComments(saveData.portfolioAtActivities.numReviews);
         }
       };
       fetcher();
     }
   }, [router.query.pid]);
   useEffect(() => {
-    console.log(
-      portfolioData && portfolioData.user && portfolioData.user.userid,
-      portfolioData
-    );
     if (portfolioData && portfolioData.user && portfolioData.user.userid) {
       const fetcher = async () => {
         const data = await fetch(`http://localhost:5000/getbasic`, {
@@ -80,6 +89,12 @@ function Portfolio() {
     <>
       <div className="pt-16  w-full bg-color_9">
         <div className=" flex justify-end rounded-full text-color_2 flex gap-3 items-start">
+          <div className="text-center flex items-center px-2 rounded-l-xl">
+            <RemoveRedEyeIcon fontSize="small" />
+            <div className="pl-1">
+              {portfolioActivities && portfolioActivities.views}
+            </div>
+          </div>
           <div className="text-center flex items-center bg-color_4 px-2 rounded-l-xl">
             <RemoveRedEyeIcon fontSize="small" />
             <div className="pl-1">
@@ -191,7 +206,15 @@ function Portfolio() {
           })}
       </div>
       <PortfolioBlogs portfolioData={portfolioData} />
-      <Education />
+      <Education portfolioData={portfolioData} />
+      <PortfolioInteration
+        pid={router.query.pid}
+        isLiked={isLiked}
+        numLikes={numLikes}
+        numComments={numComments}
+        setNumLikes={setNumLikes}
+        setNumComments={setNumComments}
+      />
     </>
   );
 }

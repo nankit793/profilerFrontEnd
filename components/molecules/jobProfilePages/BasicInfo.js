@@ -6,10 +6,16 @@ import InputField from "../../atoms/input/InputField";
 
 import Box from "@mui/material/Box";
 import Skeleton from "@mui/material/Skeleton";
+import { FormControl, MenuItem, Select } from "@mui/material";
 
 function BasicInfo(props) {
   const [jobBasicData, setJobBasicData] = useState();
-  const [skill, setSkill] = useState("");
+  const [skill, setSkill] = useState({
+    skill: "",
+    level: "beginner",
+    month: "1",
+    year: "0",
+  });
   const [hobby, setHobby] = useState("");
   const [showAddField, setShowAddField] = useState(false);
   const [showSkeletonSkills, setShowSkeletonSkills] = useState(true);
@@ -72,7 +78,13 @@ function BasicInfo(props) {
       onChange(e);
     }
   };
-
+  const skillChange = (el) => {
+    console.log(el);
+    setSkill((prev) => ({
+      ...prev,
+      [el.target.name]: el.target.value,
+    }));
+  };
   return (
     <>
       <div className="flex justify-between">
@@ -125,12 +137,20 @@ function BasicInfo(props) {
                     return (
                       <div
                         key={index}
-                        className=" bg-color_2 px-3 h-min py-2  drop-shadow rounded-3xl m-2"
+                        className=" bg-color_2 px-3 h-min py-2  drop-shadow rounded m-2"
                       >
                         <div className="flex justify-center text-text_1 items-center">
-                          {skill}
+                          <div>
+                            <div className=" text-[20px] text-text_1">
+                              {skill.skill}
+                            </div>
+                            <div className="text-text_2">{skill.level}</div>
+                            <div>
+                              {skill.year} years, {skill.month} months
+                            </div>
+                          </div>
                           <div
-                            className="cursor-pointer"
+                            className="cursor-pointer absolute top-0 right-2"
                             onClick={() => {
                               handleCloseTag(skill, "skills");
                             }}
@@ -148,34 +168,118 @@ function BasicInfo(props) {
               {jobBasicData &&
                 jobBasicData.skills &&
                 jobBasicData.skills.length < 10 && (
-                  <div
-                    onKeyDown={(e) => {
-                      if (e.key === "Enter") {
-                        addTag("skills", skill);
-                        setSkill("");
-                      }
-                    }}
-                    className="w-full drop-shadow-sm m-3 rounded-3xl bg-white border flex"
-                  >
-                    <input
-                      type="text"
-                      value={skill}
-                      onChange={(val) => {
-                        setSkill(val.target.value);
-                      }}
-                      placeholder="add a skill..."
-                      className="w-full p-2 outline-none focus:outline-bg_color_5 pl-6 rounded-l-3xl "
-                    />
+                  <>
                     <div
-                      onClick={() => {
-                        addTag("skills", skill);
-                        setSkill("");
+                      onKeyDown={(e) => {
+                        if (e.key === "Enter" && skill.skill) {
+                          addTag("skills", skill);
+                          setSkill({
+                            skill: "",
+                            level: "beginner",
+                            month: 1,
+                            year: 0,
+                          });
+                        }
                       }}
-                      className="px-5 bg-color_5 font-bold text-lg cursor-pointer rounded-3xl m-1 flex justify-center align-center text-white"
+                      className="w-full drop-shadow-sm p-2 bg-white border "
                     >
-                      +
+                      <div className="min-w-[50%] flex justify-start mx-2 gap-3 items-center">
+                        <div>Skill:</div>
+                        <input
+                          type="text"
+                          value={skill.skill}
+                          name="skill"
+                          onChange={skillChange}
+                          placeholder="add a skill..."
+                          className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
+                        />
+                      </div>
+                      <div className="grow flex justify-start  my-2 items-center gap-3 mx-2">
+                        <div>Level:</div>
+                        <div>
+                          <FormControl className="min-w-[150px]  bg-color_2 flex w-full justify-end w-full   text-left">
+                            <Select
+                              labelId="demo-simple-select-label"
+                              // label="Sort by"
+                              id="demo-simple-select"
+                              name="level"
+                              className="h-[45px] pr-[20px] "
+                              onChange={skillChange}
+                              value={skill.level}
+                            >
+                              <MenuItem value="beginner"> beginner </MenuItem>
+                              <MenuItem value="intermediate">
+                                intermediate
+                              </MenuItem>
+                              <MenuItem value="expert">expert</MenuItem>
+                              {/* <MenuItem value="">prefer not to say</MenuItem> */}
+                            </Select>
+                          </FormControl>
+                        </div>
+                      </div>
+                      <div className="mx-2">
+                        <div>experience in</div>
+                        <div className="flex flex-wrap flex gap-3 ">
+                          <div className=" flex min-w-[20%] grow justify-start mx-2 gap-3 items-center">
+                            <div>Years:</div>
+                            <input
+                              type="Number"
+                              value={skill.year}
+                              name="year"
+                              max={2}
+                              onChange={skillChange}
+                              placeholder="0"
+                              className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
+                            />
+                          </div>
+                          <div className="grow flex justify-start mx-2 gap-3 items-center">
+                            <div>Months:</div>
+                            <FormControl className=" bg-color_2 flex w-full justify-end w-full   text-left">
+                              <Select
+                                labelId="demo-simple-select-label"
+                                // label="Sort by"
+                                id="demo-simple-select"
+                                name="month"
+                                className="h-[45px] pr-[20px] "
+                                onChange={skillChange}
+                                value={skill.month}
+                              >
+                                <MenuItem value="1">1</MenuItem>
+                                <MenuItem value="2">2</MenuItem>
+                                <MenuItem value="3">3</MenuItem>
+                                <MenuItem value="4">4</MenuItem>
+                                <MenuItem value="5">5</MenuItem>
+                                <MenuItem value="6">6</MenuItem>
+                                <MenuItem value="7">7</MenuItem>
+                                <MenuItem value="8">8</MenuItem>
+                                <MenuItem value="9">9</MenuItem>
+                                <MenuItem value="10">10</MenuItem>
+                                <MenuItem value="11">11</MenuItem>
+                                <MenuItem value="12">12</MenuItem>
+                                {/* <MenuItem value="">prefer not to say</MenuItem> */}
+                              </Select>
+                            </FormControl>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        onClick={() => {
+                          if (skill.skill) {
+                            addTag("skills", skill);
+                            setSkill({
+                              skill: "",
+                              level: "beginner",
+                              month: 1,
+                              year: 0,
+                            });
+                          }
+                        }}
+                        className="py-2 bg-color_5 text-lg cursor-pointer rounded-3xl my-2 flex justify-center align-center text-white"
+                      >
+                        add
+                      </div>
                     </div>
-                  </div>
+                  </>
                 )}
             </div>
           </div>

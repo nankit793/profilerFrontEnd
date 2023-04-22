@@ -13,13 +13,13 @@ import {
 } from "../../../components/functions/dateConverter";
 import { Avatar } from "@mui/material";
 import BlogInteraction from "../../../components/molecules/BlogsPage/BlogInteraction";
-import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BlogComments from "../../../components/molecules/BlogsPage/BlogComments";
 import { axiosPost } from "../../../components/functions/axiosCall";
 import {
   errorNotification,
   successNotification,
 } from "../../../components/atoms/AlertMessage";
+import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
 import * as getFollowingList from "../../../redux-next/followerList/actions";
 import BlogsFromUser from "../../../components/molecules/BlogsPage/BlogsFromUser";
@@ -235,21 +235,29 @@ function Blog() {
       {!fetchingFailed && blogData ? (
         <>
           <div className="flex md:flex-row flex-col-reverse flex-col justify-start items-start ">
-            <div className="md:mt-0 mt-3 md:min-w-[250px] md:w-[25%] w-full h-[100vh] border-r md:pt-14 flex flex-col">
-              <div className="mt-2  rounded mx-3 ">
-                <div className="bg-color_2 rounded-l border  text-center py-3 text-color_7 ">
-                  Based on Blog
+            <div className="md:mt-0 mt-3 md:min-w-[250px] md:w-[25%] w-full h-[100vh] border-r md:pt-14 flex flex-col ">
+              <div className="border overflow-hidden rounded-xl m-2">
+                <div className="text-text_1 px-2 bg-color_8 py-1 ">
+                  More from{" "}
+                  <span className="font-semibold">
+                    {(blogData && blogData.author && blogData.author.name) ||
+                      "user"}
+                  </span>
                 </div>
-                <div className="py-3 text-center text-color_4 border-t border-r border-b shadow-inner border-b-color_4 border-b-[3px] ">
-                  {(blogData && blogData.author && blogData.author.name) ||
-                    "user"}
-                  {"'s "} blogs
-                </div>
+                <BlogsFromUser
+                  currBlog={blogData._id}
+                  author={blogData && blogData.author && blogData.author}
+                />
               </div>
-              <BlogsFromUser
-                currBlog={blogData._id}
-                author={blogData && blogData.author && blogData.author}
-              />
+              <div className="border overflow-hidden rounded-xl m-2">
+                <div className="text-text_1 px-2 bg-color_8 py-1 ">
+                  More like this
+                </div>
+                <BlogsFromUser
+                  currBlog={blogData._id}
+                  author={blogData && blogData.author && blogData.author}
+                />
+              </div>
             </div>
             <div className="px-3 w-full md:w-[75%] overflow-y-scroll md:h-screen pt-14 bg-[#fafafa]">
               <div className=" flex pt-2 py-2  justify-between  mt-2 rounded-xl">
@@ -259,31 +267,29 @@ function Blog() {
                     router.push(`/home/${blogData.author.userid}`);
                   }}
                 >
-                  <div className="w-[70px] h-[70px] bg-color_8 rounded-full">
-                    <Image
-                      unoptimized
-                      // fill
-                      src={`http://localhost:5000/profilePhoto?userid=${blogData.author.userid}`}
-                      alt="Picture of the author"
-                      // objectFit="revert"
-                      width={150}
-                      className="rounded-full"
-                      height={150}
-                    />
-                    {/* {image ? (
+                  <div className="w-[65px] h-[65px] overflow-hidden bg-color_8 rounded-full ">
+                    {image ? (
                       <Image
                         unoptimized
                         // fill
-                        src={image}
+                        src={`data:image/png;base64,` + image}
+                        fill={true}
+                        // fill
                         alt="Picture of the author"
                         // objectFit="revert"
-                        width={150}
-                        className="rounded-full"
-                        height={150}
+                        width="100%"
+                        height="100%"
+                        layout="responsive"
+                        objectFit="cover"
+                        object-position="center"
                       />
                     ) : (
-                      <PersonIcon fontSize="large" sx={{ fontSize: "40px" }} />
-                    )} */}
+                      <>
+                        <div className="rounded-full w-[150px] h-[150px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
+                          <PersonIcon fontSize="large" />
+                        </div>
+                      </>
+                    )}
                   </div>
                   <div className="">
                     <div className=" text-text_1 text-[17px]">
