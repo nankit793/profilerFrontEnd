@@ -12,7 +12,6 @@ import UpdatePage from "../../components/molecules/UpdatePage";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import DatePicker from "react-datepicker";
-import { Scrollbars } from "react-custom-scrollbars";
 import Projects from "../../components/molecules/jobProfilePages/Projects";
 import BasicInfo from "../../components/molecules/jobProfilePages/BasicInfo";
 import Education from "../../components/molecules/jobProfilePages/Education";

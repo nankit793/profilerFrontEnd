@@ -18,7 +18,6 @@ import CircularProgresser from "../../components/atoms/CircularProgresser";
 import Image from "next/image";
 import PersonIcon from "@mui/icons-material/Person";
 import BottomNav from "../../components/molecules/homePage/BottomNav";
-import { Scrollbars } from "react-custom-scrollbars";
 // import SentimentVeryDissatisfiedIcon from "@mui/icons-material/SentimentVeryDissatisfied";
 import NoAccountsIcon from "@mui/icons-material/NoAccounts";
 import * as getProfilePhoto from "../../redux-next/profilePhoto/action";
