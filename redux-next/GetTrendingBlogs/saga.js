@@ -11,7 +11,7 @@ function* getTrendingBlogs(action) {
     const result = yield call(apiCalling.makeGetRequest, {
       method: "get",
       // mode: "cors",
-      url: "http://localhost:5000/trendingBlogs",
+      url: `${process.env.BACKEND_URL}/trendingBlogs`,
       body: action.payload,
     });
     if (result.status === 200 && result.data) {

@@ -5,7 +5,6 @@ import ChatBubbleOutlineIcon from "@mui/icons-material/ChatBubbleOutline";
 import ShareIcon from "@mui/icons-material/Share";
 
 function BlogPreview(props) {
-  console.log(props.otherImages, props.blogStructure.paragraphs);
   const [youtubeVideoCode, setYoutubeVideoCode] = useState(false);
   useEffect(() => {
     if (
@@ -17,7 +16,7 @@ function BlogPreview(props) {
       var match = props.blogStructure.redirectURL.match(regExp);
       setYoutubeVideoCode(match && match[7].length == 11 ? match[7] : false);
     }
-  }, []);
+  }, [props.blogStructure]);
   return (
     <>
       <div className="w-full text-text_1 font-semibold text-[30px]">
@@ -31,7 +30,7 @@ function BlogPreview(props) {
                 <Image
                   unoptimized
                   fill={true}
-                  src={`http://localhost:5000/blogPost/image/${props.image.url}`}
+                  src={`${process.env.BACKEND_URL}/blogPost/image/${props.image.url}`}
                   alt="image"
                   width="100%"
                   height="40%"
@@ -43,7 +42,7 @@ function BlogPreview(props) {
                 <Image
                   unoptimized
                   fill={true}
-                  src={`http://localhost:5000/blogPost/image/${props.image.url}`}
+                  src={`${process.env.BACKEND_URL}/blogPost/image/${props.image.url}`}
                   alt="image"
                   width="100%"
                   height="100%"
@@ -102,11 +101,11 @@ function BlogPreview(props) {
                   {para.paragraph}
                 </div>
                 <div className=" mt-2 w-[50%] bg-color_3 rounded md:block hidden">
-                  {para.imageURL ? (
+                  {/* {para.imageURL ? (
                     <Image
                       unoptimized
                       fill={true}
-                      src={`http://localhost:5000/blogPost/image/${para.imageURL}`}
+                      src={`${process.env.BACKEND_URL}/blogPost/image/${para.imageURL}`}
                       alt="image"
                       width="100%"
                       height="40%"
@@ -132,7 +131,7 @@ function BlogPreview(props) {
                           />
                         )}
                     </>
-                  )}
+                  )} */}
                 </div>
               </div>
             </>

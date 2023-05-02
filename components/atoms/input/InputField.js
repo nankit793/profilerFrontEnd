@@ -1,34 +1,36 @@
 import React from "react";
-import { TextField, InputAdornment } from "@mui/material";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/InputAdornment";
 import NotificationsIcon from "@mui/icons-material/Notifications";
 function InputField(props) {
   if (props.multiline) {
     return (
       <>
         <div className="w-full  h-fit subpixel-antialiased">
-          <TextField
+          <textarea
             id="outlined-start-adornment"
-            className="bg-[white]"
+            // size="small"
+            className="w-full outline-none h-full bg-[white]"
             value={props.value}
             required={props.required || false}
             multiline={true}
-            size="medium"
-            fullWidth={true}
+            size="small"
+            // width="100%"
             onChange={props.onChange}
             label={props.label}
             name={props.name}
             variant={props.variant ? props.variant : "outlined"}
+            maxLength={props.length}
             inputProps={{
               startAdornment: (
                 <InputAdornment position="start">kg</InputAdornment>
               ),
-              maxLength: props.length,
             }}
-          />
-          <div className="text-sm w-fit ml-auto mx-3 bg-color_4 px-4 py-1 rounded-full relative top-[-18px] text-[white]">
-            {props.value ? props.value.length : 0}/{props.length}
-          </div>
+          ></textarea>
         </div>
+        {/* <div className="text-sm w-fit ml-auto mx-3 bg-color_4 px-4 py-1 rounded-full relative top-[-18px] text-[white]">
+          {props.value ? props.value.length : 0}/{props.length}
+        </div> */}
       </>
     );
   }
@@ -37,14 +39,14 @@ function InputField(props) {
       <>
         {props.unit ? (
           <div className="w-full bg-color_2 subpixel-antialiased ">
-            <TextField
+            <textarea
               id=""
-              className=""
+              className="border-color_2"
               value={props.value}
               required={props.required || false}
               type={props.type ? props.type : "text"}
               placeholder={props.placeholder}
-              size="medium"
+              size="small"
               fullWidth={true}
               onChange={props.onChange}
               label={props.label}
@@ -64,23 +66,25 @@ function InputField(props) {
                 maxLength: props.length,
               }}
               variant={"outlined"}
-            />
+            ></textarea>
           </div>
         ) : (
-          <div className="w-full bg-color_2 text-color_9">
-            <TextField
+          <div className="w-full text-text_2 ">
+            <input
               id=""
-              className="font-semibold"
+              className=" w-full outline-none"
               value={props.value}
               required={props.required || false}
               type={props.type ? props.type : "text"}
               placeholder={props.placeholder}
-              size="medium"
+              size="small"
               fullWidth={true}
               onChange={props.onChange}
+              sx={{ backgroundColor: "transparent" }}
               label={props.label}
               name={props.name}
-              variant={"outlined"}
+              variant="standard"
+              maxLength={props.length}
               inputProps={{
                 startAdornment: (
                   <InputAdornment position="start">
@@ -89,7 +93,7 @@ function InputField(props) {
                     </div>
                   </InputAdornment>
                 ),
-                maxLength: props.length,
+                // maxLength: props.length,
               }}
             />
           </div>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import InputField from "../../atoms/input/InputField";
 import { useRouter } from "next/router";
 
@@ -84,7 +84,7 @@ function AddBlog(props) {
     if (props.editPage && router.query.bid && !props.blogStructure) {
       const fetcher = async () => {
         const data = await fetch(
-          `http://localhost:5000/blogPost/get/${router.query.bid}`
+          `${process.env.BACKEND_URL}/blogPost/get/${router.query.bid}`
         );
         const saveData = await data.json();
         if (
@@ -379,7 +379,7 @@ function AddBlog(props) {
                         //   onChange={onChange}
                       />
                     </div>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                       {props.editPage &&
                         paragraphs[index].imageURL &&
                         `para ${index + 1} image`}
@@ -437,9 +437,9 @@ function AddBlog(props) {
                             Upload sub-image
                             <input hidden type="file" />
                           </Button>
-                        </div>
-                      )}
-                    </div>
+                        </div> */}
+                    {/* )}
+                    </div> */}
                   </div>
                 );
               })}

@@ -19,6 +19,8 @@ import { useSelector } from "react-redux";
 // import { ReactNotifications } from "react-notifications-component";
 import { useRouter } from "next/router";
 import { NotificationContainer } from "react-notifications";
+import InputAdornment from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
 export default function RegisterForm() {
   const [userid, setUserid] = useState("");
@@ -102,31 +104,52 @@ export default function RegisterForm() {
               Login{" "}
             </span>
           </div>
-          <div className="">
-            <InputField
-              label="Email"
-              onChange={onInputChangeHandler}
+          <div className="mt-1">
+            <TextField
+              id=""
+              className=" w-full outline-none"
+              required={true}
+              value={userid}
               type="email"
+              size="small"
+              fullWidth={true}
+              onChange={onInputChangeHandler}
+              sx={{ backgroundColor: "transparent" }}
+              label="Email"
               name="userid"
-              required={true}
+              variant="outlined"
             />
           </div>
           <div className="pt-2">
-            <InputField
-              label="Password"
-              onChange={onInputChangeHandler}
+            <TextField
+              id=""
+              className=" w-full outline-none"
+              required={true}
+              value={password}
               type="password"
+              size="small"
+              fullWidth={true}
+              onChange={onInputChangeHandler}
+              sx={{ backgroundColor: "transparent" }}
+              label="password"
               name="password"
-              required={true}
+              variant="outlined"
             />
           </div>
           <div className="pt-2">
-            <InputField
-              label="Confirm Password"
-              onChange={onInputChangeHandler}
-              type="password"
-              name="confirmpass"
+            <TextField
+              id=""
+              className=" w-full outline-none"
               required={true}
+              value={confirmPassword}
+              type="password"
+              size="small"
+              fullWidth={true}
+              onChange={onInputChangeHandler}
+              sx={{ backgroundColor: "transparent" }}
+              label="confirm password"
+              name="confirmpass"
+              variant="outlined"
             />
           </div>
           <div className="pt-2">

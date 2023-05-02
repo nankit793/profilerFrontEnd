@@ -1,10 +1,12 @@
 import React, { useState } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Menu, Close } from "@mui/icons-material";
+import Menu from "@mui/icons-material/Menu";
+import Close from "@mui/icons-material/Close";
 import SwipeableTemporaryDrawer from "../molecules/Drawer";
 import SearchIcon from "@mui/icons-material/Search";
 import SearchBarBody from "./SearchBarBody";
+import Avatar from "@mui/material/Avatar";
 
 function Navbar() {
   const [showTheMenuBar, setShowTheMenuBar] = useState(false);
@@ -20,7 +22,13 @@ function Navbar() {
     <>
       <div className="md:block hidden py-2 bg-color_7 w-full absolute top-0 z-20">
         <div className="flex justify-between items-center">
-          <div className=" ml-2  w-min text-white font-semibold">PROFILER</div>
+          <div className=" ml-2  w-min text-white font-semibold">
+            <Avatar
+              alt="Facebook"
+              src="/images/logo.png"
+              sx={{ width: 25, height: 25 }}
+            />
+          </div>
           <div className="flex items-center">
             <Link href="/">
               <a

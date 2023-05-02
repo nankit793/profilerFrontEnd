@@ -21,7 +21,9 @@ import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
 
-import { FormControl, MenuItem, Select } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 
 function BlogsTab(props) {
   const [deleteData, setDeleteData] = useState({});
@@ -43,7 +45,7 @@ function BlogsTab(props) {
       state: true,
     });
     const deleted = await axiosDelete(
-      `http://localhost:5000/deleteBlog?blogId=${blog._id}`
+      `${process.env.BACKEND_URL}/deleteBlog?blogId=${blog._id}`
     );
     if (deleted && deleted.state) {
       successNotification("blog has been deleted");
@@ -66,8 +68,10 @@ function BlogsTab(props) {
   };
   const sortingOfBLogs = (e) => {
     console.log(e);
+    let newBlogs = [];
     if (e === "likes") {
-      blogs &&
+      newBlogs =
+        blogs &&
         blogs.blogs.sort(
           (a, b) => b.activities.numLikes - a.activities.numLikes
         );
@@ -91,7 +95,6 @@ function BlogsTab(props) {
                 a.activities.blogUpload.split("T")[0]
             )
         );
-      // setSearchedBlogs(sortedByLikes);
     }
   };
   useEffect(() => {
@@ -199,7 +202,7 @@ function BlogsTab(props) {
                     <Image
                       unoptimized
                       // fill
-                      src={`http://localhost:5000/blogPost/image/${blog.imageURL}`}
+                      src={`${process.env.BACKEND_URL}/blogPost/image/${blog.imageURL}`}
                       alt="image"
                       width="100%"
                       height="40%"
@@ -210,7 +213,7 @@ function BlogsTab(props) {
                   <div className="p-2">
                     <div className=" flex justify-between items-start">
                       <div
-                        className="text-color_7 text-[20px] w-[90%]  decoration-1  hover:underline-offset-8 "
+                        className="text-color_7 text-[20px] break-words w-[90%]  decoration-1  hover:underline-offset-8 "
                         onClick={() => {
                           router.push(`/view/blog/${blog._id}`);
                         }}
@@ -265,7 +268,7 @@ function BlogsTab(props) {
                         </>
                       )}
                     </div>
-                    <div className="text-text_2 mt-3 my-2 ">
+                    <div className="text-text_2 mt-3 my-2 break-words">
                       {blog.paragraphs &&
                         blog.paragraphs[0] &&
                         blog.paragraphs[0].paragraph &&

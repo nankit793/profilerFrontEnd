@@ -51,7 +51,7 @@ function BlogInteraction(props) {
     const userid = localStorage.getItem("userid");
     axios
       .post(
-        `http://localhost:5000/like?blogId=${props.blogId}`,
+        `${process.env.BACKEND_URL}/like?blogId=${props.blogId}`,
         {
           body: {},
         },
@@ -80,7 +80,7 @@ function BlogInteraction(props) {
     const userid = localStorage.getItem("userid");
     axios
       .post(
-        `http://localhost:5000/unlike?blogId=${props.blogId}`,
+        `${process.env.BACKEND_URL}/unlike?blogId=${props.blogId}`,
         {
           body: {},
         },
@@ -114,7 +114,7 @@ function BlogInteraction(props) {
       const userid = localStorage.getItem("userid");
       axios
         .post(
-          `http://localhost:5000/comment?blogId=${props.blogId}`,
+          `${process.env.BACKEND_URL}/comment?blogId=${props.blogId}`,
           { comment },
           {
             headers: {
@@ -211,7 +211,8 @@ function BlogInteraction(props) {
               }}
               className="text-color_4 mt-2 cursor-pointer w-fit"
             >
-              view all {numComments} comments
+              view{" "}
+              {numComments === 1 ? `1 comment` : `all ${numComments} comments`}
             </div>
           </>
         )}

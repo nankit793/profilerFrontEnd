@@ -11,7 +11,7 @@ export default async function getOTP(body) {
     }),
   };
   const result = await fetch(
-    "http://localhost:5000/user/forgotPassword/regenrateOTP",
+    `${process.env.BACKEND_URL}/user/forgotPassword/regenrateOTP`,
     requestOptions
   );
   return result;

@@ -12,7 +12,7 @@ function* getAuthorBlogs(action) {
       method: "get",
       // mode: "cors",'
 
-      url: `http://localhost:5000/blogPost/author/${action.payload}`,
+      url: `${process.env.BACKEND_URL}/blogPost/author/${action.payload}`,
       //   body: action.payload,
     });
     console.log(result, "the result");

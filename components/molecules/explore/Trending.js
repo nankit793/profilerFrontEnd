@@ -1,4 +1,4 @@
-import { TrendingFlatRounded } from "@mui/icons-material";
+import TrendingFlatRounded from "@mui/icons-material/TrendingFlatRounded";
 import React, { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import Image from "next/image";
@@ -61,7 +61,7 @@ function Trending(props) {
   ];
   const follow = async (author) => {
     const response = await axiosPost(
-      `http://localhost:5000/follow?id=${author._id}`
+      `${process.env.BACKEND_URL}/follow?id=${author._id}`
     );
     if (response && response.state) {
       try {
@@ -76,7 +76,7 @@ function Trending(props) {
 
   const unfollow = async (author) => {
     const response = await axiosPost(
-      `http://localhost:5000/unfollow?id=${author._id}`
+      `${process.env.BACKEND_URL}/unfollow?id=${author._id}`
     );
     if (response && response.state) {
       let a = [];
@@ -147,7 +147,7 @@ function Trending(props) {
                         <Image
                           unoptimized
                           // fill
-                          src={`http://localhost:5000/profilePhoto/direct?userid=${blog.author.userid}`}
+                          src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${blog.author.userid}`}
                           alt="image"
                           width="100%"
                           height="140%"
@@ -207,7 +207,7 @@ function Trending(props) {
                   <Image
                     unoptimized
                     // fill
-                    src={`http://localhost:5000/blogPost/image/${blog.imageURL}`}
+                    src={`${process.env.BACKEND_URL}/blogPost/image/${blog.imageURL}`}
                     alt="image"
                     width="100%"
                     height="40%"

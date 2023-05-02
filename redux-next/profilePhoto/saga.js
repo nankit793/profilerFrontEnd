@@ -12,7 +12,7 @@ function* getProfilePic(action) {
     const result = yield call(apiCalling.makeGetRequest, {
       method: "get",
       // mode: "cors",
-      url: `http://localhost:5000/profilePhoto?userid=${userid}`,
+      url: `${process.env.BACKEND_URL}/profilePhoto?userid=${userid}`,
       body: action.payload,
 
       // responseType: "arrayBuffer",

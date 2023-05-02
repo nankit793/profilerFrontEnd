@@ -11,7 +11,7 @@ function* getJobProfile(action) {
     const result = yield call(apiCalling.makeGetRequest, {
       method: "get",
       // mode: "cors",
-      url: "http://localhost:5000/user/jobProfiler/getJobProfiler",
+      url: `${process.env.BACKEND_URL}/user/jobProfiler/getJobProfiler`,
       body: action.payload,
     });
     if (result.status === 200) {

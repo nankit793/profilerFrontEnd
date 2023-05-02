@@ -10,6 +10,8 @@ function SelfAccountFollow(props) {
   const [followingCount, setFollowingCount] = useState(0);
   const followingList = useSelector((state) => state.followingListReducer);
   const [isLoggedUser, setIsLoggedUser] = useState(false);
+  const router = useRouter();
+
   useEffect(() => {
     if (
       followingList &&
@@ -51,12 +53,17 @@ function SelfAccountFollow(props) {
       </div>
       <div className="flex gap-3 justify-center items-center mt-4">
         {isLoggedUser && (
-          <div className="px-5 py-2 rounded-md border text-text_1 cursor-pointer">
+          <div
+            onClick={() => {
+              router.push("/update/basicDetails");
+            }}
+            className="px-5 hover:border-color_9 text-sm py-2 rounded-full border text-text_1 cursor-pointer"
+          >
             Edit profile
           </div>
         )}
-        <div className="px-5 py-2 rounded-md border text-text_1 cursor-pointer">
-          copy link
+        <div className="px-5 hover:border-color_9 py-2 text-sm rounded-full border text-text_1 cursor-pointer">
+          copy profile link
         </div>
       </div>
     </>

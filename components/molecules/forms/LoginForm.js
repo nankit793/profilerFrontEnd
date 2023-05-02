@@ -14,6 +14,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { useRouter } from "next/router";
 import { NotificationContainer } from "react-notifications";
+import { TextField, InputAdornment } from "@mui/material";
 
 function LoginForm() {
   const router = useRouter();
@@ -104,22 +105,36 @@ function LoginForm() {
               Create Account
             </span>
           </div>
-          <div className="">
-            <InputField
-              label="Email"
-              type="text"
+          <div className="mt-1">
+            <TextField
+              id=""
+              className=" w-full outline-none"
               required={true}
+              value={userid}
+              type="text"
+              size="small"
+              fullWidth={true}
               onChange={onInputChangeHandler}
+              sx={{ backgroundColor: "transparent" }}
+              label="Email"
               name="userid"
+              variant="outlined"
             />
           </div>
           <div className="pt-2">
-            <InputField
-              label="Password"
-              type="password"
+            <TextField
+              id=""
+              className=" w-full outline-none"
               required={true}
-              name="password"
+              value={password}
+              type="password"
+              size="small"
+              fullWidth={true}
               onChange={onInputChangeHandler}
+              sx={{ backgroundColor: "transparent" }}
+              label="password"
+              name="password"
+              variant="outlined"
             />
           </div>
           <div

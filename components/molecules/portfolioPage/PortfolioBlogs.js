@@ -23,7 +23,7 @@ function PortfolioBlogs(props) {
     ) {
       const fetcher = async () => {
         const data = await fetch(
-          `http://localhost:5000/blogPost/author/${props.portfolioData.user._id}`
+          `${process.env.BACKEND_URL}/blogPost/author/${props.portfolioData.user._id}`
         );
         const saveData = await data.json();
         if (data && data.status === 200 && saveData && saveData.blogUpload) {
@@ -39,7 +39,7 @@ function PortfolioBlogs(props) {
       <div className="text-center pt-3 pb-2 font-bold text-text_1 text-[25px]">
         My Blogs
       </div>
-      <div className="md:flex justify-center flex-wrap px-2 md:px-6  gap-3">
+      <div className="md:flex justify-center flex-wrap px-2 md:px-6  gap-3 ">
         {blogsData &&
           blogsData
             .slice(blogViewIndex.start, blogViewIndex.end)
@@ -48,13 +48,13 @@ function PortfolioBlogs(props) {
                 <>
                   <div
                     key={index}
-                    className="border grow md:my-0 my-2 rounded md:max-w-[400px] md:min-w-[400px] md:w-[45%] bg-color_2 "
+                    className="border flex justify-start flex-col grow md:my-0 my-2 rounded md:max-h-[420px] md:min-h-[420px] md:max-w-[400px] md:min-w-[400px] md:w-[45%] bg-color_2 "
                   >
                     <div className="absolu">
                       <Image
                         unoptimized
                         // fill
-                        src={`http://localhost:5000/blogPost/image/${blog.imageURL}`}
+                        src={`${process.env.BACKEND_URL}/blogPost/image/${blog.imageURL}`}
                         alt="image"
                         width="100%"
                         height="50%"
@@ -62,18 +62,20 @@ function PortfolioBlogs(props) {
                         objectFit="cover"
                       />
                     </div>
-                    <div className="px-3 my-2">
-                      <div
-                        className="text-color_7 text-[20px] w-[90%]  decoration-1  hover:underline-offset-8 "
-                        onClick={() => {
-                          router.push(`/view/blog/${blog._id}`);
-                        }}
-                      >
-                        {blog.heading && blog.heading}
-                      </div>
-                      <div className="text-text_2  overflow-x-auto">
-                        {blog.paragraphs &&
-                          blog.paragraphs[0].paragraph.slice(0, 250)}
+                    <div className="px-3 my-2 flex flex-col justify-between h-full">
+                      <div className="overflow-auto">
+                        <div
+                          className="text-color_7 text-[20px] w-[90%]  decoration-1  hover:underline-offset-8 "
+                          onClick={() => {
+                            router.push(`/view/blog/${blog._id}`);
+                          }}
+                        >
+                          {blog.heading && blog.heading}
+                        </div>
+                        <div className="text-text_2 break-words overflow-auto">
+                          {blog.paragraphs &&
+                            blog.paragraphs[0].paragraph.slice(0, 250)}
+                        </div>
                       </div>
                       <div className="flex justify-between items-end ">
                         <div className="flex justify-start gap-3 flex-wrap rounded text-[white] mt-2 text-sm">
@@ -118,28 +120,34 @@ function PortfolioBlogs(props) {
               );
             })}
       </div>
+      {/* <div>{   (blogsData.length / 3)} </div> */}
       <div className="flex gap-3 justify-center py-5">
         <div
           onClick={() => {
-            if (blogViewIndex.start > 1) {
+            if (blogViewIndex.start - 3 > 0) {
               setBlogViewIndex({
                 start: blogViewIndex.start - 3,
                 end: blogViewIndex.end - 3,
               });
-            } else {
+            } else if (blogViewIndex.start === 0) {
               setBlogViewIndex({
                 start: blogsData.length - 3,
                 end: blogsData.length,
               });
+            } else {
+              setBlogViewIndex({
+                start: 0,
+                end: 3,
+              });
             }
           }}
-          className="bg-color_4 rounded-md text-color_2  px-2 rounded-full py-2 cursor-pointer"
+          className="bg-color_7 rounded text-color_2  px-2  py-2 cursor-pointer"
         >
           <NavigateBeforeIcon />
         </div>
         <div
           onClick={() => {
-            if (blogsData.length >= blogViewIndex.end + 3) {
+            if (blogsData.length > blogViewIndex.end) {
               setBlogViewIndex({
                 start: blogViewIndex.start + 3,
                 end: blogViewIndex.end + 3,
@@ -151,7 +159,7 @@ function PortfolioBlogs(props) {
               });
             }
           }}
-          className="bg-color_4 rounded-md text-color_2  px-2 rounded-full py-2 cursor-pointer"
+          className="bg-color_7 rounded text-color_2  px-2 py-2 cursor-pointer"
         >
           <NavigateNextIcon />
         </div>

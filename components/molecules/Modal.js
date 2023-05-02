@@ -10,10 +10,10 @@ export default function BasicModal(props) {
     top: "50%",
     left: "50%",
     transform: "translate(-50%, -50%)",
-    width: 400 || props.width,
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    p: 2,
+    // width: "100%",
+    // bgcolor: "background.paper",
+    // boxShadow: 24,
+    p: 1,
   };
   // console.log(props.hideBackdrop);
   return (
@@ -28,7 +28,12 @@ export default function BasicModal(props) {
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style} className="rounded outline-none">
+        <Box
+          className={`rounded outline-none ${
+            props.windowWidth ? props.windowWidth : "md:w-[60%]"
+          } w-[90%] bg-color_2`}
+          sx={style}
+        >
           <div>{props.data}</div>
         </Box>
       </Modal>

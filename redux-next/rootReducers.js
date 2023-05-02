@@ -11,6 +11,7 @@ import bookmarksReducer from "./getBookmarks/reducer";
 import authorBlogsReducer from "./getAuthorBlogs/reducer";
 import trendinBlogsReducer from "./GetTrendingBlogs/reducer";
 import sessionStorageReducer from "./sessionStorage/reducer";
+import portfolioBookmarksReducer from "./getPortfolioBookmarks/reducer";
 const appReducer = combineReducers({
   registerReducer,
   loginUserReducers,
@@ -24,6 +25,7 @@ const appReducer = combineReducers({
   trendinBlogsReducer,
   authorBlogsReducer,
   sessionStorageReducer,
+  portfolioBookmarksReducer,
 });
 
 const rootReducer = (state, action) => {

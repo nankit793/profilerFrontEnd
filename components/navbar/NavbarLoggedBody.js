@@ -1,21 +1,22 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Menu, Close } from "@mui/icons-material";
-import PersonIcon from "@mui/icons-material/Person";
-import ExitToAppIcon from "@mui/icons-material/ExitToApp";
-import SettingsIcon from "@mui/icons-material/Settings";
+// import Close from "@mui/icons-material/Close";
+// import Menu from "@mui/icons-material/Menu";
+// import PersonIcon from "@mui/icons-material/Person";
+// import ExitToAppIcon from "@mui/icons-material/ExitToApp";
+// import SettingsIcon from "@mui/icons-material/Settings";
 import { logout } from "../logout";
-import Modal from "../../components/molecules/Modal";
+// import Modal from "../../components/molecules/Modal";
 import { NotificationContainer } from "react-notifications";
 import { useSelector } from "react-redux";
-import CreateProfileModal from "../molecules/CreateProfileModal";
-import {
-  errorNotification,
-  successNotification,
-  warningNotification,
-} from "../atoms/AlertMessage";
-import Image from "next/image";
+// import CreateProfileModal from "../molecules/CreateProfileModal";
+// import {
+//   errorNotification,
+//   successNotification,
+//   warningNotification,
+// } from "../atoms/AlertMessage";
+// import Image from "next/image";
 
 function NavbarLoggedBody(props) {
   const [userBasicData, setUserBasicData] = useState({});
@@ -35,7 +36,7 @@ function NavbarLoggedBody(props) {
       (registerData.isPosted = false),
       logout();
     router.push("/login");
-    router.reload();
+    // router.reload();
   };
 
   useEffect(() => {
@@ -88,7 +89,7 @@ function NavbarLoggedBody(props) {
           </div>
           <div className="md:hidden block">
             <div className="flex flex-col justify-start w-full items-end border-color_2 border border-x-0 border-b-0 border-t-1">
-              <Link href="/">
+              {/* <Link href="/">
                 <a
                   className={`cursor-pointer  py-3 text-color_black  ${
                     router.pathname === "/aboutUs"
@@ -109,7 +110,7 @@ function NavbarLoggedBody(props) {
                 >
                   API
                 </a>
-              </Link>
+              </Link> */}
               <Link href="/">
                 <a
                   className={`cursor-pointer py-3  ${

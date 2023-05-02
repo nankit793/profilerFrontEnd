@@ -136,7 +136,7 @@ function AddBlog() {
             }}
             image={image}
             request="PATCH"
-            onSave={`http://localhost:5000/editBlog`}
+            onSave={`${process.env.BACKEND_URL}/editBlog`}
             buttons={[
               { name: "Blog Information", id: 0 },
               { name: "Review & Publish", id: 1 },

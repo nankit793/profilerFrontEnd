@@ -11,7 +11,7 @@ function* postUserRegistrationSaga(action) {
   try {
     const result = yield call(apiCalling.makePostRequests, {
       method: "post",
-      url: "http://localhost:5000/user/register",
+      url: `${process.env.BACKEND_URL}/user/register`,
       body: action.payload,
     });
     if (result.status === 200) {

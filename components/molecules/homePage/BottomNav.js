@@ -61,10 +61,10 @@ function BottomNav(props) {
       pageData: <Bookmarks data={props.id} />,
       id: 2,
     },
-    {
-      pageData: <Bookmarks data={props.id} />,
-      id: 3,
-    },
+    // {
+    //   pageData: <Bookmarks data={props.id} />,
+    //   id: 3,
+    // },
   ];
   const select = (id) => {
     pages.map((page) => {

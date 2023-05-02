@@ -16,6 +16,8 @@ function UpdatePage(props) {
   const [selectedPage, setSelectedPage] = useState();
   const [maxPages, setMaxPages] = useState(0);
   const [showSkeleton, setShowSkeleton] = useState(true);
+  const [showLoadingWhileSave, setShowLoadingWhileSave] = useState(false);
+
   useEffect(() => {
     let id = 1;
     props.pages.map((page) => {
@@ -66,12 +68,12 @@ function UpdatePage(props) {
     const userid = localStorage.getItem("userid");
     try {
       let save;
+      setShowLoadingWhileSave(true);
       if (props.bodyData) {
         console.log("normal flow");
         save = await fetch(props.onSave, {
           method: props.request,
           body: JSON.stringify(props.data),
-          // mode: "no-cors",
           headers: {
             ...props.headers,
             Accept: "application/json",
@@ -80,7 +82,6 @@ function UpdatePage(props) {
             refreshtoken: refreshtoken,
             userid: userid,
           },
-          // body: props.data,
         });
       } else {
         let formData = new FormData();
@@ -88,20 +89,9 @@ function UpdatePage(props) {
           formData.append("image", props.image.file);
         }
         formData.append("data", JSON.stringify(props.data));
-        if (props.otherImages) {
-          for (const i in props.otherImages) {
-            if (Object.hasOwnProperty.call(props.otherImages, i)) {
-              const element = props.otherImages[i];
-              console.log(element.file);
-              formData.append(i, element.file);
-            }
-          }
-        }
-        console.log(formData);
         save = await fetch(props.onSave, {
           method: props.request,
           body: formData,
-          // mode: "no-cors",
           headers: {
             ...props.headers,
             ContentType: "multipart/form-data",
@@ -109,18 +99,20 @@ function UpdatePage(props) {
             refreshtoken: refreshtoken,
             userid: userid,
           },
-          // body: props.data,
         });
       }
-      // const finalSave = await save.json();
-      // if (save && save.status === 200 && save.statusText === "OK") {
-      //   successNotification(finalSave.message, "Success");
-      // } else {
-      //   errorNotification("chages not saved", "Error");
-      // }
+      setShowLoadingWhileSave(false);
+      const finalSave = await save.json();
+      if (save && save.status === 200) {
+        successNotification(finalSave.message, "Success");
+        if (props.successProcess) {
+          props.successProcess();
+        }
+      } else {
+        errorNotification("Error try again later", "Error");
+      }
     } catch (error) {
-      console.log(error.message);
-      errorNotification("chages not saved", "Error");
+      errorNotification("Error try again later", "Error");
     }
   };
   return (
@@ -154,12 +146,18 @@ function UpdatePage(props) {
           <NavigateNextIcon />
         </div>
         {!(selectedPage && selectedPage.displayOption === "false") ? (
-          <div
-            onClick={onSave}
-            className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
-          >
-            Save
-          </div>
+          showLoadingWhileSave ? (
+            <div className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 ">
+              Saving..
+            </div>
+          ) : (
+            <div
+              onClick={onSave}
+              className="p-2 border drop-shadow font-semibold text-[16px] rounded text-color_2 px-5 bg-color_7 cursor-pointer hover:bg-color_5 duration-100 "
+            >
+              Save
+            </div>
+          )
         ) : (
           ""
         )}

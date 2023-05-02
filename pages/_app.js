@@ -15,6 +15,7 @@ import * as getFollowingList from "../redux-next/followerList/actions";
 import * as getBookMarksList from "../redux-next/getBookmarks/actions";
 
 import LinearProgress from "@mui/material/LinearProgress";
+import * as getUserPortfolioBookmarks from "../redux-next/getPortfolioBookmarks/action";
 
 function MyApp({ Component, pageProps }) {
   const [isLoggedInUser, setIsLoggedInUser] = useState(false);
@@ -31,6 +32,7 @@ function MyApp({ Component, pageProps }) {
     if (token && accesstoken && userid && router.query.uid === userid) {
       dispatch(getFollowingList.getFollowingList(""));
       dispatch(getBookMarksList.getUserBookmarks("data"));
+      dispatch(getUserPortfolioBookmarks.getUserPortfolioBookmarks("data"));
     }
     if (token && accesstoken && userid) {
       setIsLoggedInUser(true);
@@ -39,10 +41,10 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router]);
 
-  useEffect(() => {
-    dispatch(getBookMarksList.getUserBookmarks("data"));
-    dispatch(getFollowingList.getFollowingList(""));
-  }, []);
+  // useEffect(() => {
+  //   dispatch(getBookMarksList.getUserBookmarks("data"));
+  //   dispatch(getFollowingList.getFollowingList(""));
+  // }, []);
 
   return (
     <>

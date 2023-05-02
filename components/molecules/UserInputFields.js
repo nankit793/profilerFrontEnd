@@ -5,11 +5,11 @@ import Checkbox from "@mui/material/Checkbox";
 function UserInputFields(props) {
   return (
     <>
-      <div className="">
-        <div className="text-[16px] font-semibold text-color_7 ">
+      <div className="flex flex-start border bg-color_2 rounded">
+        <div className="text-text_1 flex items-center  text-sm p-2 mr-2  bg-color_8 rounded-l">
           {props.keyName}
         </div>
-        <div className={`w-full mt-1 md:mt-0 w-full`}>
+        <div className={`w-full md:mt-0 w-full p-2`}>
           <InputField
             length={props.length}
             value={props.value}

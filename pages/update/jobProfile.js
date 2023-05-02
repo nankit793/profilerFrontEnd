@@ -25,17 +25,16 @@ import {
   successNotification,
 } from "../../components/atoms/AlertMessage";
 
-import {
-  Radio,
-  FormControl,
-  FormLabel,
-  RadioGroup,
-  FormControlLabel,
-  MenuItem,
-  Select,
-  InputLabel,
-} from "@mui/material";
-import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+// import InputLabel from "@mui/icons-material/InputLabel";
+// import Select from "@mui/icons-material/Select";
+// import MenuItem from "@mui/icons-material/MenuItem";
+// import FormControlLabel from "@mui/icons-material/FormControlLabel";
+// import RadioGroup from "@mui/icons-material/RadioGroup";
+// import FormLabel from "@mui/icons-material/FormLabel";
+// import FormControl from "@mui/icons-material/Radio";
+// import Radio from "@mui/icons-material/CalendarMonth";
+// import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
+
 import "react-datepicker/dist/react-datepicker.css";
 import { useRouter } from "next/router";
 import { axiosGet } from "../../components/functions/axiosCall";
@@ -50,27 +49,13 @@ function JobProfile() {
   const router = useRouter();
 
   useEffect(() => {
-    console.log(router.query.pid);
-    if (router.query.pid) {
-      const caller = async () => {
-        await axiosGet(
-          setPortfolioData,
-          `http://localhost:5000/portfolio/get?pid=${router.query.pid}`
-        );
-      };
-      caller();
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [router, router.query.pid]);
-
-  useEffect(() => {
     if (router.query.pid) {
       const auth = async () => {
         await authenticate(loginData, registerData);
         const caller = async () => {
           await axiosGet(
             setPortfolioData,
-            `http://localhost:5000/portfolio/get?pid=${router.query.pid}`
+            `${process.env.BACKEND_URL}/portfolio/get?pid=${router.query.pid}`
           );
         };
         caller();
@@ -81,15 +66,23 @@ function JobProfile() {
   }, [router, router.query.pid]);
 
   useEffect(() => {
-    if (
-      (portfolioData &&
+    if (portfolioData && portfolioData.portfolio) {
+      console.log(
+        portfolioData &&
+          portfolioData.portfolio &&
+          portfolioData.portfolio.user &&
+          portfolioData.portfolio.user.userid === localStorage.getItem("userid")
+      );
+      if (
+        portfolioData &&
         portfolioData.portfolio &&
         portfolioData.portfolio.user &&
-        portfolioData.portfolio.user.userid !==
-          localStorage.getItem("userid")) ||
-      !portfolioData.state
-    ) {
-      // router.push(`/home/${localStorage.getItem("userid")}`);
+        portfolioData.portfolio.user.userid === localStorage.getItem("userid")
+      ) {
+        // do something
+      } else {
+        router.push(`/home/${localStorage.getItem("userid")}`);
+      }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [portfolioData]);
@@ -166,14 +159,13 @@ function JobProfile() {
               headers={{
                 pid: router.query.pid,
               }}
-              onSave="http://localhost:5000/portfolio/update"
+              onSave={`${process.env.BACKEND_URL}/portfolio/update`}
               buttons={[
                 { name: "Overview", id: 0 },
                 { name: "Details", id: 1 },
                 { name: "Experience", id: 2 },
                 { name: "Education", id: 3 },
                 { name: "Projects & Certificates", id: 4 },
-                // { name: "Certificates", id: 5 },
                 { name: "Resume", id: 5 },
               ]}
               pages={pages}

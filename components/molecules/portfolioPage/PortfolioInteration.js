@@ -11,6 +11,7 @@ import {
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import PortfolioReviews from "./PortfolioReviews";
 
 function PortfolioInteration(props) {
   const [isLiked, setIsLiked] = useState(false);
@@ -50,7 +51,7 @@ function PortfolioInteration(props) {
     const userid = localStorage.getItem("userid");
     axios
       .post(
-        `http://localhost:5000/portfolio/like?pid=${props.pid}`,
+        `${process.env.BACKEND_URL}/portfolio/like?pid=${props.pid}`,
         {
           body: {},
         },
@@ -79,7 +80,7 @@ function PortfolioInteration(props) {
     const userid = localStorage.getItem("userid");
     axios
       .post(
-        `http://localhost:5000/portfolio/unlike?pid=${props.pid}`,
+        `${process.env.BACKEND_URL}/portfolio/unlike?pid=${props.pid}`,
         {
           body: {},
         },
@@ -113,7 +114,7 @@ function PortfolioInteration(props) {
       const userid = localStorage.getItem("userid");
       axios
         .post(
-          `http://localhost:5000/portfolio/review?pid=${props.pid}`,
+          `${process.env.BACKEND_URL}/portfolio/review?pid=${props.pid}`,
           { text: comment },
           {
             headers: {
@@ -138,7 +139,7 @@ function PortfolioInteration(props) {
   };
   return (
     <>
-      <div className="w-full md:w-[90%] mx-auto  bg-color_3 border border-color_9 rounded-t-xl p-3 mb-5 mt-5">
+      <div className="w-full md:w-[90%]  md:mx-auto  bg-color_3 border border-color_9 rounded-t-xl p-3 mb-5 mt-5">
         <div className="flex justify-start items-center gap-10  text-color_7">
           <div className="text-center">
             <div className="cursor-pointer text-text_1">
@@ -161,10 +162,10 @@ function PortfolioInteration(props) {
         </div>
 
         {showComments ? (
-          <BlogComments
+          <PortfolioReviews
             setShowComments={setShowComments}
             numComments={props.numComments}
-            blogId={props.blogId}
+            pid={props.pid}
             setNumComments={props.setNumComments}
             author={props.author}
           />
@@ -201,7 +202,7 @@ function PortfolioInteration(props) {
                 className="px-5 py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded cursor-pointer text-[white] mt-2"
                 onClick={addComment}
               >
-                Add comment
+                Add review
               </div>
             </div>
             <div
@@ -210,7 +211,7 @@ function PortfolioInteration(props) {
               }}
               className="text-color_4 mt-2 cursor-pointer w-fit"
             >
-              view all {numComments} comments
+              view all {numComments} reviews
             </div>
           </>
         )}

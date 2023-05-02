@@ -11,6 +11,8 @@ import userBookMarks from "./getBookmarks/saga";
 import authorBlogs from "./getAuthorBlogs/saga";
 import getTrendingBlogsSaga from "./GetTrendingBlogs/saga";
 import sessionStorageSaga from "./sessionStorage/saga";
+import portfolioBookmarksSaga from "./getPortfolioBookmarks/saga";
+
 export default function* rootSaga() {
   yield all([
     registerSaga(),
@@ -25,5 +27,6 @@ export default function* rootSaga() {
     authorBlogs(),
     getTrendingBlogsSaga(),
     sessionStorageSaga(),
+    portfolioBookmarksSaga(),
   ]);
 }

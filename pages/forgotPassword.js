@@ -16,6 +16,8 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // const { Auth, LoginCredentials } = require("two-step-auth");
+import InputAdornment from "@mui/material/TextField";
+import TextField from "@mui/material/InputAdornment";
 
 function ForgotPassword() {
   const [userid, setUserid] = useState("");
@@ -80,7 +82,7 @@ function ForgotPassword() {
           }),
         };
         const result = await fetch(
-          "http://localhost:5000/user/forgotPassword",
+          `${process.env.BACKEND_URL}/user/forgotPassword`,
           requestOptions
         );
         const final = await result.json();
@@ -108,10 +110,10 @@ function ForgotPassword() {
             no worries we have got you covered!
           </div>
         </div>
-        <div className="drop-shadow md:w-max min-w-[90%] md:min-w-[400px] max-w-[500px] md:max-w-full mx-auto p-4 relative  top-[-100px] rounded-lg  bg-color_2">
+        <div className="drop-shadow md:w-max min-w-[90%] md:min-w-[400px] max-w-[500px] md:max-w-full mx-auto p-4 relative  top-[-100px] rounded-md  bg-color_2">
           {otpGenerated ? (
             <>
-              <div className="w-full p-3 rounded text-text_2">
+              <div className="w-full text-center  p-3 rounded text-text_2">
                 {userid ? userid : "invalid id"}
               </div>
               <div className="border my-1 rounded-md flex justify-start">
@@ -129,40 +131,66 @@ function ForgotPassword() {
                 />
               </div>
               <div className="my-2">
-                <InputField
-                  label="password"
-                  type="password"
+                <TextField
+                  id=""
+                  className=" w-full outline-none"
                   required={true}
+                  value={password}
+                  type="text"
+                  size="small"
+                  fullWidth={true}
                   onChange={(e) => {
                     setPassword(e.target.value);
                   }}
+                  sx={{ backgroundColor: "transparent" }}
+                  label="Password"
+                  name="password"
+                  variant="outlined"
                 />
               </div>
-              <InputField
-                label="confirm password"
-                type="text"
+              <TextField
+                id=""
+                className=" w-full outline-none"
                 required={true}
+                value={confirmPassword}
+                type="text"
+                size="small"
+                fullWidth={true}
                 onChange={(e) => {
                   setConfirmPassword(e.target.value);
                 }}
+                sx={{ backgroundColor: "transparent" }}
+                label="confirm password"
+                name="confirmPassword"
+                variant="outlined"
               />
+
               <div
                 onClick={handleSubmitPassword}
-                className="bg-color_7 hover:bg-color_5 duration-200 cursor-pointer py-3 px-5 mt-1 rounded ml-auto whitespace-nowrap text-[white]  w-min"
+                className="bg-color_7 hover:bg-color_5 duration-200 cursor-pointer py-3 px-5 mt-1 rounded  whitespace-nowrap text-[white]  text-center"
               >
                 Create new password
               </div>
             </>
           ) : (
             <>
-              <InputField
-                label="Email"
-                type="text"
+              <TextField
+                id=""
+                className=" w-full outline-none"
                 required={true}
+                value={userid}
+                type="text"
+                size="small"
+                fullWidth={true}
                 onChange={(e) => {
                   setUserid(e.target.value);
                 }}
+                sx={{ backgroundColor: "transparent" }}
+                label="Email"
+                name="userid"
+                variant="outlined"
               />
+
               <div
                 onClick={sendOtpHandler}
                 className="bg-color_7 hover:bg-color_5 duration-200 cursor-pointer py-3 px-5 mt-1 rounded ml-auto whitespace-nowrap text-[white]  w-min"

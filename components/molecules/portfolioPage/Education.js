@@ -68,7 +68,7 @@ function Education(props) {
                 return (
                   <div
                     key={index}
-                    className="grow m-1 md:w-[200px] my-1 bg-[#fafafa] border p-2 rounded "
+                    className="grow m-1 md:w-[200px] my-1 bg-[#fafafa] border p-2 rounded-xl "
                   >
                     <div className="capitalize font-semibold text-text_1 rounded-md">
                       {skill.skill},{" "}

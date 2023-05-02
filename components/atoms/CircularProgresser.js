@@ -1,6 +1,5 @@
 import React from "react";
-import { CircularProgress } from "@mui/material";
-import { Height } from "@mui/icons-material";
+import CircularProgress from "@mui/material/CircularProgress";
 
 function CircularProgresser(props) {
   return (

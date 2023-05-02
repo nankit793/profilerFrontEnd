@@ -35,7 +35,7 @@ function VerifyUser() {
     }
     try {
       const save = await fetch(
-        "http://localhost:5000/user/register/verifyUser",
+        `${process.env.BACKEND_URL}/user/register/verifyUser`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -46,7 +46,7 @@ function VerifyUser() {
         }
       );
       const finalSave = await save.json();
-      if (save && save.status === 200 && save.statusText === "OK") {
+      if (save && save.status === 200) {
         successNotification(finalSave.message, "Redirecting to Login");
         setTimeout(() => {
           router.push("/login");
@@ -65,7 +65,7 @@ function VerifyUser() {
     }
     try {
       const save = await fetch(
-        "http://localhost:5000/user/register/regenrateOTP",
+        `${process.env.BACKEND_URL}/user/register/regenrateOTP`,
         {
           method: "POST",
           body: JSON.stringify({
@@ -75,7 +75,7 @@ function VerifyUser() {
         }
       );
       const finalSave = await save.json();
-      if (save && save.status === 200 && save.statusText === "OK") {
+      if (save && save.status === 200) {
         successNotification(finalSave.message, "Check your mail");
       } else {
         errorNotification(finalSave.message, "Error");

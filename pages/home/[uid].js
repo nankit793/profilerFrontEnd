@@ -13,7 +13,7 @@ import {
 } from "../../components/atoms/AlertMessage";
 import ProfileListDesktop from "../../components/molecules/ProfileListDesktop";
 // dependencies
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import CircularProgresser from "../../components/atoms/CircularProgresser";
 import Image from "next/image";
 import PersonIcon from "@mui/icons-material/Person";
@@ -91,7 +91,6 @@ function Uid(props) {
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userData && userData.userData]);
-
   const follow = () => {
     if (
       userBasicData._id &&
@@ -106,7 +105,7 @@ function Uid(props) {
       };
       let id = userBasicData._id;
       axios
-        .post(`http://localhost:5000/follow?id=${id}`, headers, {
+        .post(`${process.env.BACKEND_URL}/follow?id=${id}`, headers, {
           headers: {
             accesstoken: localStorage.getItem("accessToken"),
             refreshtoken: localStorage.getItem("idToken"),
@@ -143,7 +142,7 @@ function Uid(props) {
       };
       let id = userBasicData._id;
       axios
-        .post(`http://localhost:5000/unfollow?id=${id}`, headers, {
+        .post(`${process.env.BACKEND_URL}/unfollow?id=${id}`, headers, {
           headers: {
             accesstoken: localStorage.getItem("accessToken"),
             refreshtoken: localStorage.getItem("idToken"),
@@ -192,20 +191,20 @@ function Uid(props) {
           </div>
         )}
         {!profileLoading && isUserFound && (
-          <div className="md:px-5 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3 pt-14">
-            <div className="h-min md:min-w-[300px] md:w-[30%] w-[100%]  overflow-y-auto bg-color_2 rounded-t-xl  flex flex-col justify-start items-center">
-              <div className=" bg-color_3 h-[160px] w-[160px] overflow-hidden rounded-full">
+          <div className="md:px-2 px-2  md:flex min-h-[80vh] justify-between gap-5 my-3 pt-14">
+            <div className=" md:min-w-[300px] md:w-[30%] w-[100%]  overflow-y-auto bg-color_2  flex flex-col justify-start items-center ">
+              <div className=" bg-color_3 h-[160px] w-[160px] overflow-hidden rounded-md">
                 <Image
                   unoptimized
                   // fill
-                  src={`http://localhost:5000/profilePhoto/direct?userid=${userid}`}
+                  src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${userid}`}
                   fill={true}
                   // fill
                   alt="pic"
                   // objectFit="revert"
                   width="100%"
                   height="100%"
-                  className="rounded-full"
+                  className="rounded-md"
                   layout="responsive"
                   objectFit="cover"
                   object-position="center"
@@ -213,11 +212,14 @@ function Uid(props) {
               </div>
 
               <div className=" w-full text-center ">
-                <div className="text-text_1 capitalize text-xl gap-2 mt-1 flex justify-center items-end">
+                <div className="text-text_1 capitalize text-xl gap-2 mt-1 flex break-words justify-center items-end">
                   {userBasicData.name ? userBasicData.name : ""}
                   {/* <div className="w-min text-[13px] text-text_2  whitespace-nowrap w-full ">
                     flag, country, gender, age
                   </div> */}
+                </div>
+                <div className="text-text_2">
+                  {userBasicData.userid ? userBasicData.userid : ""}
                 </div>
 
                 {userBasicData.userid === localStorage.getItem("userid") ? (
@@ -254,7 +256,7 @@ function Uid(props) {
                     !userBasicData.youtube &&
                     !userBasicData.github &&
                     !userBasicData.linkdn && (
-                      <div className="text-text_2  font-semibold text-center text-sm mt-2">
+                      <div className="text-text_1 text-center text-sm mt-2">
                         no social media links
                       </div>
                     )}
@@ -341,9 +343,9 @@ function Uid(props) {
                     )}
                   </div>
                 </div>
-              </div>
-              <div className="pt-1  rounded  text-text_2 text-left text-md">
-                {userBasicData && userBasicData.bio ? userBasicData.bio : ""}
+                <div className="pt-1 break-words rounded  text-text_2 text-left text-md">
+                  {userBasicData && userBasicData.bio ? userBasicData.bio : ""}
+                </div>
               </div>
             </div>
             {/* side panel end  */}
@@ -356,7 +358,6 @@ function Uid(props) {
                   { name: "Blogs", id: 1 },
                   { name: "Portfolio", id: 0 },
                   { name: "Bookmarks", id: 2, loginRequired: true },
-                  { name: "Stats", id: 3 },
                 ]}
               />
             </div>

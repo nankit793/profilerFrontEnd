@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
-import { Menu, Close } from "@mui/icons-material";
+
+import Menu from "@mui/icons-material/Menu";
+import Close from "@mui/icons-material/Close";
 import SearchIcon from "@mui/icons-material/Search";
 import PersonIcon from "@mui/icons-material/Person";
 import SwipeableTemporaryDrawer from "../molecules/Drawer";
 import NavbarLoggedBody from "./NavbarLoggedBody";
 import * as getProfilePhoto from "../../redux-next/profilePhoto/action";
+import Avatar from "@mui/material/Avatar";
 
 import SearchBarBody from "./SearchBarBody";
 import { useSelector } from "react-redux";
@@ -41,12 +44,17 @@ function NavbarLogged() {
       <div className="py-2 bg-color_7 w-full z-20 absolute top-0 ">
         <div className="flex justify-between items-center">
           <div
-            className=" ml-2 text-[18px] w-min text-color_2 font-semibold  cursor-pointer"
+            className="ml-2 cursor-pointer"
             onClick={() => {
               router.push(`/home/${localStorage.getItem("userid")}`);
             }}
           >
-            ImPROFILE
+            <Avatar
+              alt="logo"
+              variant="square"
+              src="/images/logo.png"
+              sx={{ width: 140, height: 35 }}
+            />
           </div>
           <div className="flex items-center mr-2 ">
             <div className="md:block hidden">
@@ -61,7 +69,7 @@ function NavbarLogged() {
                   Explore
                 </a>
               </Link>
-              <Link href="/">
+              {/* <Link href="/">
                 <a
                   className={`cursor-pointer text-[16px]  mx-2 text-color_2  ${
                     router.pathname === "/aboutUs"
@@ -82,7 +90,7 @@ function NavbarLogged() {
                 >
                   API
                 </a>
-              </Link>
+              </Link> */}
             </div>
             <div className="text-color_2 mx-2 cursor-pointer">
               <NotificationsIcon />
@@ -135,7 +143,7 @@ function NavbarLogged() {
                   <Image
                     unoptimized
                     // fill
-                    src={`http://localhost:5000/profilePhoto?userid=${localStorage.getItem(
+                    src={`${process.env.BACKEND_URL}/profilePhoto?userid=${localStorage.getItem(
                       "userid"
                     )}`}
                     alt="Picture of the author"

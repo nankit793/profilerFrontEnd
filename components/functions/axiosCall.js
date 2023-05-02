@@ -29,7 +29,6 @@ async function axiosDelete(URL) {
     },
   });
   const res = await result.json();
-  console.log(res, "hello");
   return res;
   // axios
   //   .delete(URL, {
@@ -52,22 +51,26 @@ async function axiosDelete(URL) {
 }
 
 async function axiosPost(URL, headers, body) {
-  const accesstoken = localStorage.getItem("accessToken");
-  const refreshtoken = localStorage.getItem("idToken");
-  const userid = localStorage.getItem("userid");
-  const result = await fetch(URL, {
-    method: "POST",
-    headers: {
-      accesstoken: accesstoken,
-      refreshtoken: refreshtoken,
-      userid: userid,
-      headers,
-    },
-    body,
-  });
-  const res = await result.json();
-  updateAccessToken(res);
-  return res;
+  try {
+    const accesstoken = localStorage.getItem("accessToken");
+    const refreshtoken = localStorage.getItem("idToken");
+    const userid = localStorage.getItem("userid");
+    const result = await fetch(URL, {
+      method: "POST",
+      headers: {
+        accesstoken: accesstoken,
+        refreshtoken: refreshtoken,
+        userid: userid,
+        headers,
+      },
+      body,
+    });
+    const res = await result.json();
+    updateAccessToken(res);
+    return res;
+  } catch (error) {
+    return { message: "Server Error" };
+  }
 }
 
 const updateAccessToken = (data) => {

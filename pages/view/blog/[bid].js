@@ -11,7 +11,7 @@ import {
   dateConverter,
   dateUnit,
 } from "../../../components/functions/dateConverter";
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import BlogInteraction from "../../../components/molecules/BlogsPage/BlogInteraction";
 import BlogComments from "../../../components/molecules/BlogsPage/BlogComments";
 import { axiosPost } from "../../../components/functions/axiosCall";
@@ -45,10 +45,9 @@ function Blog() {
   const router = useRouter();
   useEffect(() => {
     const bid = router.query.bid;
-    console.log("bid changed");
     if (bid) {
       axios
-        .get(`http://localhost:5000/blogPost/get/${bid}`, {
+        .get(`${process.env.BACKEND_URL}/blogPost/get/${bid}`, {
           headers: { userid: localStorage.getItem("userid") },
         })
         .then(function (response) {
@@ -103,7 +102,7 @@ function Blog() {
     if (blogData && blogData.author && blogData.author) {
       axios
         .get(
-          `http://localhost:5000/profilePhoto?userid=${blogData.author.userid}`
+          `${process.env.BACKEND_URL}/profilePhoto?userid=${blogData.author.userid}`
         )
         .then(function (response) {
           if (response.status === 200) {
@@ -116,7 +115,7 @@ function Blog() {
           setImage(null);
         });
       axios
-        .get(`http://localhost:5000/blogPost/image/${blogData.imageURL}`)
+        .get(`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`)
         .then(function (response) {
           if (response.status === 200) {
             setBlogImage(response && response.data && response.data);
@@ -154,7 +153,7 @@ function Blog() {
   }, [followingList, blogData]);
   const bookmark = async () => {
     const bookmarked = await axiosPost(
-      `http://localhost:5000/bookMarks?blogId=${router.query.bid}`
+      `${process.env.BACKEND_URL}/bookMarks?blogId=${router.query.bid}`
     );
     if (bookmarked && bookmarked.state) {
       successNotification(
@@ -168,7 +167,7 @@ function Blog() {
   };
   const removeBookmark = async () => {
     const bookmarked = await axiosPost(
-      `http://localhost:5000/removeBookmark?blogId=${router.query.bid}`
+      `${process.env.BACKEND_URL}/removeBookmark?blogId=${router.query.bid}`
     );
     if (bookmarked && bookmarked.state) {
       successNotification("Bookmark removed from the blog");
@@ -179,7 +178,7 @@ function Blog() {
   };
   const follow = async () => {
     const response = await axiosPost(
-      `http://localhost:5000/follow?id=${blogData.author._id}`
+      `${process.env.BACKEND_URL}/follow?id=${blogData.author._id}`
     );
     if (response && response.state) {
       try {
@@ -195,7 +194,7 @@ function Blog() {
 
   const unfollow = async () => {
     const response = await axiosPost(
-      `http://localhost:5000/unfollow?id=${blogData.author._id}`
+      `${process.env.BACKEND_URL}/unfollow?id=${blogData.author._id}`
     );
     if (response && response.state) {
       let a = [];
@@ -236,28 +235,30 @@ function Blog() {
         <>
           <div className="flex md:flex-row flex-col-reverse flex-col justify-start items-start ">
             <div className="md:mt-0 mt-3 md:min-w-[250px] md:w-[25%] w-full h-[100vh] border-r md:pt-14 flex flex-col ">
-              <div className="border overflow-hidden rounded-xl m-2">
-                <div className="text-text_1 px-2 bg-color_8 py-1 ">
+              <div className="">
+                <div className="text-text_1 pl-2 pt-2 ">
                   More from{" "}
                   <span className="font-semibold">
                     {(blogData && blogData.author && blogData.author.name) ||
                       "user"}
                   </span>
                 </div>
-                <BlogsFromUser
-                  currBlog={blogData._id}
-                  author={blogData && blogData.author && blogData.author}
-                />
-              </div>
-              <div className="border overflow-hidden rounded-xl m-2">
-                <div className="text-text_1 px-2 bg-color_8 py-1 ">
-                  More like this
+                <div className="">
+                  <BlogsFromUser
+                    currBlog={blogData._id}
+                    author={blogData && blogData.author && blogData.author}
+                  />
                 </div>
-                <BlogsFromUser
+              </div>
+              {/* <div className="border overflow-hidden rounded-xl m-2"> */}
+              {/* <div className="text-text_1 px-2 bg-color_8 py-1 ">
+                  More like this
+                </div> */}
+              {/* <BlogsFromUser
                   currBlog={blogData._id}
                   author={blogData && blogData.author && blogData.author}
-                />
-              </div>
+                /> */}
+              {/* </div> */}
             </div>
             <div className="px-3 w-full md:w-[75%] overflow-y-scroll md:h-screen pt-14 bg-[#fafafa]">
               <div className=" flex pt-2 py-2  justify-between  mt-2 rounded-xl">
@@ -292,7 +293,7 @@ function Blog() {
                     )}
                   </div>
                   <div className="">
-                    <div className=" text-text_1 text-[17px]">
+                    <div className=" text-text_1 text-[17px] break-words">
                       {blogData && blogData.author && blogData.author.name}
                     </div>
 
@@ -407,7 +408,7 @@ function Blog() {
               </div>
 
               <>
-                <div className="text-[30px] font-bold text-text_1">
+                <div className="text-[30px] font-bold text-text_1 break-words">
                   {blogData && blogData.heading}
                 </div>
 
@@ -417,7 +418,7 @@ function Blog() {
                       <Image
                         unoptimized
                         fill={true}
-                        src={`http://localhost:5000/blogPost/image/${blogData.imageURL}`}
+                        src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
                         alt="image"
                         width="100%"
                         height="40%"
@@ -429,7 +430,7 @@ function Blog() {
                       <Image
                         unoptimized
                         fill={true}
-                        src={`http://localhost:5000/blogPost/image/${blogData.imageURL}`}
+                        src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
                         alt="image"
                         width="100%"
                         height="100%"
@@ -447,10 +448,10 @@ function Blog() {
                     blogData.paragraphs.map((para, index) => {
                       return (
                         <div key={index} className="my-2">
-                          <div className="font-serif  text-[20px] text-text_1">
+                          <div className="font-serif  text-[20px] text-text_1 break-words">
                             {para.subHead && para.subHead}
                           </div>
-                          <div className="font-serif  text-[18px] text-text_2">
+                          <div className="font-serif  text-[18px] text-text_2 break-words">
                             {para.paragraph && para.paragraph}
                           </div>
                         </div>
@@ -499,6 +500,11 @@ function Blog() {
                       ></iframe>
                     </div>
                   )}
+                <div className="text-right md:px-20 text-text_2">
+                  ~{" "}
+                  {(blogData && blogData.author && blogData.author.name) ||
+                    "user"}
+                </div>
                 <BlogInteraction
                   isLiked={isLiked}
                   blogId={router.query.bid}

@@ -11,7 +11,7 @@ import { NotificationContainer } from "react-notifications";
 import CircularProgresser from "../../atoms/CircularProgresser";
 import { axiosGet } from "../../functions/axiosCall";
 import FamilyRestroomRounded from "@mui/icons-material/FamilyRestroomRounded";
-function BlogComments(props) {
+function PortfolioReviews(props) {
   const [comments, setComments] = useState([]);
   const [data, setData] = useState({});
   const [editComment, setEditComment] = useState();
@@ -34,14 +34,14 @@ function BlogComments(props) {
     setLoading(true);
     axiosGet(
       setData,
-      `${process.env.BACKEND_URL}/commentService/getComments?blogId=${props.blogId}`,
+      `${process.env.BACKEND_URL}/portfolio/getReviews?pid=${props.pid}`,
       setLoading
     );
-  }, [props.blogId]);
+  }, [props.pid]);
   useEffect(() => {
     setLoading(false);
-    if (data && data.comments) {
-      setComments(data.comments);
+    if (data && data.reviews && data.reviews.reviews) {
+      setComments(data.reviews.reviews);
     } else {
       setComments([]);
     }
@@ -56,8 +56,8 @@ function BlogComments(props) {
       const userid = localStorage.getItem("userid");
       axios
         .put(
-          `${process.env.BACKEND_URL}/editComment?blogId=${props.blogId}&cid=${editComment._id}`,
-          { comment: editComment.text },
+          `${process.env.BACKEND_URL}/portfolio/review/edit?pid=${props.pid}&rid=${editComment._id}`,
+          { text: editComment.text },
           {
             headers: {
               accesstoken: accesstoken,
@@ -79,9 +79,16 @@ function BlogComments(props) {
             setEditComment();
           }
         })
-        .catch(function (error) {
-          console.log(error.message);
-          // setImage(null);
+        .catch(function (response) {
+          if (
+            response &&
+            response.response &&
+            response.response.data &&
+            !response.response.data.state &&
+            response.response.data.message
+          ) {
+            errorNotification(response.response.data.message);
+          }
         });
     }
   };
@@ -91,7 +98,8 @@ function BlogComments(props) {
     const userid = localStorage.getItem("userid");
     axios
       .delete(
-        `${process.env.BACKEND_URL}/editComment?blogId=${props.blogId}&cid=${comment._id}`,
+        `${process.env.BACKEND_URL}/portfolio/review/edit?pid=${props.pid}&rid=${comment._id}`,
+
         {
           headers: {
             accesstoken: accesstoken,
@@ -110,17 +118,18 @@ function BlogComments(props) {
           setComments(newArray);
           props.setNumComments(props.numComments - 1);
           setEditComment();
-        } else if (
-          response &&
-          response.data &&
-          !response.data.state &&
-          response.data.message
-        ) {
-          errorNotification(response.data.message);
         }
       })
-      .catch(function (error) {
-        console.log(error.message);
+      .catch(function (response) {
+        if (
+          response &&
+          response.response &&
+          response.response.data &&
+          !response.response.data.state &&
+          response.response.data.message
+        ) {
+          errorNotification(response.response.data.message);
+        }
       });
   };
   const pinComment = (comment) => {
@@ -128,8 +137,9 @@ function BlogComments(props) {
     const refreshtoken = localStorage.getItem("idToken");
     const userid = localStorage.getItem("userid");
     axios
+
       .put(
-        `${process.env.BACKEND_URL}/commentService/pinComment?blogId=${props.blogId}&cid=${comment._id}`,
+        `${process.env.BACKEND_URL}/portfolio/review/pin?pid=${props.pid}&rid=${comment._id}`,
         { body: {} },
         {
           headers: {
@@ -149,17 +159,24 @@ function BlogComments(props) {
             return item; // return the original item for all other cases
           });
           setComments(updatedItems);
-        } else if (
-          response &&
-          response.data &&
-          !response.data.state &&
-          response.data.message
-        ) {
-          errorNotification(response.data.message);
         }
+        console.log(
+          response &&
+            response.data &&
+            !response.data.state &&
+            response.data.message
+        );
       })
-      .catch(function (error) {
-        console.log(error.message);
+      .catch(function (response) {
+        if (
+          response &&
+          response.response &&
+          response.response.data &&
+          !response.response.data.state &&
+          response.response.data.message
+        ) {
+          errorNotification(response.response.data.message);
+        }
       });
   };
   const unpinComment = (comment) => {
@@ -168,7 +185,7 @@ function BlogComments(props) {
     const userid = localStorage.getItem("userid");
     axios
       .put(
-        `${process.env.BACKEND_URL}/commentService/unpinComment?blogId=${props.blogId}&cid=${comment._id}`,
+        `${process.env.BACKEND_URL}/portfolio/review/unpin?pid=${props.pid}&rid=${comment._id}`,
         { body: {} },
         {
           headers: {
@@ -188,33 +205,29 @@ function BlogComments(props) {
             return item; // return the original item for all other cases
           });
           setComments(updatedItems);
-        } else if (
-          response &&
-          response.data &&
-          !response.data.state &&
-          response.data.message
-        ) {
-          errorNotification(response.data.message);
         }
       })
-      .catch(function (error) {
-        console.log(error.message);
+      .catch(function (response) {
+        if (
+          response &&
+          response.response &&
+          response.response.data &&
+          !response.response.data.state &&
+          response.response.data.message
+        ) {
+          errorNotification(response.response.data.message);
+        }
       });
   };
   return (
     <div className="border rounded-t-md h-min mb-2 mt-2 bg-color_2 md:w-[75%] md:min-w-[400px] w-full mr-auto">
-      {/* <div className="flex justify-between items-center border-b  p-2 bg-color_9  rounded-t-md"> */}
-      {/* <div className="text-text_1 font-semibold text-[19px] text-color_7">
-          Comments
-        </div> */}
-      {/* </div> */}
       <div
         className="text-color_4 my-2 cursor-pointer w-fit px-3"
         onClick={() => {
           props.setShowComments(false);
         }}
       >
-        close comments
+        close reviews
         {/* <CloseIcon fontSize="medium" /> */}
       </div>
       <div className="flex justify-center align-center">
@@ -359,4 +372,4 @@ function BlogComments(props) {
   );
 }
 
-export default BlogComments;
+export default PortfolioReviews;

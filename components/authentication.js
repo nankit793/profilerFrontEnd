@@ -20,7 +20,7 @@ export async function authenticate(loginData, registerData) {
       userid,
     },
   };
-  const result = await fetch("http://localhost:5000/auth", requestOptions);
+  const result = await fetch(`${process.env.BACKEND_URL}/auth`, requestOptions);
   const final = await result.json();
   if (!final.giveAccess) {
     logout();

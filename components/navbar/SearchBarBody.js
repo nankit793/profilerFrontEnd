@@ -10,9 +10,12 @@ function SearchBarBody() {
     if (val.target.value === "") {
       setUsersArray([]);
     } else {
-      const searchString = await fetch("http://localhost:5000/searchUser", {
-        headers: { search: val.target.value },
-      });
+      const searchString = await fetch(
+        `${process.env.BACKEND_URL}/searchUser`,
+        {
+          headers: { search: val.target.value },
+        }
+      );
       const userList = await searchString.json();
       setUsersArray(userList);
       // console.log(userList)

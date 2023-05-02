@@ -4,11 +4,13 @@ import * as getAuthorBlogs from "../../../redux-next/getAuthorBlogs/actions";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import Image from "next/image";
+import { useRouter } from "next/router";
 
 function BlogsFromUser(props) {
   const dispatch = useDispatch();
+  const router = useRouter();
+
   useEffect(() => {
-    console.log(props.author);
     dispatch(getAuthorBlogs.getAuthorBlogs(props.author._id));
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.author]);
@@ -20,7 +22,7 @@ function BlogsFromUser(props) {
 
   return (
     <>
-      <div className="bg-color_2  h-[45vh]  overflow-auto ">
+      <div className="bg-color_2 h-[85vh] overflow-y-auto ">
         {blogs &&
           blogs.isFetched &&
           blogs.blogs.length !== 0 &&
@@ -28,15 +30,18 @@ function BlogsFromUser(props) {
             return (
               <>
                 <div
-                  className={`flex justify-start gap-3  duration-200 hover:border-color_9 bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
-                    blog._id === props.currBlog ? "bg-color_3" : ""
+                  onClick={() => {
+                    router.push(`http://localhost:3000/view/blog/${blog._id}`);
+                  }}
+                  className={`flex justify-start gap-3  duration-200 bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
+                    blog._id === props.currBlog ? "bg-color_6" : ""
                   } `}
                 >
                   {/* <div className="w-[20%] min-w-[100px]  h-full  h-full bg-color_3 rounded-full m-2 overflow-hidden">
                     <Image
                       unoptimized
                       fill={true}
-                      src={`http://localhost:5000/blogPost/image/${blog.imageURL}`}
+                      src={`${process.env.BACKEND_URL}/blogPost/image/${blog.imageURL}`}
                       alt="image"
                       width="100%"
                       height="100%"
@@ -46,7 +51,7 @@ function BlogsFromUser(props) {
                     />
                   </div> */}
                   <div className="overflow-x-auto">
-                    <div className="font-semibold text-text_1">
+                    <div className="font-semibold text-text_1 break-words">
                       {blog.heading}
                     </div>
                     <div className=" text-color_4 text-sm">
@@ -55,7 +60,7 @@ function BlogsFromUser(props) {
                         blog.activities &&
                         blog.activities.blogUpload.split("T")[0]}
                     </div>
-                    <div className="text-text_2 text-sm ">
+                    <div className="text-text_2 text-sm break-words">
                       {blog.paragraphs &&
                         blog.paragraphs[0] &&
                         blog.paragraphs[0].paragraph &&

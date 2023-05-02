@@ -11,7 +11,7 @@ function* saga(action) {
     const result = yield call(apiCalling.makeGetRequest, {
       method: "get",
       // mode: "cors",
-      url: "http://localhost:5000/user/profilerList",
+      url: `${process.env.BACKEND_URL}/user/profilerList`,
       body: action.payload,
     });
     if (result.status === 200) {

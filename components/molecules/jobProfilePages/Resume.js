@@ -7,7 +7,7 @@ import {
 import Modal from "../../molecules/Modal";
 import { useRouter } from "next/router";
 
-import { CleaningServices } from "@mui/icons-material";
+import CleaningServices from "@mui/icons-material/CleaningServices";
 import DoneIcon from "@mui/icons-material/Done";
 import { Document, Page, pdfjs, View, Text, Image } from "react-pdf";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
@@ -27,16 +27,15 @@ function Resume(props) {
 
   useEffect(() => {
     const caller = async () => {
-      const userid = localStorage.getItem("userid");
       const save = await fetch(
-        `http://localhost:5000/jobResume?pid=${props.pid}`,
+        `${process.env.BACKEND_URL}/jobResume?pid=${props.pid}`,
         {
           method: "GET",
         }
       );
       let finalSave = await save.json();
       setShowLoader(false);
-      if (save && save.status === 200 && save.statusText === "OK") {
+      if (save && save.status === 200) {
         if (finalSave && finalSave.media && finalSave.media.resume) {
           if (finalSave.media.autoResume) {
             setShowTab(true);
@@ -50,7 +49,7 @@ function Resume(props) {
       }
     };
     caller();
-  }, []);
+  }, [props.pid]);
 
   const onChange = (e) => {
     const file = e.target.files[0];
@@ -67,9 +66,10 @@ function Resume(props) {
       const refreshtoken = localStorage.getItem("idToken");
       const userid = localStorage.getItem("userid");
       let formData = new FormData();
+      console.log(image);
       formData.append("resume", image);
       const save = await fetch(
-        "http://localhost:5000/portfolio/update/resume",
+        `${process.env.BACKEND_URL}/portfolio/update/resume`,
         {
           method: "PATCH",
           body: formData,
@@ -82,7 +82,7 @@ function Resume(props) {
           },
         }
       );
-      if (save && save.status === 200 && save.statusText === "OK") {
+      if (save && save.status === 200) {
         setShowUploaderMessage("resume uploaded");
         setImage(image);
       } else {
@@ -99,18 +99,21 @@ function Resume(props) {
     const userid = localStorage.getItem("userid");
     let formData = new FormData();
     formData.append("resume", null);
-    const save = await fetch("http://localhost:5000/portfolio/update/resume", {
-      method: "PATCH",
-      body: formData,
-      headers: {
-        accesstoken: accesstoken,
-        refreshtoken: refreshtoken,
-        userid: userid,
-        removeResume: true,
-        pid: props.pid,
-      },
-    });
-    if (save && save.status === 200 && save.statusText === "OK") {
+    const save = await fetch(
+      `${process.env.BACKEND_URL}/portfolio/update/resume`,
+      {
+        method: "PATCH",
+        body: formData,
+        headers: {
+          accesstoken: accesstoken,
+          refreshtoken: refreshtoken,
+          userid: userid,
+          removeResume: true,
+          pid: props.pid,
+        },
+      }
+    );
+    if (save && save.status === 200) {
       setImage(null);
       setShowUploaderMessage("resume has been removed");
     } else {
@@ -154,14 +157,14 @@ function Resume(props) {
               <div className="mt-2 text-text_2 text-md">
                 Our platform offers a wide range of PDF formats to choose from,
                 making it easy for you to find the perfect template that matches
-                your personal style and career goals. The best part? You won't
-                have to worry about updating your resume every time your
+                your personal style and career goals. The best part? You won
+                {"'"}t have to worry about updating your resume every time your
                 information changes. Our system will do it for you. And unlike
-                other services, we don't place any watermarks or logos on your
-                resume, giving you complete control over your personal branding.
-                In addition to being fast, easy, and free, our platform also
-                offers a number of customization options to help you truly make
-                your resume stand out.
+                other services, we don{"'"}t place any watermarks or logos on
+                your resume, giving you complete control over your personal
+                branding. In addition to being fast, easy, and free, our
+                platform also offers a number of customization options to help
+                you truly make your resume stand out.
               </div>
               <div className="flex gap-4 flex-wrap mt-5">
                 <div

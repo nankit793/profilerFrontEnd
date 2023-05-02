@@ -34,7 +34,7 @@ function BlogPreReview() {
   useEffect(() => {
     if (reviewId) {
       axios
-        .get(`http://localhost:5000/blogPost/noview/${reviewId}`, {
+        .get(`${process.env.BACKEND_URL}/blogPost/noview/${reviewId}`, {
           headers: { userid: localStorage.getItem("userid") },
         })
         .then(function (response) {
@@ -143,7 +143,7 @@ function BlogPreReview() {
             <Image
               unoptimized
               // fill
-              src={`http://localhost:5000/blogPost/image/${
+              src={`${process.env.BACKEND_URL}/blogPost/image/${
                 blogData && blogData.imageURL
               }`}
               alt="image"

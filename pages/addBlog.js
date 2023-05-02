@@ -6,6 +6,7 @@ import * as getBasicDataActions from "../redux-next/getUserBasic/actions";
 import UpdatePage from "../components/molecules/UpdatePage";
 import AddBloger from "../components/molecules/BlogsPage/AddBlog";
 import BlogPreview from "../components/molecules/BlogsPage/BlogPreview";
+import { useRouter } from "next/router";
 function AddBlog() {
   const [blogStructure, setBlogStructure] = useState({
     heading: "",
@@ -14,11 +15,8 @@ function AddBlog() {
     tag: "general",
     selectedRedirection: "website",
   });
+  const router = useRouter();
   const [image, setImage] = useState(null);
-  const [otherImages, setOtherImages] = useState({});
-  const [p1, setP1] = useState(null);
-  const [p2, setP2] = useState(null);
-  const [p3, setP3] = useState(null);
   const onChange = (e) => {
     const { name, value } = e;
     if (name && value) {
@@ -36,24 +34,28 @@ function AddBlog() {
     });
     // reader.readAsDataURL(image);
   };
-  const onParaImageChange = (image, para) => {
-    console.log(otherImages);
-    if (image === null) {
-      setOtherImages((prev) => ({
-        ...prev,
-        [para]: null,
-      }));
-    } else {
-      setOtherImages((prev) => ({
-        ...prev,
-        [para]: {
-          imageURL: URL.createObjectURL(image),
-          name: image.name,
-          file: image,
-        },
-      }));
-    }
+  const successProcess = () => {
+    router.push(`/home/${localStorage.getItem("userid")}`);
   };
+
+  // const onParaImageChange = (image, para) => {
+  //   console.log(otherImages);
+  //   if (image === null) {
+  //     setOtherImages((prev) => ({
+  //       ...prev,
+  //       [para]: null,
+  //     }));
+  //   } else {
+  //     setOtherImages((prev) => ({
+  //       ...prev,
+  //       [para]: {
+  //         imageURL: URL.createObjectURL(image),
+  //         name: image.name,
+  //         file: image,
+  //       },
+  //     }));
+  //   }
+  // };
 
   const loginData = useSelector((state) => state.loginUserReducers);
   const registerData = useSelector((state) => state.registerReducer);
@@ -81,8 +83,7 @@ function AddBlog() {
           onChange={onChange}
           image={image}
           onImageChange={onImageChange}
-          otherImages={otherImages}
-          onParaImageChange={onParaImageChange}
+          // onParaImageChange={onParaImageChange}
         />
       ),
       id: 0,
@@ -91,7 +92,6 @@ function AddBlog() {
     {
       pageData: (
         <BlogPreview
-          otherImages={otherImages}
           change={true}
           blogStructure={blogStructure}
           image={image}
@@ -105,12 +105,12 @@ function AddBlog() {
       <div className="md:h-screen pt-14 flex flex-col justify-start md:overflow-y-hidden">
         <div className="h-[100%] ">
           <UpdatePage
-            mediaFiles="resume"
             data={blogStructure}
             image={image}
-            otherImages={otherImages}
+            successProcess={successProcess}
+            // otherImages={otherImages}
             request="POST"
-            onSave="http://localhost:5000/blogPost"
+            onSave={`${process.env.BACKEND_URL}/blogPost`}
             buttons={[
               { name: "Blog Information", id: 0 },
               { name: "Review & Publish", id: 1 },

@@ -16,7 +16,9 @@ import { useDispatch } from "react-redux";
 import { NotificationContainer } from "react-notifications";
 import CircularProgresser from "../../components/atoms/CircularProgresser";
 
-import { FormControl, MenuItem, Select } from "@mui/material";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import FormControl from "@mui/material/FormControl";
 import "react-datepicker/dist/react-datepicker.css";
 import PersonIcon from "@mui/icons-material/Person";
 import {
@@ -26,10 +28,18 @@ import {
 import * as getProfileLIst from "../../redux-next/profileList/action";
 import * as getProfilePhoto from "../../redux-next/profilePhoto/action";
 import EditIcon from "@mui/icons-material/Edit";
+import Modal from "../../components/molecules/Modal";
 import Croppered from "../../components/molecules/subMolecules/Cropper";
+import Avatar from "@mui/material/Avatar";
+import ModeEditIcon from "@mui/icons-material/ModeEdit";
+import { Document, Page, pdfjs } from "react-pdf";
+import GeneratePortfolio from "../../components/molecules/subMolecules/GeneratePortfolio";
+Modal;
+pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 
 function BasicDetails() {
   const router = useRouter();
+  const [resume, setResume] = useState("");
 
   const [userBasicData, setUserBasicData] = useState({});
   const [loading, setLoading] = useState(false);
@@ -37,8 +47,20 @@ function BasicDetails() {
   const [portfolioList, setPortfolioList] = useState([]);
   const [image, setImage] = useState(null);
   const [startDate, setStartDate] = useState(new Date());
+
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
+
   const [showUploaderMessage, setShowUploaderMessage] = useState(new Date());
   const [croppedImage, setCroppedImage] = useState(null);
+
+  const [viewPortfolioResume, setViewPortfolioResume] = useState({
+    id: "",
+    show: false,
+    error: false,
+    loader: true,
+  });
 
   const handleChange = (event) => {
     setValue(event.target.value);
@@ -82,16 +104,19 @@ function BasicDetails() {
       const userid = localStorage.getItem("userid");
       let formData = new FormData();
       formData.append("image", file);
-      const save = await fetch("http://localhost:5000/profilePhoto/uploads", {
-        method: "POST",
-        body: formData,
-        headers: {
-          accesstoken: accesstoken,
-          refreshtoken: refreshtoken,
-          userid: userid,
-        },
-      });
-      if (save && save.status === 200 && save.statusText === "OK") {
+      const save = await fetch(
+        `${process.env.BACKEND_URL}/profilePhoto/uploads`,
+        {
+          method: "POST",
+          body: formData,
+          headers: {
+            accesstoken: accesstoken,
+            refreshtoken: refreshtoken,
+            userid: userid,
+          },
+        }
+      );
+      if (save && save.status === 200) {
         // setImage(null);
         dispatch(getProfilePhoto.getProfilePicture("data"));
       } else {
@@ -127,6 +152,15 @@ function BasicDetails() {
     }));
   };
 
+  const onPortfolioNameChange = (e, index) => {
+    const { name, value } = e.target;
+    let newArr = [...portfolioList];
+    let newEl = newArr[index];
+    newEl.title = value;
+    newArr[index] = newEl;
+    setPortfolioList(newArr);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setLoading(true);
@@ -154,6 +188,122 @@ function BasicDetails() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [userBasicUpload && userBasicUpload.uploaded]);
 
+  const changeResume = async (newResume, pid) => {
+    if (newResume) {
+      // setShowUploader(true);
+      // setShowUploaderMessage("");
+      console.log(pid);
+      const accesstoken = localStorage.getItem("accessToken");
+      const refreshtoken = localStorage.getItem("idToken");
+      const userid = localStorage.getItem("userid");
+      let formData = new FormData();
+      console.log(pid);
+      formData.append("resume", newResume);
+      const save = await fetch(
+        `${process.env.BACKEND_URL}/portfolio/update/resume`,
+        {
+          method: "PATCH",
+          body: formData,
+          headers: {
+            accesstoken: accesstoken,
+            refreshtoken: refreshtoken,
+            userid: userid,
+            change: "resume",
+            pid: pid,
+          },
+        }
+      );
+      if (save && save.status === 200) {
+        // setShowUploaderMessage("resume uploaded");
+        console.log(newResume);
+        setResume(newResume);
+      } else {
+        // setShowUploaderMessage("error occured try again");
+        // errorNotification("error try againi later");
+      }
+      // setShowUploader(false);
+    }
+  };
+
+  const viewResume = async (id) => {
+    if (id) {
+      setViewPortfolioResume({
+        id: id,
+        error: false,
+        loader: true,
+      });
+      try {
+        const save = await fetch(
+          `${process.env.BACKEND_URL}/jobResume?pid=${id}`,
+          {
+            method: "GET",
+          }
+        );
+        let finalSave = await save.json();
+        if (
+          save &&
+          save.status === 200 &&
+          finalSave &&
+          finalSave.media &&
+          finalSave.media.resume
+        ) {
+          setViewPortfolioResume({
+            id: id,
+            error: false,
+            loader: false,
+          });
+          setResume(finalSave.media.resume);
+        } else {
+          setResume("");
+          setViewPortfolioResume({
+            id: id,
+            error: true,
+            loader: false,
+          });
+        }
+      } catch (error) {
+        setResume("");
+        setViewPortfolioResume({
+          id: id,
+          error: true,
+          loader: false,
+        });
+      }
+    } else {
+      errorNotification("try again later");
+    }
+  };
+  const portfolioChangeNameAPI = async (id, title) => {
+    if (id && title) {
+      try {
+        const save = await fetch(
+          `${process.env.BACKEND_URL}/portfolio/update`,
+          {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              accesstoken: localStorage.getItem("accessToken"),
+              refreshtoken: localStorage.getItem("idToken"),
+              userid: localStorage.getItem("userid"),
+              pid: id,
+            },
+            body: JSON.stringify({
+              title: title,
+            }),
+          }
+        );
+        if (save && save.status === 200) {
+          successNotification("portfolio title has been changed");
+        } else {
+          errorNotification("Try again later");
+        }
+      } catch (error) {
+        errorNotification("try again later");
+      }
+    } else {
+      errorNotification("try again later");
+    }
+  };
   return (
     <>
       <div className="pt-14 min-h-screen flex flex-col justify-start">
@@ -199,46 +349,142 @@ function BasicDetails() {
                   <input hidden onChange={onChange} type="file" />
                 </Button>
               </div>
-              <div className="flex flex-wrap justify-end">
-                {portfolioList && portfolioList.length > 0 ? (
-                  portfolioList.map((portfolio, index) => {
-                    return (
-                      <>
-                        <div
-                          key={index}
-                          className="flex m-1 gap-[100px]  w-full  justify-between px-5 py-3 h-min border bg-color_2  w-full rounded-lg "
-                        >
-                          <div className="text-text_1 ">Portfolio</div>
+              <div className="md:w-[40%]">
+                <div className="flex flex-wrap justify-end gap-2 w-full">
+                  {portfolioList &&
+                    portfolioList.length > 0 &&
+                    portfolioList.map((portfolio, index) => {
+                      return (
+                        <>
                           <div
-                            className="text-linkBlue cursor-pointer "
-                            onClick={() => {
-                              router.push(
-                                `/update/jobProfile?pid=${portfolio._id}`
-                              );
-                            }}
+                            key={index}
+                            className="m-1 w-full md:px-5 px-2 py-2 h-min border bg-color_2  w-full rounded-md"
                           >
-                            update
-                          </div>
-                        </div>
-                      </>
-                    );
-                  })
-                ) : (
-                  <>
-                    <div className="flex m-1 gap-[100px]  w-full  justify-between px-5 py-3 h-min border bg-color_2  w-full rounded-lg">
-                      <div className="text-text_1 ">Portfolio</div>
-                      <div
-                        className="text-linkBlue cursor-pointer pl-10"
-                        // onClick={() => {
+                            <div className="flex justify-between items-center">
+                              <div className="text-text_2 ">
+                                <input
+                                  type="text"
+                                  name={portfolio._id}
+                                  onChange={(e) => {
+                                    onPortfolioNameChange(e, index);
+                                  }}
+                                  value={portfolio.title}
+                                  className="border-b p-1 w-full outline-none "
+                                />
+                              </div>
+                              <div
+                                className=" duration-200 text-sm hover:bg-color_5 rounded-md px-5 py-2 text-color_2 cursor-pointer bg-color_7 "
+                                onClick={() => {
+                                  portfolioChangeNameAPI(
+                                    portfolio._id,
+                                    portfolioList[index].title
+                                  );
+                                }}
+                              >
+                                change
+                                {/* <ModeEditIcon fontSize="small" /> */}
+                              </div>
+                            </div>
+                            <div className="flex text-[15px] justify-center items-center gap-5 flex-wrap">
+                              <Modal
+                                width="100"
+                                onClick={handleOpen}
+                                onClose={handleClose}
+                                textClass=""
+                                hideBackdrop={true}
+                                text={
+                                  <div
+                                    onClick={() => {
+                                      viewResume(portfolio._id);
+                                    }}
+                                    className="text-color_5 mt-3 cursor-pointer"
+                                  >
+                                    view resume
+                                  </div>
+                                }
+                                open={open}
+                                data={
+                                  <div className="mx-2 h-[70vh]  overflow-auto">
+                                    {viewPortfolioResume.error
+                                      ? "try again later"
+                                      : viewPortfolioResume.loader
+                                      ? "loading"
+                                      : resume && (
+                                          <div className="w-full flex justify-center textRemove">
+                                            <div className="border overflow-x-auto rounded">
+                                              <Document
+                                                file={resume && resume}
+                                                //    onLoadSuccess={onDocumentLoadSuccess}
+                                              >
+                                                <Page pageIndex={0} />
+                                              </Document>
+                                            </div>
+                                          </div>
+                                        )}
+                                    <div className="flex fixed bottom-2 right-5 gap-2 flex-wrap mt-5 justify-end">
+                                      <div
+                                        onClick={() => {
+                                          handleClose();
+                                        }}
+                                        className="border bg-color_2 border-color_5 p-2 font-semibold cursor-pointer text-text_1 px-5 rounded"
+                                      >
+                                        Close
+                                      </div>
+                                      <Button
+                                        variant="contained"
+                                        component="label"
+                                        className=" border boder-color_5  cursor-pointer text-[white] rounded px-8  capitalize bg-color_7 hover:bg-color_5 duration-100"
+                                      >
+                                        Change
+                                        <input
+                                          hidden
+                                          onChange={(e) => {
+                                            const file = e.target.files[0];
+                                            if (true) {
+                                              console.log(
+                                                portfolio,
+                                                viewPortfolioResume.id
+                                              );
 
-                        // }}
-                      >
-                        create
-                      </div>
-                    </div>
-                  </>
-                )}
-                {/* <div className="md:w-[35%] w-full flex-col flex  justify-between  h-min border bg-color_2  w-full rounded-lg ">
+                                              changeResume(
+                                                file,
+                                                viewPortfolioResume.id
+                                              );
+                                            }
+                                          }}
+                                          type="file"
+                                        />
+                                      </Button>
+                                    </div>
+                                  </div>
+                                }
+                              />
+                              <div
+                                onClick={() => {
+                                  router.push(
+                                    `/update/jobProfile?pid=${portfolio._id}`
+                                  );
+                                }}
+                                className=" text-color_5 mt-3 cursor-pointer"
+                              >
+                                edit portfolio
+                              </div>
+                            </div>
+                            {/* <div className="w-full px-3  md:px-10 flex justify-center textRemove">
+                            <div className="border overflow-x-auto rounded">
+                              <Document
+                                file="/ankit_negi_resume.pdf"
+                                //    onLoadSuccess={onDocumentLoadSuccess}
+                              >
+                                <Page pageIndex={0} />
+                              </Document>
+                            </div>
+                          </div> */}
+                          </div>
+                        </>
+                      );
+                    })}
+                  {/* <div className="md:w-[35%] w-full flex-col flex  justify-between  h-min border bg-color_2  w-full rounded-lg ">
                   <div className="text-text_1">Username</div>
                   <div className="flex justify-end">
                     <div className="pr-2 text-text_2">@</div>
@@ -249,12 +495,25 @@ function BasicDetails() {
                     />
                   </div>
                 </div> */}
-                {/* <div className="flex justify-end"> */}
-                {/* <div className=" p-2 whitespace-nowrap cursor-pointer py-3 my-3 w-min rounded px-5 bg-color_7 hover:bg-color_5 duration-200 cursor-pointe text-[white] ">
+                  {/* <div className="flex justify-end"> */}
+                  {/* <div className=" p-2 whitespace-nowrap cursor-pointer py-3 my-3 w-min rounded px-5 bg-color_7 hover:bg-color_5 duration-200 cursor-pointe text-[white] ">
                     save username
                   </div> */}
-                {/* </div> */}
+                  {/* </div> */}
+                </div>
+                {portfolioList && portfolioList.length < 2 && (
+                  <div>
+                    <GeneratePortfolio
+                      button={
+                        <div className="ml-auto mr-1 cursor-pointer px-3 py-2 bg-color_7 rounded text-color_2 duration-200 hover:bg-color_5 w-fit">
+                          Generate Portfolio
+                        </div>
+                      }
+                    />
+                  </div>
+                )}
               </div>
+
               <div className="">
                 <BasicUpdateInfo />
               </div>
@@ -304,11 +563,10 @@ function BasicDetails() {
                   />
                 </div>
                 <div className="md:flex justify-between mt-2">
-                  <div className="text-[16px] font-semibold text-text_1 ">
-                    Gender
-                  </div>
-                  <FormControl className="flex w-full justify-end w-full mt-1 md:mt-0 md:w-[70%]  text-left">
+                  <div className=" text-text_2 ">Gender</div>
+                  <FormControl className="flex bg-color_2 w-full justify-end w-full mt-1 md:mt-0 md:w-[70%]  text-left">
                     <Select
+                      size="small"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       value={userBasicData.gender ? userBasicData.gender : ""}
@@ -323,12 +581,11 @@ function BasicDetails() {
                   </FormControl>
                 </div>
                 <div className="md:flex justify-between mt-2">
-                  <div className="text-[16px] font-semibold text-text_1 whitespace-nowrap">
-                    Nationality
-                  </div>
+                  <div className="text-text_2 ">Nationality</div>
 
-                  <FormControl className="flex w-full justify-end w-full mt-2 md:mt-0 md:w-[70%] text-left">
+                  <FormControl className="flex w-full bg-color_2 justify-end w-full mt-2 md:mt-0 md:w-[70%] text-left">
                     <Select
+                      size="small"
                       labelId="demo-simple-select-label"
                       id="demo-simple-select"
                       onChange={onChange}
@@ -650,43 +907,73 @@ function BasicDetails() {
                 <div className="text-[12px] text-text_2 ">
                   (Note: Put the links to your social media is the fields)
                 </div>
-                <div className="mt-2">
+                <div className="mt-3">
                   <UserInputFields
                     name="facebook"
                     onChange={onChange}
-                    keyName="Facebook"
+                    keyName={
+                      <Avatar
+                        alt="Facebook"
+                        src="/images/facebook.png"
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    }
                     value={userBasicData.facebook}
                   />
                 </div>
-                <div className="mt-2">
+                <div className="mt-3">
                   <UserInputFields
                     name="instagram"
                     onChange={onChange}
-                    keyName="Instagram"
+                    keyName={
+                      <Avatar
+                        alt="Instagram"
+                        src="/images/insta.png"
+                        sx={{ width: 27, height: 27 }}
+                      />
+                    }
                     value={userBasicData.instagram}
                   />
                 </div>
-                <div className="mt-2">
+                <div className="mt-3">
                   <UserInputFields
                     onChange={onChange}
                     name="youtube"
-                    keyName="YouTube"
+                    keyName={
+                      <Avatar
+                        alt="Youtube"
+                        src="/images/youtube.png"
+                        sx={{ width: 27, height: 27 }}
+                      />
+                    }
                     value={userBasicData.youtube}
                   />
                 </div>{" "}
-                <div className="mt-2">
+                <div className="mt-3">
                   <UserInputFields
                     name="linkdn"
                     onChange={onChange}
-                    keyName="Linkedin"
+                    keyName={
+                      <Avatar
+                        alt="Linkedin"
+                        src="/images/linkedin.png"
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    }
                     value={userBasicData.linkdn}
                   />
                 </div>
-                <div className="mt-2">
+                <div className="mt-3">
                   <UserInputFields
                     name="github"
                     onChange={onChange}
-                    keyName="Github"
+                    keyName={
+                      <Avatar
+                        alt="Github"
+                        src="/images/github.png"
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    }
                     value={userBasicData.github}
                   />
                 </div>

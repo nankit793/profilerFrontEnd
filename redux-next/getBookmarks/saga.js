@@ -11,7 +11,7 @@ function* getUserBookmarks(action) {
     const result = yield call(apiCalling.makeLoggedGetRequest, {
       method: "get",
       // mode: "cors",
-      url: "http://localhost:5000/bookMarks",
+      url: `${process.env.BACKEND_URL}/bookMarks`,
       //   body: action.payload,
     });
     if (

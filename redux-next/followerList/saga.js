@@ -11,7 +11,7 @@ function* getFollowingList(action) {
     const result = yield call(apiCalling.makeLoggedGetRequest, {
       method: "get",
       // mode: "cors",
-      url: "http://localhost:5000/followingList",
+      url: `${process.env.BACKEND_URL}/followingList`,
       body: action.payload,
     });
     if (result.status === 200) {

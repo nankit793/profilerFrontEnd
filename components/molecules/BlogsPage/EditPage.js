@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Button from "@mui/material/Button";
 import FileCopyIcon from "@mui/icons-material/FileCopy";
-import { Avatar } from "@mui/material";
+import Avatar from "@mui/material/Avatar";
 import InputField from "../../atoms/input/InputField";
 import { useRouter } from "next/router";
 
@@ -81,7 +81,7 @@ function EditBlog(props) {
     if (props.editPage && router.query.bid && !props.blogStructure) {
       const fetcher = async () => {
         const data = await fetch(
-          `http://localhost:5000/blogPost/noview/${router.query.bid}`
+          `${process.env.BACKEND_URL}/blogPost/noview/${router.query.bid}`
         );
         const saveData = await data.json();
         if (
@@ -376,7 +376,7 @@ function EditBlog(props) {
                         //   onChange={onChange}
                       />
                     </div>
-                    <div className="mt-2">
+                    {/* <div className="mt-2">
                       {(props.otherImages &&
                         props.otherImages[`p${index + 1}`]) ||
                       para.imageURL ? (
@@ -444,7 +444,7 @@ function EditBlog(props) {
                           </Button>
                         </div>
                       )}
-                    </div>
+                    </div> */}
                   </div>
                 );
               })}

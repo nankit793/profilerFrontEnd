@@ -13,7 +13,7 @@ function* loginUserSaga(action) {
     const result = yield call(apiCalling.makePostRequests, {
       method: "post",
       mode: "cors",
-      url: "http://localhost:5000/user/login",
+      url: `${process.env.BACKEND_URL}/user/login`,
       body: action.payload,
     });
     const { data } = result;

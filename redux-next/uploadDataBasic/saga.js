@@ -9,7 +9,7 @@ function* uploadBAsicDataSaga(action) {
     const result = yield call(apiCalling.makePatchRequest, {
       method: "patch",
       mode: "cors",
-      url: "http://localhost:5000/getbasic",
+      url: `${process.env.BACKEND_URL}/getbasic`,
       data: action.payload,
     });
     if (result.status === 200) {
