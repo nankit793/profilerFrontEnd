@@ -31,7 +31,7 @@ function BlogsFromUser(props) {
               <>
                 <div
                   onClick={() => {
-                    router.push(`http://localhost:3000/view/blog/${blog._id}`);
+                    router.push(`/view/blog/${blog._id}`);
                   }}
                   className={`flex justify-start gap-3  duration-200 bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
                     blog._id === props.currBlog ? "bg-color_6" : ""
