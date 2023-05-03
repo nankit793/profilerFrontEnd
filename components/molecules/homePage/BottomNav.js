@@ -21,7 +21,10 @@ function BottomNav(props) {
   }, [props.id, router.query.uid]);
 
   useEffect(() => {
-    if (localStorage.getItem("bottomPageNav")) {
+    if (
+      localStorage.getItem("bottomPageNav") &&
+      router.query.userid === localStorage.getItem("userid")
+    ) {
       select(localStorage.getItem("bottomPageNav"));
     } else {
       select(0);
@@ -101,7 +104,7 @@ function BottomNav(props) {
           );
         })}
       </div>
-      <div className="slideUp px-1 md:px-3">
+      <div className=" px-1 md:px-3">
         {selectedPage && selectedPage.pageData && selectedPage.pageData}
       </div>
     </>

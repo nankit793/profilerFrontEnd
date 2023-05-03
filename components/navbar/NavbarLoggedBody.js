@@ -78,7 +78,7 @@ function NavbarLoggedBody(props) {
               <a
                 className={`cursor-pointer text-[16px]    ${
                   router.pathname === "/explore"
-                    ? "text-color_1"
+                    ? "text-color_5"
                     : "text-color_black"
                 } `}
               >

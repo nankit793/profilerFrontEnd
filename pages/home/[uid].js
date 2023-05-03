@@ -348,7 +348,7 @@ function Uid(props) {
               </div>
             </div>
             {/* side panel end  */}
-            <div className=" md:mt-0 mt-4 pb-2 w-full flex rounded-md  bg-color_8 flex-col  justify-start gap-1 md:w-[80%] w-full">
+            <div className=" md:mt-0 mt-4 pb-2 flex rounded-md  bg-color_8 flex-col  justify-start gap-1 md:w-[80%] w-full">
               <BottomNav
                 data={userBasicData}
                 id={userBasicData._id}

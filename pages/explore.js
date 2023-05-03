@@ -3,9 +3,9 @@ import * as trendingBlogs from "../redux-next/GetTrendingBlogs/action";
 import { useSelector } from "react-redux";
 import { useDispatch } from "react-redux";
 import { useRouter } from "next/router";
-
 import Trending from "../components/molecules/explore/Trending";
 import BlogPreReview from "../components/molecules/explore/BlogPreReview";
+import SwipeableTemporaryDrawer from "../components/molecules/Drawer";
 function Explore() {
   const router = useRouter();
   const dispatch = useDispatch();
@@ -35,8 +35,31 @@ function Explore() {
 
   return (
     <>
+      <div className="md:hidden fixed top-[70px] z-20 right-2 flex gap-2">
+        {buttons.map((btn, index) => {
+          return (
+            <>
+              <div
+                key={index}
+                onClick={() => {
+                  setSelectedPage({ id: btn.id, pageData: btn.pageData });
+                }}
+                className={`px-3 py-1 cursor-pointer ${
+                  selectedPage.id === btn.id
+                    ? "px-5 bg-color_7 text-color_2 duration-200"
+                    : "border text-text_1 bg-color_2"
+                }  rounded-full `}
+              >
+                {btn.name}
+              </div>
+            </>
+          );
+        })}
+      </div>
+
       <div className="pt-14 h-[100vh] flex justify-between ">
         {/* left wing  */}
+
         <div className="md:w-[70%]  w-full overflow-y-auto bg-[#fafafa]">
           {selectedPage.pageData}
         </div>

@@ -102,7 +102,7 @@ function BottomJobTab(props) {
             <>
               {" "}
               <div
-                className="rounded mb-5 cursor-pointer  p-3  rounded"
+                className="bg-color_2 border drop-shadow-sm mb-5 cursor-pointer  p-3  rounded"
                 key={index}
               >
                 <div className="flex justify-between items-center  pr-3">
@@ -110,7 +110,7 @@ function BottomJobTab(props) {
                     onClick={() => {
                       router.push(`/update/jobProfile?pid=${portfolio._id}`);
                     }}
-                    className="text-text_1 text-[20px] font-semibold text-[17px]"
+                    className="text-text_1 font-semibold text-[17px]"
                   >
                     {portfolio.title ? portfolio.title : "Portfolio"}
                   </div>
@@ -175,7 +175,7 @@ function BottomJobTab(props) {
                       return (
                         <>
                           {item && (
-                            <div className="border rounded-full bg-color_2 text-text_1 px-3 py-1  text-color_4">
+                            <div className="border rounded-full bg-color_5 text-color_2 px-5 py-1">
                               {item.skill}
                             </div>
                           )}
@@ -195,7 +195,7 @@ function BottomJobTab(props) {
                         loader: true,
                       });
                     }}
-                    className="  rounded-md text-[blue] text-sm cursor-pointer w-min whitespace-nowrap"
+                    className="rounded-full bg-color_7 hover:bg-color_5 duration-200 px-5 py-2 text-color_2 mt-3 text-sm cursor-pointer w-min whitespace-nowrap"
                   >
                     close resume
                   </div>
@@ -204,7 +204,7 @@ function BottomJobTab(props) {
                     onClick={() => {
                       viewResume(portfolio._id);
                     }}
-                    className="rounded-md text-[blue] text-sm cursor-pointer w-min whitespace-nowrap"
+                    className="rounded-full bg-color_7 hover:bg-color_5 duration-200 px-5 py-2 text-color_2 mt-3 text-sm cursor-pointer w-min whitespace-nowrap"
                   >
                     view resume
                   </div>

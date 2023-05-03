@@ -79,20 +79,20 @@ function PortfolioBlogs(props) {
                       </div>
                       <div className="flex justify-between items-end ">
                         <div className="flex justify-start gap-3 flex-wrap rounded text-[white] mt-2 text-sm">
-                          <div className="text-text_2 font-semibold flex justify-center items-center items-center gap-1 pr-2">
+                          <div className="text-text_2 font-semibold flex justify-center items-center gap-1 pr-2">
                             <FavoriteIcon fontSize="small" />{" "}
                             <span className="font-normal text-text_1">
                               {" "}
                               {blog.activities.numLikes}{" "}
                             </span>
                           </div>
-                          <div className="text-text_2 font-semibold flex justify-center items-center items-center gap-1 pr-2">
+                          <div className="text-text_2 font-semibold flex justify-center items-center gap-1 pr-2">
                             <ChatBubbleOutlineIcon fontSize="small" />{" "}
                             <span className="font-normal text-text_1">
                               {blog.activities.numComments}{" "}
                             </span>
                           </div>
-                          <div className="text-text_2 font-semibold flex justify-center items-center items-center gap-1 pr-2">
+                          <div className="text-text_2 font-semibold flex justify-center items-center gap-1 pr-2">
                             <RemoveRedEyeIcon fontSize="small" />
                             <span className="font-normal text-text_1">
                               {" "}
@@ -103,7 +103,7 @@ function PortfolioBlogs(props) {
                         </div>
                         <div>
                           <div className="flex justify-start items-center gap-2">
-                            <div className="text-color_4 w-min  text-sm  text-text_2">
+                            <div className=" text-sm  text-text_2">
                               {blog.tag && blog.tag}
                             </div>
                             <div className="text-color_4 text-sm">

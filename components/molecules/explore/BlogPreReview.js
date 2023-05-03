@@ -11,7 +11,7 @@ import {
   successNotification,
 } from "../../atoms/AlertMessage";
 import { NotificationContainer } from "react-notifications";
-
+import CircularProgresser from "../../atoms/CircularProgresser";
 // mui
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
@@ -49,7 +49,6 @@ function BlogPreReview() {
           headers: { userid: localStorage.getItem("userid") },
         })
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
             setBlogData(response && response.data && response.data.blog);
             setIsLiked(response && response.data && response.data.liked);
@@ -155,18 +154,18 @@ function BlogPreReview() {
     }
   };
   return (
-    <div className="w-full h-full">
+    <div className="w-full">
       {reviewId ? (
         <>
           {loading ? (
             <div className="w-full h-full text-text_2 flex justify-center items-center">
-              loading
+              <CircularProgresser />
             </div>
           ) : (
             <>
               <div className="px-2 ">
-                <div className="w-full my-2 flex-wrap flex justify-between  items-start">
-                  <div className="flex gap-7 text-center cursor-pointer">
+                <div className="w-full my-2 flex-wrap flex justify-between  items-center">
+                  <div className="flex gap-10 grow text-center cursor-pointer">
                     <div className="">
                       {isLiked && isLiked ? (
                         <div onClick={unliked} className="text-[red] ">
@@ -188,7 +187,7 @@ function BlogPreReview() {
                       <div className="text-sm text-text_2">{views}</div>
                     </div>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-5 items-center">
                     <div className="text-left text-color_4 text-text-[15px] ">
                       {blogDate &&
                         dateConverter(blogDate[1]) +
@@ -218,7 +217,7 @@ function BlogPreReview() {
                   </div>
                 </div>
               </div>
-              <div className="flex gap-3 px-2 pb-2">
+              <div className=" flex gap-3  px-2 pb-2">
                 <div
                   onClick={() => {
                     reviewId && router.push(`/view/blog/${reviewId}`);
@@ -229,7 +228,7 @@ function BlogPreReview() {
                 </div>
                 <div className="text-color_4 cursor-pointer">report</div>
               </div>
-              <div className="overflow-y-scroll h-[70vh]">
+              <div className="overflow-y-scroll md:h-[70vh] h-[80vh]">
                 <Image
                   unoptimized
                   // fill

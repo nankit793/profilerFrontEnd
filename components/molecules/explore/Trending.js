@@ -8,6 +8,8 @@ import { axiosPost } from "../../functions/axiosCall";
 import * as getFollowingList from "../../../redux-next/followerList/actions";
 import * as sessionStorageAction from "../../../redux-next/sessionStorage/actions";
 import axios from "axios";
+import SwipeableTemporaryDrawer from "../Drawer";
+import BlogPreReview from "./BlogPreReview";
 
 function Trending(props) {
   const trendingBlogs = useSelector((state) => state.trendinBlogsReducer);
@@ -99,28 +101,7 @@ function Trending(props) {
 
   return (
     <div>
-      <div className="flex px-2 overflow-x-auto gap-2 mt-2 scrollbar-hide ">
-        {/* {buttons.map((btn, index) => {
-          return (
-            <>
-              <div
-                key={index}
-                // onClick={() => {
-                // setSelectedPage({ id: btn.id, pageData: btn.pageData });
-                // }}
-                className={`px-3 py-1 cursor-pointer ${
-                  false
-                    ? "px-5 bg-color_7 text-color_2 duration-200"
-                    : "border text-text_1 bg-color_2"
-                }  rounded-full border borcer-color_9`}
-              >
-                {btn.name}
-              </div>
-            </>
-          );
-        })} */}
-      </div>
-      <div className="md:flex flex-wrap md:mx-0 mx-2 justify-evenly md:px-3 pt-4">
+      <div className="md:flex flex-wrap md:mx-0 mx-2 justify-evenly md:px-3 pt-4 hidden">
         {mainBlogs &&
           mainBlogs.map((e) => {
             const blog = e.blog;
@@ -229,6 +210,132 @@ function Trending(props) {
                     </div>
                   </div>
                 </div>
+              </>
+            );
+          })}
+      </div>
+      <div className="mx-2 md:px-3 pt-4 md:hidden">
+        {mainBlogs &&
+          mainBlogs.map((e) => {
+            const blog = e.blog;
+            return (
+              <>
+                <SwipeableTemporaryDrawer
+                  anchor="bottom"
+                  click={
+                    <div
+                      id="operationButton"
+                      key={e._id}
+                      onClick={() => {
+                        dispatch(
+                          sessionStorageAction.userReviewBlog(
+                            blog && blog._id && blog._id
+                          )
+                        );
+                      }}
+                      className={`${
+                        sessionStorage.session === blog._id
+                          ? "border-color_9 bg-color_6"
+                          : "bg-color_2"
+                      }   border cursor-pointer md:min-w-[400px] duration-200 hover:drop-shadow mx-auto max-w-[450px] rounded md:w-[45%] mb-3`}
+                    >
+                      <div className="w-full flex justify-between px-2 py-2 ">
+                        <div className="flex justify-start gap-2 items-start">
+                          <div className="rounded-full drop-shadow overflow-hidden h-[50px] w-[50px] bg-color_8 text-color_2">
+                            <Image
+                              unoptimized
+                              // fill
+                              src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${blog.author.userid}`}
+                              alt="image"
+                              width="100%"
+                              height="140%"
+                              layout="responsive"
+                              objectFit="cover"
+                            />
+                          </div>{" "}
+                          <div>
+                            <div className="text-text_1 font-semibold">
+                              {blog.author && blog.author.name}
+                            </div>
+                            <div className="text-text_2">
+                              {" "}
+                              {blog.author && blog.author.userid}
+                            </div>
+                          </div>
+                        </div>
+                        <div>
+                          {blog.author.userid !==
+                            localStorage.getItem("userid") && (
+                            <>
+                              {followersData &&
+                              blog &&
+                              blog.author &&
+                              followersData.includes(blog.author._id) ? (
+                                <div
+                                  onClick={() => {
+                                    unfollow(blog.author);
+                                  }}
+                                  className="text-[blue]"
+                                >
+                                  unfollow
+                                </div>
+                              ) : (
+                                <div
+                                  onClick={() => {
+                                    follow(blog.author);
+                                  }}
+                                  className="text-[blue]"
+                                >
+                                  follow
+                                </div>
+                              )}
+                            </>
+                          )}
+
+                          <div>
+                            {/* {blog &&
+                      blog.blogUpload &&
+                      blog.from.split("T")[0].split("-") &&
+                      dateConverter(blog.from.split("T")[0].split("-")[1]) +
+                        " " +
+                        blog.from.split("T")[0].split("-")[0]}{" "}} */}
+                          </div>
+                        </div>
+                      </div>
+                      <Image
+                        unoptimized
+                        // fill
+                        src={`${process.env.BACKEND_URL}/blogPost/image/${blog.imageURL}`}
+                        alt="image"
+                        width="100%"
+                        height="40%"
+                        layout="responsive"
+                        objectFit="cover"
+                      />
+                      <div className="px-2">
+                        <div className="py-1 text-[19px] text-text_1">
+                          {blog && blog.heading}
+                        </div>
+                        <div className="text-text_2">
+                          qiojri ejr jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e
+                          tne n ntnt kn kynkl n qiojri ejr jjepjetmlkm n nlnlk n
+                          knlk tnlkwe ne ntn e tne n ntnt kn kynkl n qiojri ejr
+                          jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne n ntnt
+                          kn kynkl n qiojri ejr jjepjetmlkm n nlnlk n knlk
+                          tnlkwe ne ntn e tne n ntnt kn kynkl n qiojri ejr
+                          jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne n ntnt
+                          kn kynkl n
+                        </div>
+                      </div>
+                    </div>
+                  }
+                  classNameDrawer="text-color_2"
+                  data={
+                    <div className="grow  h-full ">
+                      <BlogPreReview />
+                    </div>
+                  }
+                />
               </>
             );
           })}
