@@ -16,8 +16,7 @@ import Head from "next/head";
 import Link from "next/link";
 import { useRouter } from "next/router";
 // const { Auth, LoginCredentials } = require("two-step-auth");
-import InputAdornment from "@mui/material/TextField";
-import TextField from "@mui/material/InputAdornment";
+import TextField from "@mui/material/TextField";
 
 function ForgotPassword() {
   const [userid, setUserid] = useState("");
@@ -102,7 +101,7 @@ function ForgotPassword() {
   return (
     <>
       <div className="h-screen flex flex-col items-center max-h-[1000px] pt-14">
-        <div className="h-[50vh] w-full bg-color_9 text-center">
+        <div className="h-[50vh] w-full gradientColor text-center">
           <div className="text-color_7  pt-10 text-[30px]">
             Forgot Password?
           </div>
@@ -176,8 +175,8 @@ function ForgotPassword() {
             <>
               <TextField
                 id=""
-                className=" w-full outline-none"
                 required={true}
+                maxLength={40}
                 value={userid}
                 type="text"
                 size="small"
@@ -193,7 +192,7 @@ function ForgotPassword() {
 
               <div
                 onClick={sendOtpHandler}
-                className="bg-color_7 hover:bg-color_5 duration-200 cursor-pointer py-3 px-5 mt-1 rounded ml-auto whitespace-nowrap text-[white]  w-min"
+                className="bg-color_7 hover:bg-color_5 duration-200 cursor-pointer py-2 px-5 mt-1 rounded ml-auto whitespace-nowrap text-[white]  w-min"
               >
                 Send OTP
               </div>

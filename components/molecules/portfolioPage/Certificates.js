@@ -18,7 +18,7 @@ function Certificates(props) {
                   key={index}
                   className={` ${
                     index === 0 ? "" : ""
-                  }  border-l  border-l-color_11 border-l-[2px]  ${
+                  }  border-l-color_11 border-l-[2px]  ${
                     props.portfolioData.certificates.length - 1 === index
                       ? " pb-1 "
                       : "pb-4 pt-1"
@@ -34,7 +34,7 @@ function Certificates(props) {
                     <div className="text-color_4 mx-3">
                       {edu && edu.organization}
                     </div>
-                    <div className="text-text_2 text-color_4 mx-3">
+                    <div className=" text-color_4 mx-3">
                       {edu.attending ? (
                         <span className="font-semibold italic ">learning</span>
                       ) : (

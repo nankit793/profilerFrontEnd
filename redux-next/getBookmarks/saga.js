@@ -5,7 +5,7 @@ import {
   getUserBookmarks_success,
   getUserBookmarks_error,
 } from "./actions";
-
+import { logout } from "../../components/logout";
 function* getUserBookmarks(action) {
   try {
     const result = yield call(apiCalling.makeLoggedGetRequest, {
@@ -22,9 +22,11 @@ function* getUserBookmarks(action) {
     ) {
       yield put(getUserBookmarks_success(result.data.bookmarks));
     } else {
+      logout();
       yield put(getUserBookmarks_error([]));
     }
   } catch (error) {
+    logout();
     yield put(getUserBookmarks_error(error.response));
   }
 }

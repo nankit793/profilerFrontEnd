@@ -300,7 +300,7 @@ function BlogsTab(props) {
                       </div>
                       <div>
                         <div className="flex justify-start items-center gap-2">
-                          <div className="text-color_4 w-min  text-sm  text-text_2">
+                          <div className="text-color_4 text-sm  text-text_2">
                             {blog.tag && blog.tag}
                           </div>
                           <div className="text-color_4 text-sm">

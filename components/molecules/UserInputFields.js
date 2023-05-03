@@ -6,10 +6,10 @@ function UserInputFields(props) {
   return (
     <>
       <div className="flex flex-start border bg-color_2 rounded">
-        <div className="text-text_1 flex items-center  text-sm p-2 mr-2  bg-color_8 rounded-l">
+        <div className="text-text_1 flex items-center whitespace-nowrap text-sm p-2 mr-2  bg-color_8 rounded-l">
           {props.keyName}
         </div>
-        <div className={`w-full md:mt-0 w-full p-2`}>
+        <div className={`w-full md:mt-0  p-2`}>
           <InputField
             length={props.length}
             value={props.value}

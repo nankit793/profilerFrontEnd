@@ -24,9 +24,10 @@ function Navbar() {
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">
             <Avatar
-              alt="Facebook"
+              alt="logo"
+              variant="square"
               src="/images/logo.png"
-              sx={{ width: 25, height: 25 }}
+              sx={{ width: 140, height: 35 }}
             />
           </div>
           <div className="flex items-center">

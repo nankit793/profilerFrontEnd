@@ -41,10 +41,22 @@ function MyApp({ Component, pageProps }) {
     }
   }, [router]);
 
-  // useEffect(() => {
-  //   dispatch(getBookMarksList.getUserBookmarks("data"));
-  //   dispatch(getFollowingList.getFollowingList(""));
-  // }, []);
+  useEffect(() => {
+    const token = localStorage.getItem("idToken");
+    const accesstoken = localStorage.getItem("accessToken");
+    const userid = localStorage.getItem("userid");
+    console.log(token && accesstoken && userid);
+    if (token && accesstoken && userid) {
+      dispatch(getFollowingList.getFollowingList(""));
+      dispatch(getBookMarksList.getUserBookmarks("data"));
+      dispatch(getUserPortfolioBookmarks.getUserPortfolioBookmarks("data"));
+    }
+    if (token && accesstoken && userid) {
+      setIsLoggedInUser(true);
+    } else {
+      setIsLoggedInUser(false);
+    }
+  }, []);
 
   return (
     <>

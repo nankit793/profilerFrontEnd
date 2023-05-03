@@ -6,12 +6,17 @@ function InputField(props) {
   if (props.multiline) {
     return (
       <>
-        <div className="w-full  h-fit subpixel-antialiased">
+        <div className="w-full h-fit subpixel-antialiased">
           <textarea
             id="outlined-start-adornment"
             // size="small"
-            className="w-full outline-none h-full bg-[white]"
+            className={`${
+              props.className
+                ? props.className
+                : " w-full outline-none h-full bg-[white]"
+            }`}
             value={props.value}
+            rows={8}
             required={props.required || false}
             multiline={true}
             size="small"

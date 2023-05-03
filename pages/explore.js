@@ -9,24 +9,29 @@ import BlogPreReview from "../components/molecules/explore/BlogPreReview";
 function Explore() {
   const router = useRouter();
   const dispatch = useDispatch();
-  const [selectedPage, setSelectedPage] = useState({
-    id: 0,
-    pageData: "<Overview />",
-  });
-
-  useEffect(() => {
-    dispatch(trendingBlogs.getTrendingBlogs("t"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   const buttons = [
-    { name: "For You", id: 0, pageData: "<Overview />" },
+    {
+      name: "For You",
+      id: 0,
+      pageData: (
+        <div className="w-full h-full text-text_2 flex justify-center items-center">
+          Feature available soon
+        </div>
+      ),
+    },
     {
       name: "Trending",
       id: 1,
       pageData: <Trending />,
     },
   ];
+  const [selectedPage, setSelectedPage] = useState(buttons[1]);
+
+  useEffect(() => {
+    dispatch(trendingBlogs.getTrendingBlogs("t"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   return (
     <>
@@ -35,7 +40,7 @@ function Explore() {
         <div className="md:w-[70%]  w-full overflow-y-auto bg-[#fafafa]">
           {selectedPage.pageData}
         </div>
-        <div className="md:block hidden grow h-full bg-color_8 overflow-hidden w-[30%]">
+        <div className="md:block hidden grow h-full bg-color_3 overflow-hidden md:min-w-[300px] border-l w-[40%]">
           <div className="flex top-13 right-0 gap-3 px-3 mt-3 pb-2 justify-end border-b">
             {buttons.map((btn, index) => {
               return (

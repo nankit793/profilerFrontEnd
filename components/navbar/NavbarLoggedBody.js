@@ -68,12 +68,25 @@ function NavbarLoggedBody(props) {
               router.push("/home");
             }
           }}
-          id="operationButton"
+          // id="operationButton"
         >
           My profile
         </div>
-        <div className="w-full">
-          <div className="pt-3 pb-2">
+        <div className="w-full text-right">
+          <div className="md:hidden mt-2 block">
+            <Link href="/explore">
+              <a
+                className={`cursor-pointer text-[16px]    ${
+                  router.pathname === "/explore"
+                    ? "text-color_1"
+                    : "text-color_black"
+                } `}
+              >
+                Explore
+              </a>
+            </Link>
+          </div>
+          <div className="mt-2 pb-2">
             <Link href="/update/basicDetails">
               <a
                 className={`cursor-pointer py-2 whitespace-nowrap text-md hover:text-color_5 w-full text-center  ${
@@ -111,17 +124,17 @@ function NavbarLoggedBody(props) {
                   API
                 </a>
               </Link> */}
-              <Link href="/">
+              {/* <Link href="/">
                 <a
                   className={`cursor-pointer py-3  ${
                     router.pathname === "/aboutUs"
-                      ? "text-color_1 text-color_5 "
+                      ? " text-color_5 "
                       : "text-color_black "
                   } `}
                 >
                   About
                 </a>
-              </Link>
+              </Link> */}
             </div>
           </div>
           {/* <div className="flex flex-col justify-center w-full items-center border-color_2 border border-x-0 border-b-0 border-t-1">
@@ -138,7 +151,7 @@ function NavbarLoggedBody(props) {
           </div> */}
           <div
             onClick={handleLogOut}
-            className="text-right text-md pt-1 cursor-pointer text-[#880808] "
+            className="text-right text-md  cursor-pointer text-[#880808] "
           >
             {/* <ExitToAppIcon sx={{ marginRight: 1 }} /> */}
             Log out

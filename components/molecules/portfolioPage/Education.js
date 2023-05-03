@@ -5,7 +5,7 @@ function Education(props) {
     <div className="">
       <div className="md:flex justify-between md:w-[90%] mx-2 md:mx-auto md:mt-5  mt-3 ">
         <div className="md:w-[70%]">
-          <div className="font-bold text-[23px]  text-text_1 mb-2">
+          <div className="font-bold whitespace-nowrap text-[23px]  text-text_1 mb-2">
             Education
           </div>
           {props.portfolioData &&
@@ -16,7 +16,7 @@ function Education(props) {
                   key={index}
                   className={` ${
                     index === 0 ? "" : ""
-                  }  border-l  border-l-color_11 border-l-[2px]  ${
+                  }    border-l-color_11 border-l-[2px]  ${
                     props.portfolioData.experience.length - 1 === index
                       ? " pb-1 "
                       : "pb-4 pt-1"

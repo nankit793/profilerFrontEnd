@@ -5,6 +5,12 @@ import { useRouter } from "next/router";
 import { dateConverter, dateUnit } from "../../functions/dateConverter";
 import axios from "axios";
 import Image from "next/image";
+import { axiosPost } from "../../functions/axiosCall";
+import {
+  errorNotification,
+  successNotification,
+} from "../../atoms/AlertMessage";
+import { NotificationContainer } from "react-notifications";
 
 // mui
 import FavoriteIcon from "@mui/icons-material/Favorite";
@@ -22,8 +28,12 @@ function BlogPreReview() {
   const [views, setViews] = useState(0);
   const [blogDate, setBlogDate] = useState(null);
   const [fetchingFailed, setFetchingFailed] = useState(false);
-
+  const [loading, setLoading] = useState(false);
+  const [isBookMarked, setIsBookMarked] = useState(false);
   const sessionStorage = useSelector((state) => state.sessionStorageReducer);
+  const bookmarks = useSelector((state) => state.bookmarksReducer);
+
+  const router = useRouter();
 
   useEffect(() => {
     if (sessionStorage && sessionStorage.isSession && sessionStorage.session) {
@@ -33,6 +43,7 @@ function BlogPreReview() {
 
   useEffect(() => {
     if (reviewId) {
+      setLoading(true);
       axios
         .get(`${process.env.BACKEND_URL}/blogPost/noview/${reviewId}`, {
           headers: { userid: localStorage.getItem("userid") },
@@ -70,112 +81,201 @@ function BlogPreReview() {
                   .split("T")[0]
                   .split("-")
             );
-            var regExp =
-              /^.*((youtu.be\/)|(v\/)|(\/u\/\w\/)|(embed\/)|(watch\?))\??v?=?([^#&?]*).*/;
-            var match =
-              response &&
-              response.data &&
-              response.data.blog.redirectURL.match(regExp);
-            setYoutubeVideoCode(
-              match && match[7].length == 11 ? match[7] : false
-            );
+            setLoading(false);
           } else {
-            console.log("here");
             setFetchingFailed(true);
+            setLoading(false);
           }
         })
         .catch(function (error) {
           setFetchingFailed(true);
-          console.log(error.message);
-          // setImage(null);
+          setLoading(false);
         });
     }
   }, [reviewId]);
+
+  useEffect(() => {
+    if (bookmarks && bookmarks.isFetched && bookmarks.bookmarks) {
+      bookmarks.bookmarks.forEach((element) => {
+        if (element._id === reviewId) {
+          setIsBookMarked(true);
+        }
+      });
+    }
+  }, [bookmarks, reviewId]);
+
+  const bookmark = async () => {
+    const bookmarked = await axiosPost(
+      `${process.env.BACKEND_URL}/bookMarks?blogId=${reviewId}`
+    );
+    if (bookmarked && bookmarked.state) {
+      successNotification(
+        "you can view Bookmarked blogs on your profile",
+        "blog has been bookmarked"
+      );
+      setIsBookMarked(true);
+    } else if (bookmarked && !bookmarked.state) {
+      errorNotification(bookmarked.message);
+    }
+  };
+  const removeBookmark = async () => {
+    const bookmarked = await axiosPost(
+      `${process.env.BACKEND_URL}/removeBookmark?blogId=${reviewId}`
+    );
+    if (bookmarked && bookmarked.state) {
+      successNotification("Bookmark removed from the blog");
+      setIsBookMarked(false);
+    } else if (bookmarked && !bookmarked.state) {
+      errorNotification(bookmarked.message);
+    }
+  };
+
+  const liked = async () => {
+    const liked = await axiosPost(
+      `${process.env.BACKEND_URL}/like?blogId=${reviewId}`
+    );
+    if (liked && liked.state) {
+      successNotification("Blog Liked");
+      setIsLiked(true);
+      setNumLikes(numLikes + 1);
+    } else if (liked && !liked.state) {
+      errorNotification(liked.message);
+    }
+  };
+  const unliked = async () => {
+    const liked = await axiosPost(
+      `${process.env.BACKEND_URL}/unlike?blogId=${reviewId}`
+    );
+    if (liked && liked.state) {
+      successNotification("Blog Uniked");
+      setIsLiked(false);
+      setNumLikes(numLikes - 1);
+    } else if (liked && !liked.state) {
+      errorNotification(liked.message);
+    }
+  };
   return (
-    <div className="w-full">
+    <div className="w-full h-full">
       {reviewId ? (
         <>
-          <div className="px-2 ">
-            <div className="w-full my-2  flex justify-between items-start">
-              <div className="flex gap-7 text-center">
+          {loading ? (
+            <div className="w-full h-full text-text_2 flex justify-center items-center">
+              loading
+            </div>
+          ) : (
+            <>
+              <div className="px-2 ">
+                <div className="w-full my-2 flex-wrap flex justify-between  items-start">
+                  <div className="flex gap-7 text-center cursor-pointer">
+                    <div className="">
+                      {isLiked && isLiked ? (
+                        <div onClick={unliked} className="text-[red] ">
+                          <FavoriteIcon />
+                        </div>
+                      ) : (
+                        <div onClick={liked} className="">
+                          <FavoriteBorderIcon />
+                        </div>
+                      )}
+                      <div className="text-sm text-text_2">{numLikes}</div>
+                    </div>
+                    <div className="text-text_1 text-center">
+                      <CommentIcon fontSize="small" />
+                      <div className="text-sm text-text_2">{numComments}</div>
+                    </div>
+                    <div className="text-text_1 text-center">
+                      <RemoveRedEyeIcon fontSize="small" />
+                      <div className="text-sm text-text_2">{views}</div>
+                    </div>
+                  </div>
+                  <div className="flex gap-2">
+                    <div className="text-left text-color_4 text-text-[15px] ">
+                      {blogDate &&
+                        dateConverter(blogDate[1]) +
+                          " " +
+                          parseInt(blogDate[2]) +
+                          dateUnit(blogDate[2]) +
+                          " " +
+                          blogDate[0]}
+                    </div>
+                    <div>
+                      {!isBookMarked ? (
+                        <div
+                          onClick={bookmark}
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
+                        >
+                          <BookmarkBorderIcon />
+                        </div>
+                      ) : (
+                        <div
+                          onClick={removeBookmark}
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
+                        >
+                          <BookmarkAddedIcon />
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="flex gap-3 px-2 pb-2">
+                <div
+                  onClick={() => {
+                    reviewId && router.push(`/view/blog/${reviewId}`);
+                  }}
+                  className="text-color_4 cursor-pointer"
+                >
+                  read full
+                </div>
+                <div className="text-color_4 cursor-pointer">report</div>
+              </div>
+              <div className="overflow-y-scroll h-[70vh]">
+                <Image
+                  unoptimized
+                  // fill
+                  src={`${process.env.BACKEND_URL}/blogPost/image/${
+                    blogData && blogData.imageURL
+                  }`}
+                  alt="image"
+                  width="100%"
+                  height="60%"
+                  layout="responsive"
+                  objectFit="cover"
+                />
                 <div className="">
-                  {isLiked ? (
-                    <div className="text-[red]">
-                      <FavoriteIcon />
-                    </div>
-                  ) : (
-                    <div className=" text-text_1">
-                      <FavoriteBorderIcon fontSize="small" />
-                    </div>
-                  )}
-                  <div className="text-sm text-text_2">{numLikes}</div>
+                  {blogData &&
+                    blogData.paragraphs &&
+                    blogData.paragraphs.slice(0, 1).map((para, index) => {
+                      return (
+                        <div key={index} className="my-2 mx-2">
+                          <div className="font-serif  text-[20px] text-text_1">
+                            {para.subHead && para.subHead}
+                          </div>
+                          <div className="font-serif  text-[18px] text-text_2">
+                            {para.paragraph && para.paragraph}
+                          </div>
+                        </div>
+                      );
+                    })}
                 </div>
-                <div className="text-text_1 text-center">
-                  <CommentIcon fontSize="small" />
-                  <div className="text-sm text-text_2">{numComments}</div>
-                </div>
-                <div className="text-text_1 text-center">
-                  <RemoveRedEyeIcon fontSize="small" />
-                  <div className="text-sm text-text_2">{views}</div>
-                </div>
-              </div>
-              <div className="flex gap-2">
-                <div className="text-left text-color_4 text-text-[15px] ">
-                  {blogDate &&
-                    dateConverter(blogDate[1]) +
-                      " " +
-                      parseInt(blogDate[2]) +
-                      dateUnit(blogDate[2]) +
-                      " " +
-                      blogDate[0]}
-                </div>
-                <div>
-                  <BookmarkBorderIcon />
+                <div
+                  onClick={() => {
+                    reviewId && router.push(`/view/blog/${reviewId}`);
+                  }}
+                  className="text-center my-3 cursor-pointer text-[blue]"
+                >
+                  Read full
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="flex gap-3 px-2 pb-2">
-            <div className="text-color_4 cursor-pointer">read full</div>
-            <div className="text-color_4 cursor-pointer">report</div>
-          </div>
-          <div className="overflow-y-scroll h-[70vh]">
-            <Image
-              unoptimized
-              // fill
-              src={`${process.env.BACKEND_URL}/blogPost/image/${
-                blogData && blogData.imageURL
-              }`}
-              alt="image"
-              width="100%"
-              height="60%"
-              layout="responsive"
-              objectFit="cover"
-            />
-            <div className="">
-              {blogData &&
-                blogData.paragraphs &&
-                blogData.paragraphs.slice(0, 1).map((para, index) => {
-                  return (
-                    <div key={index} className="my-2">
-                      <div className="font-serif  text-[20px] text-text_1">
-                        {para.subHead && para.subHead}
-                      </div>
-                      <div className="font-serif  text-[18px] text-text_2">
-                        {para.paragraph && para.paragraph}
-                      </div>
-                    </div>
-                  );
-                })}
-            </div>
-            <div className="text-center my-3 cursor-pointer text-[blue]">
-              Read full
-            </div>
-          </div>
+            </>
+          )}
         </>
       ) : (
-        "summary of the selected blog will appear here"
+        <div className="w-full h-full text-text_2 flex justify-center items-center">
+          summary of the selected blog will appear here
+        </div>
       )}
+      <NotificationContainer />
     </div>
   );
 }

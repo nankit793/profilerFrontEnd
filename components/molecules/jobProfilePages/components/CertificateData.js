@@ -122,11 +122,11 @@ function CertificateData(props) {
           />
           Currently learning
         </div>
-        {!checkBox && (
+        {/* {!checkBox && (
           <div className="p-2 bg-color_5 text-[white] text-center mt-2 cursor-pointer font-semibold rounded">
             image input here
           </div>
-        )}
+        )} */}
       </div>
       <div className="flex justify-center p-3 text-maroon">
         {error && error}
@@ -136,9 +136,13 @@ function CertificateData(props) {
       </div>
       <ButtonPrimary
         disabled={!(title && organization && (checkBox || recievedOn))}
-        id="operationButton"
+        id={
+          !(title && organization && (checkBox || recievedOn))
+            ? ""
+            : "operationButton"
+        }
         onClick={onSubmit}
-        disabledClass="w-full p-4 justify-center  rounded-none bg-color_6 hover:bg-color_6 text-md font-semibold flex items-center"
+        disabledClass="w-full p-4 hover:bg-color_7 text-center text-[white] rounded-none bg-color_7 text-md font-semibold f"
         className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
         text={props.edited ? `update certificate` : `add certificate`}
       />

@@ -15,7 +15,7 @@ import CircularProgresser from "../../atoms/CircularProgresser";
 pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.min.js`;
 function Resume(props) {
   const [image, setImage] = useState("");
-  const [showTab, setShowTab] = useState(true);
+  const [showTab, setShowTab] = useState(false);
   const [showLoader, setShowLoader] = useState(true);
   const [showRemoveLoader, setShowRemoveLoader] = useState(false);
   const [showUploader, setShowUploader] = useState(false);
@@ -127,7 +127,7 @@ function Resume(props) {
         <div className="text-lg font-semibold text-text_1 whitespace-nowrap">
           Upload Resume
         </div>
-        {!showTab && (
+        {/* {!showTab && (
           <div
             onClick={() => {
               setShowTab(true);
@@ -136,7 +136,7 @@ function Resume(props) {
           >
             Let imProfile create your resume
           </div>
-        )}
+        )} */}
       </div>
       {!showLoader ? (
         <>

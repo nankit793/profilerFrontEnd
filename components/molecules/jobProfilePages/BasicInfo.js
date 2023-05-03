@@ -111,9 +111,9 @@ function BasicInfo(props) {
           <div className="">
             <div className="font-semibold text-text_1 text-md">Skills</div>
 
-            <div className="w-full rounded-xl mt-1 bg-color_8 p-2 flex flex-wrap">
-              <div className="w-full flex justify-between align-center">
-                <div className="mx-4 font-semibold text-text_1">
+            <div className="w-full rounded-t-md mt-1 bg-color_8  flex flex-wrap">
+              <div className="w-full pt-2 flex justify-between align-center">
+                <div className="mx-4 font-semibold text-text_2">
                   {jobBasicData &&
                     jobBasicData.skills &&
                     `${jobBasicData.skills.length}/10`}
@@ -139,7 +139,7 @@ function BasicInfo(props) {
                         key={index}
                         className=" bg-color_2 px-3 h-min py-2  drop-shadow rounded m-2"
                       >
-                        <div className="flex justify-center text-text_1 items-center">
+                        <div className=" flex justify-center text-text_1 items-center">
                           <div>
                             <div className=" text-[20px] text-text_1">
                               {skill.skill}
@@ -183,10 +183,11 @@ function BasicInfo(props) {
                       }}
                       className="w-full drop-shadow-sm p-2 bg-white border "
                     >
-                      <div className="min-w-[50%] flex justify-start mx-2 gap-3 items-center">
+                      <div className="whitespace-nowrap pt-2 min-w-[50%] flex justify-start mx-2 gap-3 items-center">
                         <div>Skill:</div>
                         <input
                           type="text"
+                          maxLength={30}
                           value={skill.skill}
                           name="skill"
                           onChange={skillChange}
@@ -219,7 +220,7 @@ function BasicInfo(props) {
                       </div>
                       <div className="mx-2">
                         <div>experience in</div>
-                        <div className="flex flex-wrap flex gap-3 ">
+                        <div className="flex flex-wrap whitespace-nowrap gap-3 ">
                           <div className=" flex min-w-[20%] grow justify-start mx-2 gap-3 items-center">
                             <div>Years:</div>
                             <input
@@ -232,9 +233,9 @@ function BasicInfo(props) {
                               className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
                             />
                           </div>
-                          <div className="grow flex justify-start mx-2 gap-3 items-center">
+                          <div className="grow  flex justify-start mx-2 gap-3 items-center">
                             <div>Months:</div>
-                            <FormControl className=" bg-color_2 flex w-full justify-end w-full   text-left">
+                            <FormControl className=" bg-color_2 flex w-full justify-end   text-left">
                               <Select
                                 labelId="demo-simple-select-label"
                                 // label="Sort by"
@@ -276,7 +277,7 @@ function BasicInfo(props) {
                         }}
                         className="py-2 bg-color_5 text-lg cursor-pointer rounded-3xl my-2 flex justify-center align-center text-white"
                       >
-                        add
+                        Add
                       </div>
                     </div>
                   </>

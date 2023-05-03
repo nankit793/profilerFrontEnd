@@ -51,7 +51,6 @@ function Blog() {
           headers: { userid: localStorage.getItem("userid") },
         })
         .then(function (response) {
-          console.log(response);
           if (response.status === 200) {
             setBlogData(response && response.data && response.data.blog);
             setIsLiked(response && response.data && response.data.liked);

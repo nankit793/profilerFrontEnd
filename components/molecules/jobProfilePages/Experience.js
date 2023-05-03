@@ -111,8 +111,8 @@ function Experience(props) {
                 className="border h-min  bg-color_2 drop-shadow md:w-[45%] md:my-0 my-4"
                 key={index}
               >
-                <div className="flex mt-2 flex-wrap justify-between items-center font-semibold px-3 bg-color_2 text-text_1  w-full text-[16px]">
-                  {item.company && item.company}
+                <div className="flex mt-2 justify-between items-center font-semibold px-3 bg-color_2 text-text_1  w-full text-[16px]">
+                  <div>{item.company && item.company}</div>
                   <div className="flex justify-center">
                     <Popover
                       text={<MoreHorizIcon />}

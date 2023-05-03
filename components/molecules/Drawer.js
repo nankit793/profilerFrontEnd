@@ -51,6 +51,8 @@ export default function SwipeableTemporaryDrawer(props) {
         onClick={(e) => {
           if (e.target.id === "operationButton") {
             setOpen(false);
+          } else if (e.target.id === "operationKeepOpen") {
+            setOpen(open);
           }
         }}
         className="flex  justify-between h-full flex-col"

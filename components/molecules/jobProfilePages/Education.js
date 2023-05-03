@@ -56,12 +56,14 @@ function Education(props) {
     <>
       <div className="">
         <div className="flex justify-between  w-full items-center">
-          <div className="text-lg text-text_2 font-semibold ">Education</div>
+          <div className="text-lg text-text_2 font-semibold whitespace-nowrap">
+            Education
+          </div>
           <div className="h-[2px] bg-color_6 w-full rounded-full mx-5 md:block hidden"></div>
           <SwipeableTemporaryDrawer
             anchor="right"
             click={
-              <div className="p-2 rounded lowercase bg-color_5 whitespace-nowrap hover:bg-color_7 px-3 cursor-pointer text-[white] flex items-center duration-200">
+              <div className="p-2  rounded lowercase bg-color_5 whitespace-nowrap hover:bg-color_7 px-3 cursor-pointer text-[white] flex items-center duration-200">
                 <AddIcon fontSize="small" sx={{ color: "white" }} /> add
                 Education
               </div>
@@ -84,63 +86,66 @@ function Education(props) {
           </Box>
         )}
         {jobEducationData && jobEducationData["education"] && (
-          <div className="md:flex justify-start gap-5 flex-wrap mt-5">
+          <div className="md:flex justify-start  gap-5 flex-wrap mt-5">
             {jobEducationData["education"].map((item, index) => {
               return (
                 <div
                   key={index}
-                  className="border px-2 pb-3 h-min  bg-color_2 drop-shado-sm w-full md:w-[45%] md:my-0 my-5"
+                  className="border max-w-[400px] mx-auto px-2 pb-3 h-min  bg-color_2 drop-shado-sm w-full md:w-[45%] md:my-0 my-5"
                 >
-                  <div className="text-right">
-                    <Popover
-                      data={
-                        <>
-                          <SwipeableTemporaryDrawer
-                            anchor="right"
-                            click={
-                              <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer w-min flex items-center p-1 ">
-                                Edit
-                              </div>
-                            }
-                            data={
-                              <EducationData
-                                edited={true}
-                                educationData={
-                                  jobEducationData["education"][index]
-                                }
-                                index={index}
-                                onClick={onClick}
-                              />
-                            }
-                          />
-                          <div
-                            onClick={() => {
-                              removeEducation(index);
-                            }}
-                            id="operationButton"
-                            className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
-                          >
-                            Delete
+                  <div className="flex justify-between items-center">
+                    <div className="w-full flex justify-between flex-wrap items-center my-2 gap-2">
+                      <div className=" font-semibold   flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
+                        {item.institution && item.institution}
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <Popover
+                        data={
+                          <>
+                            <SwipeableTemporaryDrawer
+                              anchor="right"
+                              click={
+                                <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer  flex items-center p-1 ">
+                                  Edit
+                                </div>
+                              }
+                              data={
+                                <EducationData
+                                  edited={true}
+                                  educationData={
+                                    jobEducationData["education"][index]
+                                  }
+                                  index={index}
+                                  onClick={onClick}
+                                />
+                              }
+                            />
+                            <div
+                              onClick={() => {
+                                removeEducation(index);
+                              }}
+                              id="operationButton"
+                              className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
+                            >
+                              Delete
+                            </div>
+                          </>
+                        }
+                        text={
+                          <div className="">
+                            <MoreHorizIcon />
                           </div>
-                        </>
-                      }
-                      text={
-                        <div className="">
-                          <MoreHorizIcon />
-                        </div>
-                      }
-                    />
-                  </div>
-                  <div className="w-full flex justify-between flex-wrap items-center my-2 gap-2">
-                    <div className="mx-3 font-semibold   flex-wrap text-text_1 text-[17px] flex justify-start items-center gap-2">
-                      {item.institution && item.institution}
+                        }
+                      />
                     </div>
                   </div>
-                  <div className="mx-3 my-2 flex flex-wrap justify-start gap-2 whitespace-nowrap text-text_2">
+
+                  <div className=" my-1 flex flex-wrap justify-start gap-2 whitespace-nowrap text-text_2">
                     <div>{item.education && item.education},</div>
                     <div>{item.course && item.course}</div>
                   </div>
-                  <div className="mx-3 flex gap-5 flex-wrap justify-start items-end text-text_2">
+                  <div className="flex gap-5 flex-wrap justify-start items-end text-text_2">
                     {item.attending && (
                       <div className="font-medium whitespace-nowrap text-text_2 italic text-[15px]">
                         currently attending

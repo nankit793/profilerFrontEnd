@@ -166,9 +166,9 @@ function ProjectsData(props) {
         </div>
         <ButtonPrimary
           disabled={!(title && from && (to || checkBox))}
-          id="operationButton"
+          id={!(title && from && (to || checkBox)) ? "" : "operationButton"}
           onClick={onSubmit}
-          disabledClass="w-full p-4 justify-center  rounded-none bg-color_6 hover:bg-color_6 text-md font-semibold flex items-center"
+          disabledClass="w-full p-4 hover:bg-color_7 text-center text-[white] rounded-none bg-color_7 text-md font-semibold f"
           className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
           text={props.edited ? `update project` : `add project`}
         />

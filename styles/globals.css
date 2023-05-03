@@ -15,9 +15,15 @@
 .colorBg{
     background: linear-gradient(to bottom left, #009999 0%, #99ccff 122%);;
 }
+.gradientColor{
+    background: rgb(255,249,249);
+    background: linear-gradient(166deg, rgba(255,249,249,1) 0%, rgba(84,110,145,1) 72%, rgba(3,37,76,1) 100%);}
 .textRemove .react-pdf__Page__textContent  {
     display: none;
 }
 .textRemove .react-pdf__Page__annotations  {
     display: none;
+}
+div {
+    word-break: break-word;
 }

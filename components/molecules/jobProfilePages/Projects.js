@@ -46,7 +46,7 @@ function Projects(props) {
   return (
     <>
       <div className="">
-        <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between whitespace-nowrap">
           <div className="text-text_2 font-semibold text-lg ">Projects</div>
           <div className="h-[2px] bg-color_6 w-full rounded-full mx-5 md:block hidden"></div>
           <SwipeableTemporaryDrawer
@@ -72,16 +72,21 @@ function Projects(props) {
                 return (
                   <div
                     key={index}
-                    className="border h-min  px-2 pb-3 bg-color_2 drop-shadow w-full md:w-[45%] md:my-0 my-5"
+                    className="max-h-[400px] border h-min  px-3 pb-3 bg-color_2 drop-shadow w-full md:w-[45%] md:my-0 my-5"
                   >
-                    <div className="text-right">
+                    <div className="flex justify-between items-center pt-2">
+                      <div className="w-full flex justify-between flex-wrap items-center  gap-2">
+                        <div className="font-semibold text-text_1 text-[17px]">
+                          {item.title && item.title}
+                        </div>
+                      </div>
                       <Popover
                         data={
                           <>
                             <SwipeableTemporaryDrawer
                               anchor="right"
                               click={
-                                <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer w-min flex items-center p-1 ">
+                                <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer flex items-center p-1 ">
                                   Edit
                                 </div>
                               }
@@ -112,12 +117,8 @@ function Projects(props) {
                         }
                       />
                     </div>
-                    <div className="w-full flex justify-between flex-wrap items-center  gap-2">
-                      <div className="mx-2 font-semibold text-text_1 text-[17px]">
-                        {item.title && item.title}
-                      </div>
-                    </div>
-                    <div className="mx-2 my-1 text-text_2">
+
+                    <div className=" my-1 text-text_2">
                       <div>{item.desc && item.desc},</div>
                       {item.url && (
                         <div
@@ -130,7 +131,7 @@ function Projects(props) {
                         </div>
                       )}
                     </div>
-                    <div className="mx-3 flex gap-5 justify-start items-end text-text_2">
+                    <div className=" flex gap-5 justify-start items-end text-text_2">
                       {item.attending && (
                         <div className="font-medium whitespace-nowrap text-text_2 italic text-[15px]">
                           present
@@ -165,7 +166,7 @@ function Projects(props) {
           )}
         </div>
       </div>
-      <div className="flex justify-between mt-5 items-center">
+      <div className="flex justify-between mt-5 items-center whitespace-nowrap">
         <div className="text-text_2 font-semibold text-lg">Certificates</div>
         <div className="h-[2px] bg-color_6 w-full rounded-full mx-5 md:block hidden"></div>
 
@@ -198,45 +199,47 @@ function Projects(props) {
                   className="border h-min  px-2 pb-3 bg-color_2 drop-shadow w-full md:w-[45%] md:my-0 my-5"
                 >
                   <div className="text-right">
-                    <Popover
-                      data={
-                        <>
-                          <SwipeableTemporaryDrawer
-                            anchor="right"
-                            click={
-                              <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer w-min flex items-center p-1 ">
-                                Edit
-                              </div>
-                            }
-                            data={
-                              <CertificateData
-                                edited={true}
-                                educationData={jobData["certificates"][index]}
-                                index={index}
-                                onClick={onClick}
-                              />
-                            }
-                          />
-                          <div
-                            id="operationButton"
-                            onClick={() => {
-                              removeEducation(index, "certificates");
-                            }}
-                            className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
-                          >
-                            Delete
+                    <div className="flex justify-between items-center">
+                      <div className="mx-2 font-semibold text-text_1 text-[17px] mt-2 ">
+                        {item.title && item.title}
+                      </div>
+                      <Popover
+                        data={
+                          <>
+                            <SwipeableTemporaryDrawer
+                              anchor="right"
+                              click={
+                                <div className="text-text_2 hover:text-color_4 duration-200 cursor-pointer w-min flex items-center p-1 ">
+                                  Edit
+                                </div>
+                              }
+                              data={
+                                <CertificateData
+                                  edited={true}
+                                  educationData={jobData["certificates"][index]}
+                                  index={index}
+                                  onClick={onClick}
+                                />
+                              }
+                            />
+                            <div
+                              id="operationButton"
+                              onClick={() => {
+                                removeEducation(index, "certificates");
+                              }}
+                              className="text-maroon  duration-200 cursor-pointer flex items-center p-1 "
+                            >
+                              Delete
+                            </div>
+                          </>
+                        }
+                        text={
+                          <div className="">
+                            <MoreHorizIcon />
                           </div>
-                        </>
-                      }
-                      text={
-                        <div className="">
-                          <MoreHorizIcon />
-                        </div>
-                      }
-                    />
-                  </div>
-                  <div className="mx-2 font-semibold text-text_1 text-[17px]">
-                    {item.title && item.title}
+                        }
+                      />
+                    </div>
                   </div>
                   <div className="mx-2 font-semibold text-text_1 text-[17px]">
                     <span className="text_text_1 font-normal text-sm">
@@ -245,11 +248,11 @@ function Projects(props) {
                     {item.organization && item.organization}
                   </div>
                   <div className="mx-2 my-1 text-text_2">
-                    {!item.attending && (
+                    {/* {!item.attending && (
                       <div className="underline text-sm cursor-pointer">
                         image preview
                       </div>
-                    )}
+                    )} */}
                   </div>
                   <div className="mx-3 flex gap-5 justify-start items-end text-text_2">
                     {item.attending && (
