@@ -76,9 +76,6 @@ function AddBlog(props) {
     setImage(file);
     props.onImageChange(file);
   };
-  useEffect(() => {
-    console.log(image);
-  }, [image]);
 
   useEffect(() => {
     if (props.editPage && router.query.bid && !props.blogStructure) {
@@ -94,15 +91,14 @@ function AddBlog(props) {
           saveData.blog.author &&
           saveData.blog.author.userid === localStorage.getItem("userid")
         ) {
-          console.log("yes you can");
           props.setBlogStructure(saveData.blog);
           setHeading(saveData.blog.heading);
           setParagraphs(saveData.blog.paragraphs);
           setImage(saveData.blog.imageURL && saveData.blog.imageURL);
-          props.setImage({
-            name: "blog_image",
-            url: saveData.blog.imageURL && saveData.blog.imageURL,
-          });
+          // props.setImage({
+          //   name: "blog_image",
+          //   url: saveData.blog.imageURL && saveData.blog.imageURL,
+          // });
           setRedirectURL(
             saveData.blog.redirectURL && saveData.blog.redirectURL
           );
@@ -198,7 +194,7 @@ function AddBlog(props) {
                   <div
                     onClick={() => {
                       setImage(null);
-                      props.setImage(null);
+                      props.onImageChange(null);
                     }}
                     className="px-3  cursor-pointer py-2 rounded bg-color_2 border text-text_7"
                   >
@@ -302,7 +298,7 @@ function AddBlog(props) {
           </div>
           <div className="mt-2">
             <div>Tags</div>
-            <div className="w-full bg-color_8 p-4 mt-2 flex gap-4 justify-start flex-wrap">
+            <div className="w-full bg-color_6 p-4 mt-2 flex gap-4 justify-start flex-wrap">
               {tags.map((tag) => {
                 return (
                   <>
@@ -319,7 +315,7 @@ function AddBlog(props) {
                       }}
                       className={`${
                         selectedTag === tag
-                          ? "bg-color_9 text-text_1"
+                          ? "bg-color_7 text-color_2 px-5"
                           : "bg-color_2 text-text_2"
                       }  py-1 px-3 rounded-full border duration-200 cursor-pointer drop-shadow-sm`}
                     >
@@ -348,6 +344,7 @@ function AddBlog(props) {
                       <InputField
                         className="border w-full rounded p-3 focus:outline-color_1 focus:outline"
                         length={60}
+                        rows={2}
                         multiline={true}
                         value={paragraphs[index].subHead}
                         type="text"
@@ -446,7 +443,6 @@ function AddBlog(props) {
             {paragraphs && paragraphs.length < 4 && (
               <div
                 onClick={() => {
-                  console.log(paragraphs);
                   setParagraphs([
                     ...paragraphs,
                     {
@@ -455,7 +451,7 @@ function AddBlog(props) {
                     },
                   ]);
                 }}
-                className="mt-1 px-5 cursor-pointer text-text_1 py-2 rounded bg-color_2 border border-color_9 w-min mb-1 whitespace-nowrap "
+                className="mt-1 px-5 cursor-pointer text-color_2 py-2 rounded-full bg-color_7 w-min mb-1 whitespace-nowrap "
               >
                 Add Paragraph
               </div>

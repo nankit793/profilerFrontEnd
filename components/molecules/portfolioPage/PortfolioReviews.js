@@ -11,13 +11,14 @@ import { NotificationContainer } from "react-notifications";
 import CircularProgresser from "../../atoms/CircularProgresser";
 import { axiosGet } from "../../functions/axiosCall";
 import FamilyRestroomRounded from "@mui/icons-material/FamilyRestroomRounded";
+import { useRouter } from "next/router";
 function PortfolioReviews(props) {
   const [comments, setComments] = useState([]);
   const [data, setData] = useState({});
   const [editComment, setEditComment] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
   const [loading, setLoading] = useState(true);
-
+  const router = useRouter();
   useEffect(() => {
     setLoading(true);
     const accesstoken = localStorage.getItem("accessToken");
@@ -160,12 +161,6 @@ function PortfolioReviews(props) {
           });
           setComments(updatedItems);
         }
-        console.log(
-          response &&
-            response.data &&
-            !response.data.state &&
-            response.data.message
-        );
       })
       .catch(function (response) {
         if (
@@ -245,7 +240,18 @@ function PortfolioReviews(props) {
                     className="md:flex justify-between gap-5 my-1 rounded md:mx-1 cursor-pointer duration-200 p-3 hover:bg-color_6 "
                   >
                     <div className="flex justify-start gap-5 md:w-[80%]">
-                      <div className="flex items-start ">
+                      <div
+                        onClick={() => {
+                          router.push(
+                            `/home/${
+                              comment.user &&
+                              comment.user.userid &&
+                              comment.user.userid
+                            }`
+                          );
+                        }}
+                        className="flex items-start "
+                      >
                         <Image
                           unoptimized
                           // fill

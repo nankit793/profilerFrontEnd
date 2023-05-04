@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import CloseIcon from "@mui/icons-material/Close";
 import axios from "axios";
 import Image from "next/image";
 import InputField from "../../atoms/input/InputField";
@@ -10,16 +9,15 @@ import {
 import { NotificationContainer } from "react-notifications";
 import CircularProgresser from "../../atoms/CircularProgresser";
 import { axiosGet } from "../../functions/axiosCall";
-import FamilyRestroomRounded from "@mui/icons-material/FamilyRestroomRounded";
+import { useRouter } from "next/router";
 function BlogComments(props) {
   const [comments, setComments] = useState([]);
   const [data, setData] = useState({});
   const [editComment, setEditComment] = useState();
   const [loggedIn, setLoggedIn] = useState(false);
-  const [loading, setLoading] = useState(true);
-
+  const [loading, setLoading] = useState(false);
+  const router = useRouter();
   useEffect(() => {
-    setLoading(true);
     const accesstoken = localStorage.getItem("accessToken");
     const refreshtoken = localStorage.getItem("idToken");
     const userid = localStorage.getItem("userid");
@@ -31,11 +29,9 @@ function BlogComments(props) {
   }, []);
 
   useEffect(() => {
-    setLoading(true);
     axiosGet(
       setData,
-      `${process.env.BACKEND_URL}/commentService/getComments?blogId=${props.blogId}`,
-      setLoading
+      `${process.env.BACKEND_URL}/commentService/getComments?blogId=${props.blogId}`
     );
   }, [props.blogId]);
   useEffect(() => {
@@ -80,7 +76,7 @@ function BlogComments(props) {
           }
         })
         .catch(function (error) {
-          console.log(error.message);
+          // console.log(error.message);
           // setImage(null);
         });
     }
@@ -120,7 +116,7 @@ function BlogComments(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
   const pinComment = (comment) => {
@@ -159,7 +155,7 @@ function BlogComments(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
   const unpinComment = (comment) => {
@@ -198,7 +194,7 @@ function BlogComments(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
       });
   };
   return (
@@ -232,11 +228,28 @@ function BlogComments(props) {
                     className="md:flex justify-between gap-5 my-1 rounded md:mx-1 cursor-pointer duration-200 p-3 hover:bg-color_6 "
                   >
                     <div className="flex justify-start gap-5 md:w-[80%]">
-                      <div className="flex items-start ">
+                      <div
+                        onClick={() => {
+                          router.push(
+                            `/home/${
+                              comment.user &&
+                              comment.user.userid &&
+                              comment.user.userid
+                            }`
+                          );
+                        }}
+                        className="flex items-start "
+                      >
                         <Image
                           unoptimized
                           // fill
-                          src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${comment.user.userid}`}
+                          src={`${
+                            process.env.BACKEND_URL
+                          }/profilePhoto/direct?userid=${
+                            comment.user &&
+                            comment.user.userid &&
+                            comment.user.userid
+                          }`}
                           alt="pic"
                           // objectFit="revert"
                           width={50}

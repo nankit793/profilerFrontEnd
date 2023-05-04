@@ -18,7 +18,7 @@ function UpdatePage(props) {
   const [showLoadingWhileSave, setShowLoadingWhileSave] = useState(false);
 
   useEffect(() => {
-    let id = 1;
+    let id = 0;
     props.pages.map((page) => {
       id = page.id;
       if (page.id === 0) {
@@ -39,6 +39,7 @@ function UpdatePage(props) {
       }
     });
   };
+
   const handleSideNav = () => {
     if (showSidemenu) {
       setShowSideMenu(false);
@@ -69,7 +70,6 @@ function UpdatePage(props) {
       let save;
       setShowLoadingWhileSave(true);
       if (props.bodyData) {
-        console.log("normal flow");
         save = await fetch(props.onSave, {
           method: props.request,
           body: JSON.stringify(props.data),
@@ -179,11 +179,11 @@ function UpdatePage(props) {
                     key={index}
                     className={`${
                       selectedPage &&
-                      selectedPage.id &&
+                      selectedPage.id.toString() &&
                       selectedPage.id === item.id
                         ? "bg-color_7 text-[white] px-5"
                         : "text-text_1  border px-3"
-                    } p-2  rounded-3xl snap-center  duration-200 ease-in-out  whitespace-nowrap cursor-pointer  rounded`}
+                    } p-2   snap-center  duration-200 ease-in-out  whitespace-nowrap cursor-pointer  rounded-full`}
                     onClick={() => {
                       handleButtonClick(item);
                     }}

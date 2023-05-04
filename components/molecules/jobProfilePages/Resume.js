@@ -66,7 +66,6 @@ function Resume(props) {
       const refreshtoken = localStorage.getItem("idToken");
       const userid = localStorage.getItem("userid");
       let formData = new FormData();
-      console.log(image);
       formData.append("resume", image);
       const save = await fetch(
         `${process.env.BACKEND_URL}/portfolio/update/resume`,

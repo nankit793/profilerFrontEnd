@@ -45,7 +45,7 @@ function MyApp({ Component, pageProps }) {
     const token = localStorage.getItem("idToken");
     const accesstoken = localStorage.getItem("accessToken");
     const userid = localStorage.getItem("userid");
-    console.log(token && accesstoken && userid);
+    // console.log(token && accesstoken && userid);
     if (token && accesstoken && userid) {
       dispatch(getFollowingList.getFollowingList(""));
       dispatch(getBookMarksList.getUserBookmarks("data"));

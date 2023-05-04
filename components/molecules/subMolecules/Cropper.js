@@ -19,7 +19,7 @@ function Croppered(props) {
   }, [props.croppedImage]);
 
   const onCropComplete = (croppedArea, croppedAreaPixels) => {
-    console.log(croppedArea, croppedAreaPixels);
+    // console.log(croppedArea, croppedAreaPixels);
   };
   return (
     <div className="z-10">

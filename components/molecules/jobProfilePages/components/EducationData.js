@@ -24,12 +24,14 @@ function EducationData(props) {
   const [from, setFrom] = useState(null);
 
   const onSubmit = () => {
-    if (
+    if (!(from <= clearedOn)) {
+      setError("`from` date should be equal or less than `to` date");
+    } else if (
       institution &&
       education &&
       education !== "none" &&
       course &&
-      (clearedOn || checkBox) &&
+      from <= clearedOn &&
       from
     ) {
       const data = {
@@ -54,7 +56,6 @@ function EducationData(props) {
     }
   };
   useEffect(() => {
-    console.log(props.edited);
     if (props.edited) {
       setInstitution(
         props.educationData.institution && props.educationData.institution
@@ -115,7 +116,6 @@ function EducationData(props) {
                 value={education}
                 onChange={(e) => {
                   setEducation(e.target.value);
-                  console.log(e.target.value);
                 }}
                 name="zodiac"
               >
@@ -215,7 +215,7 @@ function EducationData(props) {
                 institution &&
                 education !== "none" &&
                 course &&
-                (clearedOn || checkBox) &&
+                from <= clearedOn &&
                 from
               )
             }
@@ -224,7 +224,7 @@ function EducationData(props) {
                 institution &&
                 education !== "none" &&
                 course &&
-                (clearedOn || checkBox) &&
+                from <= clearedOn &&
                 from
               )
                 ? ""

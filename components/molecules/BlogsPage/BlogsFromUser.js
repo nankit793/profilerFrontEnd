@@ -16,10 +16,6 @@ function BlogsFromUser(props) {
   }, [props.author]);
   const blogs = useSelector((state) => state.authorBlogsReducer);
 
-  useEffect(() => {
-    console.log(blogs);
-  }, [blogs]);
-
   return (
     <>
       <div className="bg-color_2 h-[85vh] overflow-y-auto ">
@@ -31,9 +27,10 @@ function BlogsFromUser(props) {
               <>
                 <div
                   onClick={() => {
+                    // router.query.bid = blog._id;
                     router.push(`/view/blog/${blog._id}`);
                   }}
-                  className={`flex justify-start gap-3  duration-200 bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
+                  className={`flex justify-start gap-3  bg-color_2 cursor-pointer  p-2  hover:bg-color_3 duration-300   ${
                     blog._id === props.currBlog ? "bg-color_6" : ""
                   } `}
                 >

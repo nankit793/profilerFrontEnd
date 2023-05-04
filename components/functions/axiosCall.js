@@ -12,7 +12,6 @@ function axiosGet(setData, URL) {
     })
     .catch(function (error) {
       setData({ message: error.message, state: false });
-      console.log(error.message);
     });
 }
 

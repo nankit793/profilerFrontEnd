@@ -67,7 +67,6 @@ function BlogsTab(props) {
     });
   };
   const sortingOfBLogs = (e) => {
-    console.log(e);
     let newBlogs = [];
     if (e === "likes") {
       newBlogs =

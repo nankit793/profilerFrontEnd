@@ -71,7 +71,7 @@ function Trending(props) {
         newArr.push(author._id);
         dispatch(getFollowingList.updateFollowingList(newArr));
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };

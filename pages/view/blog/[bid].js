@@ -36,6 +36,7 @@ function Blog() {
   const [alreadyFollowing, setAlreadyFollowing] = useState(false);
   const [isBookMarked, setIsBookMarked] = useState(false);
   const [youtubeVideoCode, setYoutubeVideoCode] = useState(false);
+  const [loading, setLoading] = useState(true);
   const [fetchingFailed, setFetchingFailed] = useState(false);
   const followingList = useSelector((state) => state.followingListReducer);
 
@@ -46,6 +47,7 @@ function Blog() {
   useEffect(() => {
     const bid = router.query.bid;
     if (bid) {
+      setLoading(true);
       axios
         .get(`${process.env.BACKEND_URL}/blogPost/get/${bid}`, {
           headers: { userid: localStorage.getItem("userid") },
@@ -85,14 +87,15 @@ function Blog() {
             setYoutubeVideoCode(
               match && match[7].length == 11 ? match[7] : false
             );
+            setLoading(false);
           } else {
-            console.log("here");
+            setLoading(false);
             setFetchingFailed(true);
           }
         })
         .catch(function (error) {
+          setLoading(false);
           setFetchingFailed(true);
-          console.log(error.message);
           // setImage(null);
         });
     }
@@ -186,7 +189,7 @@ function Blog() {
         setAlreadyFollowing(true);
         dispatch(getFollowingList.updateFollowingList(newArr));
       } catch (error) {
-        console.log(error);
+        // console.log(error);
       }
     }
   };
@@ -210,9 +213,6 @@ function Blog() {
       setAlreadyFollowing(false);
       dispatch(getFollowingList.updateFollowingList(a));
     }
-    // }
-    // errorNotification("can't follow now", "try again later");
-    // }
   };
 
   return (
@@ -259,277 +259,281 @@ function Blog() {
                 /> */}
               {/* </div> */}
             </div>
-            <div className="px-3 w-full md:w-[75%] overflow-y-scroll md:h-screen pt-14 bg-[#fafafa]">
-              <div className=" flex pt-2 py-2  justify-between  mt-2 rounded-xl">
-                <div
-                  className="flex justify-start gap-3 cursor-pointer w-[50%]"
-                  onClick={() => {
-                    router.push(`/home/${blogData.author.userid}`);
-                  }}
-                >
-                  <div className="w-[65px] h-[65px] overflow-hidden bg-color_8 rounded-full ">
-                    {image ? (
-                      <Image
-                        unoptimized
-                        // fill
-                        src={`data:image/png;base64,` + image}
-                        fill={true}
-                        // fill
-                        alt="Picture of the author"
-                        // objectFit="revert"
-                        width="100%"
-                        height="100%"
-                        layout="responsive"
-                        objectFit="cover"
-                        object-position="center"
-                      />
-                    ) : (
+            {loading && (
+              <div className="flex items-center mx-auto  h-[90vh]">
+                <CircularProgresser />
+              </div>
+            )}
+            {!loading && (
+              <div className="px-3 w-full md:w-[75%] overflow-y-scroll md:h-screen pt-14 bg-[#fafafa]">
+                <div className=" flex pt-2 py-2  justify-between  mt-2 rounded-xl">
+                  <div
+                    className="flex justify-start gap-3 cursor-pointer w-[50%]"
+                    onClick={() => {
+                      router.push(`/home/${blogData.author.userid}`);
+                    }}
+                  >
+                    <div className="w-[65px] h-[65px] overflow-hidden bg-color_8 rounded-full ">
+                      {image ? (
+                        <Image
+                          unoptimized
+                          // fill
+                          src={`data:image/png;base64,` + image}
+                          fill={true}
+                          // fill
+                          alt="Picture of the author"
+                          // objectFit="revert"
+                          width="100%"
+                          height="100%"
+                          layout="responsive"
+                          objectFit="cover"
+                          object-position="center"
+                        />
+                      ) : (
+                        <>
+                          <div className="rounded-full w-[150px] h-[150px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
+                            <PersonIcon fontSize="large" />
+                          </div>
+                        </>
+                      )}
+                    </div>
+                    <div className="">
+                      <div className=" text-text_1 text-[17px] break-words">
+                        {blogData && blogData.author && blogData.author.name}
+                      </div>
+
+                      {/* <div className="text-color_4">|</div> */}
+                      <div className="text-left text-color_4 text-text-[15px] ">
+                        {blogDate &&
+                          dateConverter(blogDate[1]) +
+                            " " +
+                            parseInt(blogDate[2]) +
+                            dateUnit(blogDate[2]) +
+                            " " +
+                            blogDate[0]}
+                      </div>
+                    </div>
+                  </div>
+                  <div>
+                    {localStorage.getItem("userid") !==
+                      blogData.author.userid && (
                       <>
-                        <div className="rounded-full w-[150px] h-[150px] overflow-hidden flex justify-center items-center bg-color_1 text-color_2">
-                          <PersonIcon fontSize="large" />
-                        </div>
+                        {alreadyFollowing ? (
+                          <div
+                            onClick={unfollow}
+                            className="text-[blue] cursor-pointer text-right"
+                          >
+                            Unfollow
+                          </div>
+                        ) : (
+                          <div
+                            onClick={follow}
+                            className="text-[blue] cursor-pointer text-right"
+                          >
+                            Follow
+                          </div>
+                        )}
                       </>
                     )}
-                  </div>
-                  <div className="">
-                    <div className=" text-text_1 text-[17px] break-words">
-                      {blogData && blogData.author && blogData.author.name}
-                    </div>
-
-                    {/* <div className="text-color_4">|</div> */}
-                    <div className="text-left text-color_4 text-text-[15px] ">
-                      {blogDate &&
-                        dateConverter(blogDate[1]) +
-                          " " +
-                          parseInt(blogDate[2]) +
-                          dateUnit(blogDate[2]) +
-                          " " +
-                          blogDate[0]}
-                    </div>
-                  </div>
-                </div>
-                <div>
-                  {localStorage.getItem("userid") !==
-                    blogData.author.userid && (
-                    <>
-                      {alreadyFollowing ? (
+                    <div className="flex gap-2 flex-row  flex-wrap">
+                      {blogData && blogData.author && blogData.author.linkdn ? (
                         <div
-                          onClick={unfollow}
-                          className="text-[blue] cursor-pointer text-right"
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer"
+                          onClick={() => {
+                            window.open(
+                              blogData &&
+                                blogData.author &&
+                                blogData.author.linkdn,
+                              "_blank"
+                            );
+                          }}
                         >
-                          Unfollow
+                          <Avatar
+                            alt="Linkedin"
+                            src="/images/linkedin.png"
+                            sx={{ width: 25, height: 25 }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      {blogData && blogData.author && blogData.author.linkdn ? (
+                        <div
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer "
+                          onClick={() => {
+                            window.open(
+                              blogData &&
+                                blogData.author &&
+                                blogData.author.linkdn,
+                              "_blank"
+                            );
+                          }}
+                        >
+                          <Avatar
+                            alt="Linkedin"
+                            src="/images/linkedin.png"
+                            sx={{ width: 25, height: 25 }}
+                          />
+                        </div>
+                      ) : (
+                        ""
+                      )}
+                      <div
+                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer text-color_5"
+                        onClick={() => {
+                          const url = location.href;
+                          navigator.clipboard.writeText(url);
+                          successNotification("Link copied to clipboard");
+                        }}
+                      >
+                        <Avatar
+                          alt="copyLink"
+                          src="/images/copyLink.png"
+                          sx={{ width: 25, height: 25 }}
+                        />
+                      </div>
+
+                      {!isBookMarked ? (
+                        <div
+                          onClick={bookmark}
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
+                        >
+                          <BookmarkBorderIcon />
                         </div>
                       ) : (
                         <div
-                          onClick={follow}
-                          className="text-[blue] cursor-pointer text-right"
+                          onClick={removeBookmark}
+                          className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
                         >
-                          Follow
+                          <BookmarkAddedIcon />
                         </div>
                       )}
-                    </>
-                  )}
-                  <div className="flex gap-2 flex-row  flex-wrap">
-                    {blogData && blogData.author && blogData.author.linkdn ? (
-                      <div
-                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer"
-                        onClick={() => {
-                          window.open(
-                            blogData &&
-                              blogData.author &&
-                              blogData.author.linkdn,
-                            "_blank"
-                          );
-                        }}
-                      >
-                        <Avatar
-                          alt="Linkedin"
-                          src="/images/linkedin.png"
-                          sx={{ width: 25, height: 25 }}
-                        />
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    {blogData && blogData.author && blogData.author.linkdn ? (
-                      <div
-                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer "
-                        onClick={() => {
-                          window.open(
-                            blogData &&
-                              blogData.author &&
-                              blogData.author.linkdn,
-                            "_blank"
-                          );
-                        }}
-                      >
-                        <Avatar
-                          alt="Linkedin"
-                          src="/images/linkedin.png"
-                          sx={{ width: 25, height: 25 }}
-                        />
-                      </div>
-                    ) : (
-                      ""
-                    )}
-                    <div
-                      className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-300 cursor-pointer text-color_5"
-                      onClick={() => {
-                        const url = location.href;
-                        navigator.clipboard.writeText(url);
-                        successNotification("Link copied to clipboard");
-                      }}
-                    >
-                      <Avatar
-                        alt="copyLink"
-                        src="/images/copyLink.png"
-                        sx={{ width: 25, height: 25 }}
-                      />
                     </div>
-
-                    {!isBookMarked ? (
-                      <div
-                        onClick={bookmark}
-                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
-                      >
-                        <BookmarkBorderIcon />
-                      </div>
-                    ) : (
-                      <div
-                        onClick={removeBookmark}
-                        className="mx-auto p-1 hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_5"
-                      >
-                        <BookmarkAddedIcon />
-                      </div>
-                    )}
                   </div>
                 </div>
-              </div>
 
-              <>
-                <div className="text-[30px] font-bold text-text_1 break-words">
-                  {blogData && blogData.heading}
-                </div>
+                <>
+                  <div className="text-[30px] font-bold text-text_1 break-words">
+                    {blogData && blogData.heading}
+                  </div>
 
-                {blogImage ? (
-                  <>
-                    <div className=" mt-2 w-full bg-color_3 rounded md:block hidden">
-                      <Image
-                        unoptimized
-                        fill={true}
-                        src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
-                        alt="image"
-                        width="100%"
-                        height="40%"
-                        layout="responsive"
-                        objectFit="cover"
-                      />
-                    </div>
-                    <div className=" mt-2 w-full bg-color_3 rounded md:hidden block">
-                      <Image
-                        unoptimized
-                        fill={true}
-                        src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
-                        alt="image"
-                        width="100%"
-                        height="100%"
-                        layout="responsive"
-                        objectFit="cover"
-                      />
-                    </div>
-                  </>
-                ) : (
-                  <PersonIcon fontSize="large" sx={{ fontSize: "40px" }} />
-                )}
-                <div className=" mt-3 md:w-[85%] w-full mx-auto">
+                  {blogImage ? (
+                    <>
+                      <div className=" mt-2 w-full bg-color_3 rounded md:block hidden">
+                        <Image
+                          unoptimized
+                          fill={true}
+                          src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
+                          alt="image"
+                          width="100%"
+                          height="40%"
+                          layout="responsive"
+                          objectFit="cover"
+                        />
+                      </div>
+                      <div className=" mt-2 w-full bg-color_3 rounded md:hidden block">
+                        <Image
+                          unoptimized
+                          fill={true}
+                          src={`${process.env.BACKEND_URL}/blogPost/image/${blogData.imageURL}`}
+                          alt="image"
+                          width="100%"
+                          height="100%"
+                          layout="responsive"
+                          objectFit="cover"
+                        />
+                      </div>
+                    </>
+                  ) : (
+                    <PersonIcon fontSize="large" sx={{ fontSize: "40px" }} />
+                  )}
+                  <div className=" mt-3 md:w-[85%] w-full mx-auto">
+                    {blogData &&
+                      blogData.paragraphs &&
+                      blogData.paragraphs.map((para, index) => {
+                        return (
+                          <div key={index} className="my-2">
+                            <div className="font-serif  text-[20px] text-text_1 break-words">
+                              {para.subHead && para.subHead}
+                            </div>
+                            <div className="font-serif  text-[18px] text-text_2 break-words">
+                              {para.paragraph && para.paragraph}
+                            </div>
+                          </div>
+                        );
+                      })}
+                  </div>
                   {blogData &&
-                    blogData.paragraphs &&
-                    blogData.paragraphs.map((para, index) => {
-                      return (
-                        <div key={index} className="my-2">
-                          <div className="font-serif  text-[20px] text-text_1 break-words">
-                            {para.subHead && para.subHead}
-                          </div>
-                          <div className="font-serif  text-[18px] text-text_2 break-words">
-                            {para.paragraph && para.paragraph}
-                          </div>
-                        </div>
-                      );
-                    })}
-                </div>
-                {blogData &&
-                  blogData.redirectURL &&
-                  blogData.selectedRedirection === "website" && (
-                    <div className="text-text_1 mt-3">
-                      This link will take you to external site{" "}
-                      <span
-                        onClick={() => {
-                          window.open(blogData.redirectURL, "_blank");
-                        }}
-                        className="text-[blue] cursor-pointer"
-                      >
-                        {" "}
-                        (click here){" "}
-                      </span>
-                    </div>
-                  )}
-                {blogData &&
-                  blogData.redirectURL &&
-                  blogData.selectedRedirection === "youtube" && (
-                    <div className="text-text_1 mt-3">
-                      view on youtube{" "}
-                      <span
-                        onClick={() => {
-                          window.open(blogData.redirectURL, "_blank");
-                        }}
-                        className="text-[blue] cursor-pointer"
-                      >
-                        {" "}
-                        (click here){" "}
-                      </span>
-                      <iframe
-                        className="video"
-                        title="Youtube player"
-                        width="100%"
-                        height="500px"
-                        sandbox="allow-same-origin allow-forms allow-popups allow-scripts allow-presentation"
-                        src={`https://youtube.com/embed/${
-                          youtubeVideoCode && youtubeVideoCode
-                        }?autoplay=0`}
-                      ></iframe>
-                    </div>
-                  )}
-                <div className="text-right md:px-20 text-text_2">
-                  ~{" "}
-                  {(blogData && blogData.author && blogData.author.name) ||
-                    "user"}
-                </div>
-                <BlogInteraction
-                  isLiked={isLiked}
-                  blogId={router.query.bid}
-                  numLikes={numLikes}
-                  numComments={numComments}
-                  author={blogData && blogData.author}
-                  setBlogData={setBlogData}
-                  setNumComments={setNumComments}
-                />
-              </>
-            </div>
+                    blogData.redirectURL &&
+                    blogData.selectedRedirection === "website" && (
+                      <div className="text-text_1 mt-3">
+                        This link will take you to external site{" "}
+                        <span
+                          onClick={() => {
+                            window.open(blogData.redirectURL, "_blank");
+                          }}
+                          className="text-[blue] cursor-pointer"
+                        >
+                          {" "}
+                          (click here){" "}
+                        </span>
+                      </div>
+                    )}
+                  {blogData &&
+                    blogData.redirectURL &&
+                    blogData.selectedRedirection === "youtube" && (
+                      <div className="text-text_1 mt-3">
+                        view on youtube{" "}
+                        <span
+                          onClick={() => {
+                            window.open(blogData.redirectURL, "_blank");
+                          }}
+                          className="text-[blue] cursor-pointer"
+                        >
+                          {" "}
+                          (click here){" "}
+                        </span>
+                        <iframe
+                          className="video"
+                          title="Youtube player"
+                          width="100%"
+                          height="500px"
+                          sandbox="allow-same-origin allow-forms allow-popups allow-scripts allow-presentation"
+                          src={`https://youtube.com/embed/${
+                            youtubeVideoCode && youtubeVideoCode
+                          }?autoplay=0`}
+                        ></iframe>
+                      </div>
+                    )}
+                  <div className="text-right md:px-20 text-text_2">
+                    ~{" "}
+                    {(blogData && blogData.author && blogData.author.name) ||
+                      "user"}
+                  </div>
+                  <BlogInteraction
+                    isLiked={isLiked}
+                    blogId={router.query.bid}
+                    numLikes={numLikes}
+                    numComments={numComments}
+                    author={blogData && blogData.author}
+                    setBlogData={setBlogData}
+                    setNumComments={setNumComments}
+                  />
+                </>
+              </div>
+            )}
           </div>
+
           <Footer />
         </>
       ) : (
         <>
-          {fetchingFailed ? (
+          {fetchingFailed && (
             <div className="">
               <div className="h-[90vh] w-full flex justify-center items-center">
                 Eighter blog does not exist or you have lost Internet connection
               </div>
               <Footer />
-            </div>
-          ) : (
-            <div className="h-[90vh] w-full flex justify-center items-center">
-              <CircularProgresser />
             </div>
           )}
         </>

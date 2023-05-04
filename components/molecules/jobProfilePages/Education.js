@@ -63,7 +63,7 @@ function Education(props) {
           <SwipeableTemporaryDrawer
             anchor="right"
             click={
-              <div className="p-2  rounded lowercase bg-color_5 whitespace-nowrap hover:bg-color_7 px-3 cursor-pointer text-[white] flex items-center duration-200">
+              <div className="px-4 py-2  rounded-full lowercase bg-color_5 whitespace-nowrap hover:bg-color_7 cursor-pointer text-[white] flex items-center duration-200">
                 <AddIcon fontSize="small" sx={{ color: "white" }} /> add
                 Education
               </div>

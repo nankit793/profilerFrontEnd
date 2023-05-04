@@ -7,7 +7,6 @@ export const actionTypes = {
 };
 
 export function getAuthorBlogs(data) {
-  console.log(data, "in action");
   return {
     type: actionTypes.GET_AUTHOR_BLOGS,
     payload: data,

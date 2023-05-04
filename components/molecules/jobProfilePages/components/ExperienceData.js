@@ -15,7 +15,14 @@ function ExperienceData(props) {
   const [success, setSuccess] = useState("");
 
   const onClick = () => {
-    if (company && designation && from && (to || checkBox)) {
+    if (!(checkBox ? true : from <= to)) {
+      setError("`from` date should be equal or less than `to` date");
+    } else if (
+      company &&
+      designation &&
+      from &&
+      (checkBox ? true : from <= to)
+    ) {
       let data;
       setError("");
       if (checkBox) {
@@ -175,18 +182,30 @@ function ExperienceData(props) {
             <div className=" relative  w-full text-[green] text-center text-md ">
               {success && success}
             </div>
-
             <ButtonPrimary
-              disabled={!(company && designation && from && (to || checkBox))}
+              disabled={
+                !(
+                  company &&
+                  designation &&
+                  from &&
+                  (checkBox ? true : from <= to)
+                )
+              }
               id={
-                !(company && designation && from && (to || checkBox))
+                !(
+                  company &&
+                  designation &&
+                  from &&
+                  (to || checkBox) &&
+                  (checkBox ? true : from <= to)
+                )
                   ? ""
                   : "operationButton"
               }
               onClick={onClick}
               disabledClass="w-full p-4 hover:bg-color_7 text-center text-[white] rounded-none bg-color_7 text-md font-semibold f"
               className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"
-              text={`add experience`}
+              text={`update experience`}
             />
           </div>
         </div>
@@ -290,9 +309,22 @@ function ExperienceData(props) {
               {success && success}
             </div>
             <ButtonPrimary
-              disabled={!(company && designation && from && (to || checkBox))}
+              disabled={
+                !(
+                  company &&
+                  designation &&
+                  from &&
+                  (checkBox ? true : from <= to)
+                )
+              }
               id={
-                !(company && designation && from && (to || checkBox))
+                !(
+                  company &&
+                  designation &&
+                  from &&
+                  (to || checkBox) &&
+                  (checkBox ? true : from <= to)
+                )
                   ? ""
                   : "operationButton"
               }

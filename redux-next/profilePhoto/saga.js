@@ -23,7 +23,6 @@ function* getProfilePic(action) {
       yield put(getProfilePicture_error(result));
     }
   } catch (error) {
-    console.log(error);
     yield put(getProfilePicture_error(error.response));
   }
 }

@@ -66,12 +66,6 @@ function JobProfile() {
 
   useEffect(() => {
     if (portfolioData && portfolioData.portfolio) {
-      console.log(
-        portfolioData &&
-          portfolioData.portfolio &&
-          portfolioData.portfolio.user &&
-          portfolioData.portfolio.user.userid === localStorage.getItem("userid")
-      );
       if (
         portfolioData &&
         portfolioData.portfolio &&

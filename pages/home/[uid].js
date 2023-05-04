@@ -120,7 +120,7 @@ function Uid(props) {
           }
         })
         .catch(function (error) {
-          console.log(error.message);
+          // console.log(error.message);
           // setImage(null);
         });
     } else {
@@ -163,7 +163,7 @@ function Uid(props) {
           }
         })
         .catch(function (error) {
-          console.log(error.message);
+          // console.log(error.message);
         });
     } else {
       errorNotification("can't follow now", "try again later");

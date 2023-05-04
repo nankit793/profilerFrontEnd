@@ -71,7 +71,6 @@ function BottomJobTab(props) {
             error: false,
             loader: false,
           });
-          console.log(finalSave.media.resume, "hi");
           setResume(finalSave.media.resume);
         } else {
           setResume("");
@@ -108,7 +107,7 @@ function BottomJobTab(props) {
                 <div className="flex justify-between items-center  pr-3">
                   <div
                     onClick={() => {
-                      router.push(`/update/jobProfile?pid=${portfolio._id}`);
+                      router.push(`/view/portfolio/${portfolio._id}`);
                     }}
                     className="text-text_1 font-semibold text-[17px]"
                   >
@@ -143,7 +142,7 @@ function BottomJobTab(props) {
                               >
                                 visit
                               </div>
-                              <div
+                              {/* <div
                                 // onClick={() => {
                                 //   router.push(
                                 //     `/update/jobProfile?pid=${portfolio._id}`
@@ -153,7 +152,7 @@ function BottomJobTab(props) {
                                 className="text-text_1 text-[maroon] py-1 duration-200 cursor-pointer flex items-center "
                               >
                                 deactivate
-                              </div>
+                              </div> */}
                             </div>
                           }
                           text={

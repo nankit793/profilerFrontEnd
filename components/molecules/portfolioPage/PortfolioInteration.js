@@ -12,6 +12,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import CommentIcon from "@mui/icons-material/Comment";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import PortfolioReviews from "./PortfolioReviews";
+import RemoveRedEyeIcon from "@mui/icons-material/RemoveRedEye";
 
 function PortfolioInteration(props) {
   const [isLiked, setIsLiked] = useState(false);
@@ -70,7 +71,6 @@ function PortfolioInteration(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
         // setImage(null);
       });
   };
@@ -99,7 +99,6 @@ function PortfolioInteration(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
         // setImage(null);
       });
   };
@@ -132,7 +131,6 @@ function PortfolioInteration(props) {
           }
         })
         .catch(function (error) {
-          console.log(error.message);
           // setImage(null);
         });
     }
@@ -158,6 +156,12 @@ function PortfolioInteration(props) {
           <div className="text-center text-text_1">
             <CommentIcon />
             <div className="text-color_4">{numComments}</div>
+          </div>
+          <div className="text-center text-text_1">
+            <RemoveRedEyeIcon />
+            <div className="text-color_4">
+              {props.numViews ? props.numViews : 0}
+            </div>
           </div>
         </div>
 
@@ -187,10 +191,11 @@ function PortfolioInteration(props) {
                   </div>
                 </div>
               </div> */}
-            <div className="md:w-[60%] mt-2">
+            <div className="md:w-[60%] mt-2 ">
               <InputField
                 length={500}
                 type="text"
+                className="border p-2 outline-none border-color_4 rounded-xl w-full max-w-[400px] bg-color_2 md:w-[60%]"
                 value={comment}
                 multiline={true}
                 placeholder="add comment"
@@ -199,20 +204,25 @@ function PortfolioInteration(props) {
                 }}
               />
               <div
-                className="px-5 py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded cursor-pointer text-[white] mt-2"
+                className="px-5  py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded-full cursor-pointer text-[white] mt-2"
                 onClick={addComment}
               >
                 Add review
               </div>
             </div>
-            <div
-              onClick={() => {
-                setShowComments(true);
-              }}
-              className="text-color_4 mt-2 cursor-pointer w-fit"
-            >
-              view all {numComments} reviews
-            </div>
+            {numComments > 0 && (
+              <div
+                onClick={() => {
+                  setShowComments(true);
+                }}
+                className="text-color_4 mt-2 cursor-pointer w-fit"
+              >
+                view
+                {numComments === 1
+                  ? ` ${numComments} review`
+                  : ` all ${numComments} review`}
+              </div>
+            )}
           </>
         )}
       </div>

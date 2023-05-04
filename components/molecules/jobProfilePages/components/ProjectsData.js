@@ -14,7 +14,9 @@ function ProjectsData(props) {
   const [desc, setDesc] = useState("");
 
   const onSubmit = () => {
-    if (title && from && (to || checkBox)) {
+    if (!(checkBox ? true : from <= to)) {
+      setError("`from` date should be equal or less than `to` date");
+    } else if (title && from && (checkBox ? true : from <= to)) {
       let data;
       if (checkBox) {
         data = {
@@ -158,15 +160,19 @@ function ProjectsData(props) {
         />
       </div>
       <div className="">
-        <div className="flex justify-center p-3 text-maroon">
+        <div className=" relative overflow-scroll text-maroon text-center text-md ">
           {error && error}
-        </div>
+        </div>{" "}
         <div className="flex justify-center p-3 text-[green]">
           {success && success}
         </div>
         <ButtonPrimary
-          disabled={!(title && from && (to || checkBox))}
-          id={!(title && from && (to || checkBox)) ? "" : "operationButton"}
+          disabled={!(title && from && (checkBox ? true : from <= to))}
+          id={
+            !(title && from && (checkBox ? true : from <= to))
+              ? ""
+              : "operationButton"
+          }
           onClick={onSubmit}
           disabledClass="w-full p-4 hover:bg-color_7 text-center text-[white] rounded-none bg-color_7 text-md font-semibold f"
           className="w-full p-4 justify-center bg-color_5 rounded-none hover:bg-color_7 duration-200 cursor-pointer text-[white] text-md font-semibold flex items-center d"

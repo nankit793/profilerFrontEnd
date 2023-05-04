@@ -15,7 +15,6 @@ function AddBlog() {
     tag: "general",
     selectedRedirection: "website",
   });
-  const router = useRouter();
   const [image, setImage] = useState(null);
   const onChange = (e) => {
     const { name, value } = e;
@@ -27,17 +26,22 @@ function AddBlog() {
     }
   };
   const onImageChange = (image) => {
-    setImage({
-      url: URL.createObjectURL(image),
-      name: image.name,
-      file: image,
-    });
+    // console.log(image);
+    if (image) {
+      setImage({
+        url: URL.createObjectURL(image),
+        name: image.name,
+        file: image,
+      });
+    } else {
+      setImage(null);
+    }
     // reader.readAsDataURL(image);
   };
+  const router = useRouter();
   const successProcess = () => {
     router.push(`/home/${localStorage.getItem("userid")}`);
   };
-
   // const onParaImageChange = (image, para) => {
   //   console.log(otherImages);
   //   if (image === null) {
@@ -82,6 +86,7 @@ function AddBlog() {
           blogStructure={blogStructure}
           onChange={onChange}
           image={image}
+          setImage={setImage}
           onImageChange={onImageChange}
           // onParaImageChange={onParaImageChange}
         />

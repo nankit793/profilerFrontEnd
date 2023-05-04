@@ -64,12 +64,14 @@ function Experience(props) {
   return (
     <>
       <div className="flex justify-between items-center">
-        <div className="text-text_2 font-semibold text-lg ">Experience</div>
+        <div className="text-text_2 whitespace-nowrap font-semibold text-lg ">
+          Experience
+        </div>
         <div className="h-[2px] bg-color_6 w-full rounded-full mx-5 md:block hidden"></div>
         <SwipeableTemporaryDrawer
           anchor="right"
           click={
-            <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_7 hover:bg-color_5 rounded text-[white] whitespace-nowrap w-min">
+            <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_5 hover:bg-color_5 rounded-full text-[white] whitespace-nowrap w-min">
               <AddIcon fontSize="small" sx={{ marginRight: "5px" }} />
               add experience
             </div>

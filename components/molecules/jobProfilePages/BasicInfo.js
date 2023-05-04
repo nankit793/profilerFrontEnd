@@ -79,7 +79,6 @@ function BasicInfo(props) {
     }
   };
   const skillChange = (el) => {
-    console.log(el);
     setSkill((prev) => ({
       ...prev,
       [el.target.name]: el.target.value,

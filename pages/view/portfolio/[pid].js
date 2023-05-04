@@ -45,7 +45,7 @@ function Portfolio() {
   const [resume, setResume] = useState("");
   const bookmarks = useSelector((state) => state.portfolioBookmarksReducer);
   const [isBookMarked, setIsBookMarked] = useState(false);
-
+  const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
@@ -60,6 +60,7 @@ function Portfolio() {
 
   useEffect(() => {
     if (router.query.pid) {
+      setLoading(true);
       const fetcher = async () => {
         const data = await fetch(
           `${process.env.BACKEND_URL}/portfolio/get?pid=${router.query.pid}`,
@@ -83,6 +84,10 @@ function Portfolio() {
           setIsLiked(saveData.isLiked);
           setNumLikes(saveData.portfolioAtActivities.numLikes);
           setNumComments(saveData.portfolioAtActivities.numReviews);
+          setLoading(false);
+        } else {
+          setPortfolioData(null);
+          setLoading(false);
         }
       };
       fetcher();
@@ -98,7 +103,7 @@ function Portfolio() {
         });
         const saveData = await data.json();
         if (data && data.status === 200 && saveData && saveData.data) {
-          console.log(saveData);
+          // console.log(saveData);
         }
       };
       fetcher();
@@ -165,248 +170,283 @@ function Portfolio() {
 
   return (
     <>
-      <div className="pt-16  w-full bg-color_1 border-b-[1px]">
-        <div className=" flex justify-end items-end rounded-full text-color_2 flex gap-3 items-start">
-          <div className="">
-            {!isBookMarked ? (
-              <div
-                onClick={bookmark}
-                className="hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_7"
-              >
-                <BookmarkBorderIcon />
-              </div>
-            ) : (
-              <div
-                onClick={removeBookmark}
-                className=" hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_7"
-              >
-                <BookmarkAddedIcon />
-              </div>
-            )}
-          </div>
-          <div className="text-center flex items-center bg-color_7 px-2 rounded-l-xl">
-            <RemoveRedEyeIcon fontSize="small" />
-            <div className="pl-1">
-              {portfolioActivities && portfolioActivities.views}
-            </div>
-          </div>
-        </div>
-        <div className="flex md:gap-10 gap-2 md:flex-row flex-col items-start justify-center mx-3 pt-2">
-          <div className="w-[200px] h-[200px] md:mx-0 mx-auto">
-            {portfolioData &&
-              portfolioData.user &&
-              portfolioData.user.userid && (
-                <Image
-                  unoptimized
-                  // fill
-                  src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${portfolioData.user.userid}`}
-                  alt="Picture of the author"
-                  // objectFit="revert"
-                  width="100%"
-                  height="100%"
-                  className="rounded"
-                  layout="responsive"
-                  objectFit="cover"
-                />
-              )}
-          </div>
-          <div className="md:w-[70%] md:flex gap-3 justify-between items-end">
-            <div className="">
-              {/* <div className="text-semibold text-text_1 text-[20px]">
-                Hello, My name is
-              </div> */}
-              <div className="text-[23px] font-bold uppercase text-color_2">
-                {portfolioData && portfolioData.user && portfolioData.user.name}
-              </div>
-              <div className="md:w-[90%]  text-text_1 text-sm">
-                {portfolioData.about}
-              </div>
-            </div>
-            <div className="bg-color_7 px-3 w-fit md:mt-0 mt-5 rounded whitespace-nowrap p-2 text-color_2">
-              Download CV
-            </div>
-          </div>
-        </div>
-        <div className="flex justify-between bg-color_2 mt-2 rounded-t-md w-fit mx-auto  gap-2 text-color_2">
-          <div>
-            {portfolioData &&
-            portfolioData.user &&
-            portfolioData.user.linkdn ? (
-              <div
-                className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
-                onClick={() => {
-                  window.open(portfolioData.user.linkdn, "_blank");
-                }}
-              >
-                <Avatar
-                  alt="Facebook"
-                  src="/images/linkedin.png"
-                  sx={{ width: 25, height: 25 }}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          {portfolioData &&
-          portfolioData.user &&
-          portfolioData.user.facebook ? (
-            <div
-              className="mx-auto mt-1 p-1 h-min hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
-              onClick={() => {
-                window.open(portfolioData.user.facebook, "_blank");
-              }}
-            >
-              <Avatar
-                alt="Facebook"
-                src="/images/facebook.png"
-                sx={{ width: 25, height: 25 }}
-              />
-            </div>
-          ) : (
-            ""
-          )}
-          <div>
-            {portfolioData &&
-            portfolioData.user &&
-            portfolioData.user.instagram ? (
-              <div
-                className="mx-auto p-1 mt-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
-                onClick={() => {
-                  window.open(portfolioData.user.instagram, "_blank");
-                }}
-              >
-                <Avatar
-                  alt="Facebook"
-                  src="/images/insta.png"
-                  sx={{ width: 30, height: 30 }}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <div>
-            {portfolioData &&
-            portfolioData.user &&
-            portfolioData.user.youtube ? (
-              <div
-                className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
-                onClick={() => {
-                  window.open(portfolioData.user.youtube, "_blank");
-                }}
-              >
-                <Avatar
-                  alt="Facebook"
-                  src="/images/youtube.png"
-                  sx={{ width: 25, height: 25 }}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-          <div>
-            {portfolioData &&
-            portfolioData.user &&
-            portfolioData.user.github ? (
-              <div
-                className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
-                onClick={() => {
-                  window.open(portfolioData.user.github, "_blank");
-                }}
-              >
-                <Avatar
-                  alt="Facebook"
-                  src="/images/github.png"
-                  sx={{ width: 25, height: 25 }}
-                />
-              </div>
-            ) : (
-              ""
-            )}
-          </div>
-        </div>
-      </div>
-      <div className=" mt-3 md:w-[80%] mx-2 md:mx-auto">
-        <div className="font-bold text-text_1 text-[25px] mb-2">Experience</div>
-        {portfolioData &&
-          portfolioData.experience &&
-          portfolioData.experience.map((job, index) => {
-            return (
-              <div
-                key={index}
-                className={` ${
-                  index === 0 ? "" : ""
-                } border-l  border-l-color_11 border-l-[2px] ${
-                  portfolioData.experience.length - 1 === index
-                    ? " pb-1 "
-                    : "pb-4 pt-1"
-                } `}
-              >
-                <div className="flex items-center">
-                  <div className="w-[10px]  flex justify-center rounded-r-xl items-center h-[2px] bg-color_11"></div>
-                  <div className="px-2  text-text_1 text-[20px] font-semibold capitalize">
-                    {job && job.company}
-                  </div>
-                </div>
-                <div className="px-2">
-                  <div className="text-color_4 mx-3">
-                    {job && job.designation}, {job && job.employementType}
-                  </div>
-                  <div className="text-text_2 text-color_4 mx-3">
-                    {job &&
-                      job.from &&
-                      job.from.split("T")[0].split("-") &&
-                      dateConverter(job.from.split("T")[0].split("-")[1]) +
-                        " " +
-                        job.from.split("T")[0].split("-")[0]}{" "}
-                    -
-                    {job.working ? (
-                      <span className="font-semibold italic "> present</span>
-                    ) : (
-                      job &&
-                      job.to &&
-                      job.to.split("T")[0].split("-") &&
-                      dateConverter(job.to.split("T")[0].split("-")[1]) +
-                        " " +
-                        job.to.split("T")[0].split("-")[0]
-                    )}
-                  </div>
-                  <div className="text-text_2 text-[16px] mx-3">
-                    {job && job.description}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-      </div>
-      <PortfolioBlogs portfolioData={portfolioData} />
-      <Education portfolioData={portfolioData} />
-      <Certificates portfolioData={portfolioData} />
-
-      {resume && (
-        <div className="w-full px-3 mt-10  md:px-10 flex justify-center textRemove">
-          <div className="border overflow-x-auto rounded">
-            <Document
-              file={resume && resume}
-              //    onLoadSuccess={onDocumentLoadSuccess}
-            >
-              <Page pageIndex={0} />
-            </Document>
-          </div>
+      {loading && (
+        <div className="w-full h-[95vh] text-text_2 flex justify-center items-center">
+          <CircularProgresser />
         </div>
       )}
+      {!loading && !portfolioData && (
+        <div className="w-full h-[90vh] text-center text-text_2 flex justify-center items-center">
+          Either Portfolio does not exist or you are facing network isseues
+        </div>
+      )}
+      {!loading && (
+        <>
+          {portfolioData && (
+            <>
+              <div className="pt-16  w-full bg-color_1 border-b-[1px]">
+                <div className=" flex justify-end items-end rounded-full text-color_2 gap-3">
+                  <div className="">
+                    {!isBookMarked ? (
+                      <div
+                        onClick={bookmark}
+                        className="hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_7"
+                      >
+                        <BookmarkBorderIcon />
+                      </div>
+                    ) : (
+                      <div
+                        onClick={removeBookmark}
+                        className=" hover:bg-color_9 flex justify-center items-center rounded-full duration-200 cursor-pointer text-color_7"
+                      >
+                        <BookmarkAddedIcon />
+                      </div>
+                    )}
+                  </div>
+                  <div className="text-center flex items-center bg-color_7 px-2 rounded-l-xl">
+                    <RemoveRedEyeIcon fontSize="small" />
+                    <div className="pl-1">
+                      {portfolioActivities && portfolioActivities.views}
+                    </div>
+                  </div>
+                </div>
+                <div className="flex md:gap-10 gap-2 md:flex-row flex-col items-start justify-center mx-3 pt-2">
+                  <div className="w-[200px] h-[200px] md:mx-0 mx-auto">
+                    {portfolioData &&
+                      portfolioData.user &&
+                      portfolioData.user.userid && (
+                        <Image
+                          unoptimized
+                          // fill
+                          src={`${process.env.BACKEND_URL}/profilePhoto/direct?userid=${portfolioData.user.userid}`}
+                          alt="Picture of the author"
+                          // objectFit="revert"
+                          width="100%"
+                          height="100%"
+                          className="rounded"
+                          layout="responsive"
+                          objectFit="cover"
+                        />
+                      )}
+                  </div>
+                  <div className="md:w-[70%] md:flex gap-3 justify-between items-end">
+                    <div className="">
+                      {/* <div className="text-semibold text-text_1 text-[20px]">
+                Hello, My name is
+              </div> */}
+                      <div className="text-[23px] font-bold uppercase text-color_2">
+                        {portfolioData &&
+                          portfolioData.user &&
+                          portfolioData.user.name}
+                      </div>
+                      <div className="md:w-[90%]  text-text_1 text-sm">
+                        {portfolioData && portfolioData.about}
+                      </div>
+                    </div>
+                    <div className="bg-color_7 px-3 w-fit md:mt-0 mt-5 rounded whitespace-nowrap p-2 text-color_2">
+                      Download CV
+                    </div>
+                  </div>
+                </div>
+                <div className="flex justify-between bg-color_2 mt-2 rounded-t-md w-fit mx-auto  gap-2 text-color_2">
+                  <div>
+                    {portfolioData &&
+                    portfolioData.user &&
+                    portfolioData.user.linkdn ? (
+                      <div
+                        className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        onClick={() => {
+                          window.open(portfolioData.user.linkdn, "_blank");
+                        }}
+                      >
+                        <Avatar
+                          alt="Facebook"
+                          src="/images/linkedin.png"
+                          sx={{ width: 25, height: 25 }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  {portfolioData &&
+                  portfolioData.user &&
+                  portfolioData.user.facebook ? (
+                    <div
+                      className="mx-auto mt-1 p-1 h-min hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                      onClick={() => {
+                        window.open(portfolioData.user.facebook, "_blank");
+                      }}
+                    >
+                      <Avatar
+                        alt="Facebook"
+                        src="/images/facebook.png"
+                        sx={{ width: 25, height: 25 }}
+                      />
+                    </div>
+                  ) : (
+                    ""
+                  )}
+                  <div>
+                    {portfolioData &&
+                    portfolioData.user &&
+                    portfolioData.user.instagram ? (
+                      <div
+                        className="mx-auto p-1 mt-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        onClick={() => {
+                          window.open(portfolioData.user.instagram, "_blank");
+                        }}
+                      >
+                        <Avatar
+                          alt="Facebook"
+                          src="/images/insta.png"
+                          sx={{ width: 30, height: 30 }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div>
+                    {portfolioData &&
+                    portfolioData.user &&
+                    portfolioData.user.youtube ? (
+                      <div
+                        className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        onClick={() => {
+                          window.open(portfolioData.user.youtube, "_blank");
+                        }}
+                      >
+                        <Avatar
+                          alt="Facebook"
+                          src="/images/youtube.png"
+                          sx={{ width: 25, height: 25 }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                  <div>
+                    {portfolioData &&
+                    portfolioData.user &&
+                    portfolioData.user.github ? (
+                      <div
+                        className="mx-auto mt-1 p-1 hover:bg-color_7 flex justify-center items-center rounded-full duration-200 cursor-pointer"
+                        onClick={() => {
+                          window.open(portfolioData.user.github, "_blank");
+                        }}
+                      >
+                        <Avatar
+                          alt="Facebook"
+                          src="/images/github.png"
+                          sx={{ width: 25, height: 25 }}
+                        />
+                      </div>
+                    ) : (
+                      ""
+                    )}
+                  </div>
+                </div>
+              </div>
+              {portfolioData &&
+                portfolioData.experience &&
+                portfolioData.experience.length > 0 && (
+                  <div className=" mt-3 md:w-[80%] mx-2 md:mx-auto">
+                    <div className="font-bold text-text_1 text-[25px] mb-2">
+                      Experience
+                    </div>
+                    {portfolioData.experience.map((job, index) => {
+                      return (
+                        <div
+                          key={index}
+                          className={` ${
+                            index === 0 ? "" : ""
+                          } border-l-color_11 border-l-[2px] ${
+                            portfolioData.experience.length - 1 === index
+                              ? " pb-1 "
+                              : "pb-4 pt-1"
+                          } `}
+                        >
+                          <div className="flex items-center">
+                            <div className="w-[10px]  flex justify-center rounded-r-xl items-center h-[2px] bg-color_11"></div>
+                            <div className="px-2  text-text_1 text-[20px] font-semibold capitalize">
+                              {job && job.company}
+                            </div>
+                          </div>
+                          <div className="px-2">
+                            <div className="text-color_4 mx-3">
+                              {job && job.designation},{" "}
+                              {job && job.employementType}
+                            </div>
+                            <div className="text-text_2 text-color_4 mx-3">
+                              {job &&
+                                job.from &&
+                                job.from.split("T")[0].split("-") &&
+                                dateConverter(
+                                  job.from.split("T")[0].split("-")[1]
+                                ) +
+                                  " " +
+                                  job.from.split("T")[0].split("-")[0]}{" "}
+                              -
+                              {job.working ? (
+                                <span className="font-semibold italic ">
+                                  {" "}
+                                  present
+                                </span>
+                              ) : (
+                                job &&
+                                job.to &&
+                                job.to.split("T")[0].split("-") &&
+                                dateConverter(
+                                  job.to.split("T")[0].split("-")[1]
+                                ) +
+                                  " " +
+                                  job.to.split("T")[0].split("-")[0]
+                              )}
+                            </div>
+                            <div className="text-text_2 text-[16px] mx-3">
+                              {job && job.description}
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              <PortfolioBlogs portfolioData={portfolioData} />
+              <Education portfolioData={portfolioData} />
+              <Certificates portfolioData={portfolioData} />
+              <div className="text-center mb-2 font-bold text-text_1 text-[25px] mx-2">
+                Resume
+              </div>
+              {resume && (
+                <div className="w-full   md:px-10 flex justify-center textRemove">
+                  <div className="border overflow-x-auto rounded">
+                    <Document
+                      file={resume && resume}
+                      //    onLoadSuccess={onDocumentLoadSuccess}
+                    >
+                      <Page pageIndex={0} />
+                    </Document>
+                  </div>
+                </div>
+              )}
 
-      <PortfolioInteration
-        pid={router.query.pid}
-        isLiked={isLiked}
-        numLikes={numLikes}
-        author={portfolioData.user}
-        numComments={numComments}
-        setNumLikes={setNumLikes}
-        setNumComments={setNumComments}
-      />
+              <PortfolioInteration
+                pid={router.query.pid}
+                isLiked={isLiked}
+                numLikes={numLikes}
+                author={portfolioData.user}
+                numViews={portfolioActivities && portfolioActivities.views}
+                numComments={numComments}
+                setNumLikes={setNumLikes}
+                setNumComments={setNumComments}
+              />
+            </>
+          )}
+        </>
+      )}
       <Footer />
     </>
   );

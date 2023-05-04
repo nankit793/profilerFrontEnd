@@ -256,7 +256,7 @@ function EditBlog(props) {
                   selectedRedirection.web ? "bg-color_9" : ""
                 }`}
                 alt="Facebook"
-                src="./images/web.png"
+                src="/images/web.png"
                 sx={{ width: 50, height: 50 }}
               />
               <Avatar
@@ -277,7 +277,7 @@ function EditBlog(props) {
                   selectedRedirection.youtube ? "bg-color_9" : ""
                 }`}
                 alt="Facebook"
-                src="./images/youtube.png"
+                src="/images/youtube.png"
                 sx={{ width: 50, height: 50 }}
               />
             </div>

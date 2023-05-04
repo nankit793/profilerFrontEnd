@@ -20,8 +20,6 @@ function Projects(props) {
     } else {
       jobData[name][index] = data;
     }
-    console.log(data, edited, index, name);
-    console.log(jobData[name]);
     setJobData((prevState) => ({
       ...prevState,
       [name]: jobData[name],
@@ -52,7 +50,7 @@ function Projects(props) {
           <SwipeableTemporaryDrawer
             anchor="right"
             click={
-              <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_5 rounded text-[white] whitespace-nowrap w-min">
+              <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_5 rounded-full text-[white] whitespace-nowrap w-min">
                 <AddIcon fontSize="small" sx={{ marginRight: "5px" }} />
                 add projects
               </div>
@@ -173,7 +171,7 @@ function Projects(props) {
         <SwipeableTemporaryDrawer
           anchor="right"
           click={
-            <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_5 rounded text-[white] whitespace-nowrap w-min">
+            <div className="py-2 lowercase mb-2 flex items-center px-3 bg-color_5 rounded-full text-[white] whitespace-nowrap w-min">
               <AddIcon fontSize="small" sx={{ marginRight: "5px" }} />
               add certificates
             </div>

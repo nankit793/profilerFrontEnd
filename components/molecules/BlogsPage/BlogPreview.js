@@ -83,7 +83,7 @@ function BlogPreview(props) {
       ) : (
         ""
       )}
-      <div className="mt-2 px-3 py-1  font-mono rounded-full border border-color_9 bg-color_2 w-min text-text_1">
+      <div className="mt-2 px-3 py-1  font-mono rounded-full border border-color_9 bg-color_2 w-fit text-text_1">
         {props.blogStructure.tag}
       </div>
       <div className="mt-2">

@@ -16,7 +16,7 @@ function InputField(props) {
                 : " w-full outline-none h-full bg-[white]"
             }`}
             value={props.value}
-            rows={8}
+            rows={props.rows ? props.rows : 8}
             required={props.required || false}
             multiline={true}
             size="small"

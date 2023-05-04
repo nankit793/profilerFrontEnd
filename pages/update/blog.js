@@ -41,7 +41,6 @@ function AddBlog() {
     // reader.readAsDataURL(image);
   };
   const onParaImageChange = (image, para) => {
-    console.log(otherImages);
     if (image === null) {
       setOtherImages((prev) => ({
         ...prev,

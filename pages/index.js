@@ -52,87 +52,64 @@ export default function Home() {
           dangerouslySetInnerHTML={{ __html: JSON.stringify(schemaData) }}
         />
       </Head>
-      <div className="h-[50%] min-h-[300px] bg-color_9 flex flex-col items-start px-3 max-h-[700px] justify-center pt-14">
+      <div className="h-[50%] gradientColor min-h-[300px] flex flex-col items-start px-3 max-h-[700px] justify-center pt-14">
         <div className="flex gap-5 flex-col ">
           <div className="">
-            <span className="whitespace-nowrap text-[25px]">
+            <span className="whitespace-nowrap text-[25px] text-color_2">
               Create Blogs and Portfolio <br />
             </span>
-            <strong className="text-text_1 text-[25px] font-bold">
+            <strong className="text-color_2 text-[25px] font-bold">
               FOR FREE!!!
             </strong>
           </div>
-          <div className="px-6 py-2 bg-color_7 hover:bg-color_5 text-color_2 cursor-pointer w-fit rounded duration-200">
-            start exploring
+          <div className="px-6 py-2 bg-color_2 text-color_7 font-semibold cursor-pointer w-fit rounded-full duration-200">
+            Start Exploring
           </div>
-          {/* <div className="md:flex text-center justify-center items-center p-2 w-full">
-            <div>
-              <ButtonPrimary
-                type="button"
-                text="Login"
-                className="border border-color_1  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
-              />
-            </div>
-            <div className="md:ml-10">
-              <ButtonPrimary
-                type="button"
-                text="Register"
-                className="border-2 py-4 px-10 bg-[#a5eefa] text-[black]  font-semibold drop-shadow-sm rounded-xl"
-              />
-            </div>
-          </div> */}
         </div>
-        {/* <div className="md:text-[25px] text-[18px] mb-5 text-color_2 text-center font-bold ">
-          1Million People are using Profiler as their Portfolio <br />
-          <span className="italic">Join the team Now!</span>
-        </div> */}
       </div>
-      hyy
-      {/* 
-      <div className="h-full flex flex-col  md:flex-row md:justify-start justify-start items-center ">
-        <div className="md:block hidden absolute top-20  h-screen overflow-hidden">
-          <img
-            src="https://cdn.wedevs.com/uploads/2019/04/Explore-the-easiest-WordPress-user-registration-plugin.png"
-            alt=""
-            width="100%"
-            height="100%"
-            layout="fill"
-          />
+      <div className=" justify-center bg-color_8 flex items-center h-[40vh]">
+        <div className="text-text_1 font-bold text-[40px] text-center px-5">
+          Everything you need to manage your
+          <div>Blogs and Portfolios</div>
         </div>
-        <div className="md:hidden block ">
-          <img
-            src="https://img.freepik.com/free-vector/mobile-login-concept-illustration_114360-83.jpg?w=2000"
-            width="100%"
-            height="100%"
-            layout="fill"
-            alt=""
-          />
-        </div>
-        <div className="z-10 flex justify-center items-center md:mt-40 w-full flex-col">
-          <div className=" text-2xl md:text-left text-center">
-            Profiler helps you manage your profiles for different field. <br />{" "}
-            <span className="font-semibold text-color_2">
-              So stop sharing documents share your profiler!
-            </span>
+      </div>
+      <div className="flex p-2 gap-10 bg-color_8 flex-wrap justify-center  pb-20">
+        <div className="max-w-[300px] md:w-[25%] bg-color_2 border drop-shadow rounded-xl ">
+          <div className="text-center text-text_1 text-[30px] font-bold">
+            Blogs
           </div>
-          <div className="md:flex text-center justify-center items-center p-2 w-full mt-10">
-            <div>
-              <ButtonPrimary
-                type="button"
-                text="Login"
-                className="border border-color_1  py-4 px-10 text-[black] font-semibold drop-shadow-sm rounded-xl"
-              />
-            </div>
-            <div className="md:ml-10">
-              <ButtonPrimary
-                type="button"
-                text="Register"
-                className="border-2 py-4 px-10 bg-color_1 text-[black]  font-semibold drop-shadow-sm rounded-xl"
-              />
-            </div>
+          <div className="text-text_2 p-3">
+            A blog, short for weblog, is a frequently updated web page used for
+            personal commentary or business content. Blogs are often interactive
+            and include sections at the bottom of individual blog posts where
+            readers can leave comments.
           </div>
         </div>
-      </div> */}
+        <div className="md:w-[25%] max-w-[300px]  bg-color_2 border drop-shadow rounded-xl ">
+          <div className="text-center text-text_1 text-[30px] font-bold">
+            Portfolio
+          </div>
+          <div className="text-text_2 p-3">
+            A portfolio is a compilation of academic and professional materials
+            that exemplifies your beliefs, skills, qualifications, education,
+            training, and experiences.
+          </div>
+        </div>
+      </div>
+      <div className="h-[40vh] mt-20">
+        <div className="text-text_1 font-bold text-[40px] text-center px-5">
+          More than 2 Million people
+          <div>have already chosen us!</div>
+        </div>
+        <div className="flex gap-5 justify-center mt-5">
+          <div className="bg-color_2 border-color_7 border  px-7 py-1 text-color_7 text-[25px] rounded-full">
+            Login
+          </div>
+          <div className="bg-color_7   px-5 py-1 text-color_2 text-[25px] rounded-full">
+            Sign Up
+          </div>
+        </div>
+      </div>
     </>
   );
 }

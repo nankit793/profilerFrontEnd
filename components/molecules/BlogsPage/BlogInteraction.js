@@ -70,7 +70,7 @@ function BlogInteraction(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
         // setImage(null);
       });
   };
@@ -99,7 +99,7 @@ function BlogInteraction(props) {
         }
       })
       .catch(function (error) {
-        console.log(error.message);
+        // console.log(error.message);
         // setImage(null);
       });
   };
@@ -132,7 +132,7 @@ function BlogInteraction(props) {
           }
         })
         .catch(function (error) {
-          console.log(error.message);
+          // console.log(error.message);
           // setImage(null);
         });
     }
@@ -191,6 +191,7 @@ function BlogInteraction(props) {
               <InputField
                 length={500}
                 type="text"
+                className="border p-2 outline-none border-color_4 rounded-xl w-full max-w-[600px] bg-color_2 md:w-[80%]"
                 value={comment}
                 multiline={true}
                 placeholder="add comment"
@@ -199,21 +200,25 @@ function BlogInteraction(props) {
                 }}
               />
               <div
-                className="px-5 py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded cursor-pointer text-[white] mt-2"
+                className="px-5 py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded-full cursor-pointer text-[white] mt-2"
                 onClick={addComment}
               >
                 Add comment
               </div>
             </div>
-            <div
-              onClick={() => {
-                setShowComments(true);
-              }}
-              className="text-color_4 mt-2 cursor-pointer w-fit"
-            >
-              view{" "}
-              {numComments === 1 ? `1 comment` : `all ${numComments} comments`}
-            </div>
+            {numComments > 0 && (
+              <div
+                onClick={() => {
+                  setShowComments(true);
+                }}
+                className="text-color_4 mt-2 cursor-pointer w-fit"
+              >
+                view
+                {numComments === 1
+                  ? ` ${numComments} review`
+                  : ` all ${numComments} review`}
+              </div>
+            )}
           </>
         )}
       </div>

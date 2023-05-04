@@ -15,15 +15,15 @@ function* getAuthorBlogs(action) {
       url: `${process.env.BACKEND_URL}/blogPost/author/${action.payload}`,
       //   body: action.payload,
     });
-    console.log(result, "the result");
+    // console.log(result, "the result");
     if (result.status === 200 && result.data && result.data.blogUpload) {
       yield put(getAuthorBlogs_success(result.data.blogUpload));
     } else {
-      console.log("other error");
+      // console.log("other error");
       yield put(getAuthorBlogs_error([]));
     }
   } catch (error) {
-    console.log(error.message, error);
+    // console.log(error.message, error);
     yield put(getAuthorBlogs_error(error.response));
   }
 }

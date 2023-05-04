@@ -192,12 +192,10 @@ function BasicDetails() {
     if (newResume) {
       // setShowUploader(true);
       // setShowUploaderMessage("");
-      console.log(pid);
       const accesstoken = localStorage.getItem("accessToken");
       const refreshtoken = localStorage.getItem("idToken");
       const userid = localStorage.getItem("userid");
       let formData = new FormData();
-      console.log(pid);
       formData.append("resume", newResume);
       const save = await fetch(
         `${process.env.BACKEND_URL}/portfolio/update/resume`,
@@ -215,7 +213,6 @@ function BasicDetails() {
       );
       if (save && save.status === 200) {
         // setShowUploaderMessage("resume uploaded");
-        console.log(newResume);
         setResume(newResume);
       } else {
         // setShowUploaderMessage("error occured try again");

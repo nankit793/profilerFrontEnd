@@ -20,7 +20,7 @@ function Navbar() {
   };
   return (
     <>
-      <div className="md:block hidden py-2 bg-color_7 w-full absolute top-0 z-20">
+      <div className="md:block hidden py-2  bg-color_7 w-full absolute top-0 z-20">
         <div className="flex justify-between items-center">
           <div className=" ml-2  w-min text-white font-semibold">
             <Avatar
@@ -35,7 +35,7 @@ function Navbar() {
               <a
                 className={`cursor-pointer text-[16px] font-semibold  mx-2 text-[white] p-2 ${
                   router.pathname === "/explore"
-                    ? "text-color_5"
+                    ? "text-color_1"
                     : "text-color_black"
                 } `}
               >
@@ -45,9 +45,7 @@ function Navbar() {
             <Link href="/">
               <a
                 className={`cursor-pointer text-[16px] font-semibold  mx-2 text-[white] p-2 ${
-                  router.pathname === "/aboutUs"
-                    ? "text-color_1"
-                    : "text-[white]"
+                  router.pathname === "/" ? "text-color_1" : "text-[white]"
                 } `}
               >
                 About
@@ -110,7 +108,7 @@ function Navbar() {
                             : "text-color_black"
                         } `}
                       >
-                        Explores
+                        Explore
                       </a>
                     </Link>
                     <Link href="/">
