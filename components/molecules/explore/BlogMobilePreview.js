@@ -19,6 +19,7 @@ import CommentIcon from "@mui/icons-material/Comment";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import BookmarkBorderIcon from "@mui/icons-material/BookmarkBorder";
 import BookmarkAddedIcon from "@mui/icons-material/BookmarkAdded";
+
 function BlogPreReview(props) {
   const [reviewId, setReviewId] = useState("");
   const [blogData, setBlogData] = useState();
@@ -36,12 +37,11 @@ function BlogPreReview(props) {
   const router = useRouter();
   useEffect(() => {
     if (props.reviewId) {
-      //   console.log(props.reviewId);
-      getBlog();
+      setLoading(true);
+      setBlogData({});
+      console.log(props.reviewId);
       setReviewId(props.reviewId);
     }
-    return;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.reviewId]);
 
   // useEffect(() => {
@@ -50,12 +50,11 @@ function BlogPreReview(props) {
   //   }
   // }, [sessionStorage]);
 
-  const getBlog = (e) => {
-    // e.preventDefault();
+  useEffect(() => {
     console.log(reviewId);
     if (reviewId) {
-      // console.log(reviewId);
       setLoading(true);
+      // console.log(reviewId);
       // reviewId !== localStorage.getItem("reveiwId") &&
       axios
         .get(`${process.env.BACKEND_URL}/blogPost/noview/${reviewId}`, {
@@ -63,6 +62,7 @@ function BlogPreReview(props) {
         })
         .then(function (response) {
           if (response.status === 200) {
+            console.log("first", response);
             setBlogData(response && response.data && response.data.blog);
             setIsLiked(response && response.data && response.data.liked);
             setNumLikes(
@@ -105,7 +105,7 @@ function BlogPreReview(props) {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  };
+  }, [reviewId]);
 
   useEffect(() => {
     if (bookmarks && bookmarks.isFetched && bookmarks.bookmarks) {
