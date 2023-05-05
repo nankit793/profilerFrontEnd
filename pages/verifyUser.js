@@ -85,11 +85,11 @@ function VerifyUser() {
   };
   return (
     <>
-      <div className="pt-12 h-[50vh] w-full bg-color_9 text-center">
-        <div className="text-text_1 font-semibold pt-10 text-[30px]">
+      <div className="pt-12 h-[50vh] w-full gradientColor text-center">
+        <div className="text-color_2 font-semibold pt-10 text-[30px]">
           verify yourself
         </div>
-        <div className="text-color_7 pt-1 text-[18px] ">
+        <div className="text-color_2 pt-1 text-[18px] ">
           we have sent an OTP to your account! please check your mail
         </div>
       </div>

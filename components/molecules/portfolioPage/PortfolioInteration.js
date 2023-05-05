@@ -204,7 +204,7 @@ function PortfolioInteration(props) {
                 }}
               />
               <div
-                className="px-5  py-2 bg-color_7 hover:bg-color_5 duration-200 w-fit rounded-full cursor-pointer text-[white] mt-2"
+                className="px-5  py-2 bg-color_7 whitespace-nowrap hover:bg-color_5 duration-200 w-fit rounded-full cursor-pointer text-[white] mt-2"
                 onClick={addComment}
               >
                 Add review
@@ -215,7 +215,7 @@ function PortfolioInteration(props) {
                 onClick={() => {
                   setShowComments(true);
                 }}
-                className="text-color_4 mt-2 cursor-pointer w-fit"
+                className="text-color_4 whitespace-nowrap mt-2 cursor-pointer w-fit"
               >
                 view
                 {numComments === 1

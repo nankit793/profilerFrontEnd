@@ -45,24 +45,23 @@ function FollowersDetails(props) {
             <div className="text-[17px] text-color_4 font-normal ">Blogs</div>
           </div>
         </div>
-        <div className="border border-color_9 rounded-full mt-2">
+        <div className="border rounded-full mt-2">
           {!alreadyFollowing ? (
             <ButtonPrimary
               onClick={props.follow}
               type="button"
-              className="text-color_5  h-[35px] rounded-full text-[16px]"
+              className="capitalize text-color_5  h-[35px] rounded-full text-[16px]"
               color="primary"
               //   disabled={loading && userid && password ? true : false}
-              text={false ? <CircularProgresser key="key" /> : "follow"}
+              text={"follow"}
             />
           ) : (
             <ButtonPrimary
               onClick={props.unfollow}
               type="button"
-              className="text-color_5  hover:bg-color_9 h-[35px] bg-color_3 rounded-full text-[16px]"
+              className="capitalize text-color_5  hover:bg-color_9 h-[35px] bg-color_6 rounded-full text-[16px]"
               color="primary"
-              //   disabled={loading && userid && password ? true : false}
-              text={false ? <CircularProgresser key="key" /> : "following"}
+              text={"following"}
             />
           )}
         </div>

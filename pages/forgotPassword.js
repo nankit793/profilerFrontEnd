@@ -102,10 +102,10 @@ function ForgotPassword() {
     <>
       <div className="h-screen flex flex-col items-center max-h-[1000px] pt-14">
         <div className="h-[50vh] w-full gradientColor text-center">
-          <div className="text-color_7  pt-10 text-[30px]">
+          <div className="text-color_2  pt-10 text-[30px]">
             Forgot Password?
           </div>
-          <div className="text-color_7 text-[20px]">
+          <div className="text-color_2 text-[20px]">
             no worries we have got you covered!
           </div>
         </div>
@@ -116,7 +116,7 @@ function ForgotPassword() {
                 {userid ? userid : "invalid id"}
               </div>
               <div className="border my-1 rounded-md flex justify-start">
-                <div className="py-3 px-5 rounded-l-md bg-color_8 text-text_1 font-semibold border-r">
+                <div className="py-3 px-5 whitespace-nowrap rounded-l-md bg-color_8 text-text_1 font-semibold border-r">
                   OTP
                 </div>
                 <input

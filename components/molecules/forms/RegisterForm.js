@@ -154,11 +154,17 @@ export default function RegisterForm() {
           </div>
           <div className="pt-2">
             <ButtomPrimary
-              type="submit"
-              className=" bg-color_7 text-color_2 h-[50px]  hover:bg-color_5 p-3 rounded-md text-[16px]"
+              type={!loading ? "submit" : "button"}
+              className="capitalize gradientColor rounded cursor-pointer text-color_2 h-[50px]  hover:bg-color_5 p-3 text-[16px]"
               color="primary"
-              text={loading ? [<CircularProgresser key="key" />] : "Register"}
+              disabledClass="capitalize hover:bg-color_7 bg-color_7 cursor-pointer text-color_2 h-[50px]  p-3 text-[16px]"
+              disabled={
+                !loading && !(userid && password && confirmPassword)
+                  ? true
+                  : false
+              }
               disableFocusRipple={false}
+              text={loading ? <CircularProgresser key="key" /> : "Register"}
             />
           </div>
         </form>

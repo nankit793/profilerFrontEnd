@@ -15,7 +15,7 @@ function ButtonPrimary(props) {
           fullWidth={true}
           id={props.id}
           sx={{ borderRadius: "none" }}
-          className={`capitalize ${
+          className={`text-center ${
             props.disabled ? props.disabledClass : props.className
           }  `}
           onClick={props.onClick ? props.onClick : null}
@@ -23,7 +23,7 @@ function ButtonPrimary(props) {
           disabled={props.disabled == "true" ? true : false}
           type={props.type}
         >
-          {props.icon}
+          {/* {props.icon} */}
           {props.text}
         </Button>
       </div>

@@ -83,7 +83,7 @@ function Bookmarks() {
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-2 rounded  mb-2 cursor-pointer border duration-200"
+                  className="flex justify-between items-center p-2 rounded bg-color_3  mb-2 cursor-pointer border duration-200"
                 >
                   <div className="w-[90%]">
                     <div className="font-semibold text-[20px] text-text_1 break-words">
@@ -126,7 +126,7 @@ function Bookmarks() {
               return (
                 <div
                   key={index}
-                  className="flex justify-between items-center p-2  rounded bg-color_2 mb-2 cursor-pointer border duration-200"
+                  className="flex justify-between items-center p-2  rounded bg-color_3 mb-2 cursor-pointer border duration-200"
                 >
                   <div className="w-[90%]">
                     <div className="font-semibold text-[20px] text-text_1 break-words">

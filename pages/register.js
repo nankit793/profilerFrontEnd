@@ -54,8 +54,8 @@ function Register() {
         />
       </Head>
       <div className="pt-12">
-        <div className="h-[50vh] w-full bg-color_9 text-center">
-          <div className="text-text_1 font-semibold pt-10 text-[30px]">
+        <div className="h-[50vh] w-full gradientColor text-center">
+          <div className="text-color_2 font-semibold pt-10 text-[30px]">
             Sign up / Register
           </div>
         </div>

@@ -523,10 +523,11 @@ function BasicDetails() {
                 <ButtonPrimary
                   type="submit"
                   disabled={loading ? true : false}
+                  disabledClass="capitalize  bg-color_7  text-color_2 hover:bg-color_7 p-4 h-[45px] w-[140px]"
                   // onClick={handleSubmit}
                   text={loading ? <CircularProgresser /> : "save changes"}
                   // icon={<ModeEditOutlineIcon />}
-                  className="bg-color_7 text-[white] h-[45px] w-[140px]  hover:bg-color_5  text-[15px]"
+                  className="capitalize bg-color_7 text-[white] focus:none h-[45px] w-[140px]  hover:bg-color_5  text-[15px]"
                 />
               </div>
             </div>
