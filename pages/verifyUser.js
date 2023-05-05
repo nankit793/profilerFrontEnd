@@ -20,7 +20,6 @@ function VerifyUser() {
       router.push("/home");
     }
     let verifyId = localStorage.getItem("verifyId");
-    localStorage.removeItem("verifyId");
     if (verifyId) {
       setUserid(verifyId);
     } else {
@@ -100,7 +99,7 @@ function VerifyUser() {
             {userid ? userid : "invalid id"}
           </div>
           <div className="border rounded-md flex justify-start">
-            <div className="py-3 px-5 rounded-l-md bg-color_8 text-text_1 font-semibold border-r">
+            <div className="py-3 whitespace-nowrap px-5 rounded-l-md bg-color_8 text-text_1 font-semibold border-r">
               OTP
             </div>
             <input

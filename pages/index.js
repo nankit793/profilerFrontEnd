@@ -1,6 +1,5 @@
 import Head from "next/head";
 import React, { useEffect } from "react";
-
 import Navbar from "../components/navbar/Navbar";
 import Image from "next/image";
 import ButtonPrimary from "../components/atoms/input/ButtonPrimary";
@@ -62,13 +61,18 @@ export default function Home() {
               FOR FREE!!!
             </strong>
           </div>
-          <div className="px-6 py-2 bg-color_2 text-color_7 font-semibold cursor-pointer w-fit rounded-full duration-200">
+          <div
+            onClick={() => {
+              router.push("/explore");
+            }}
+            className="px-6 py-2 bg-color_2 text-color_7 font-semibold cursor-pointer w-fit rounded-full duration-200"
+          >
             Start Exploring
           </div>
         </div>
       </div>
-      <div className=" justify-center bg-color_8 flex items-center h-[40vh]">
-        <div className="text-text_1 font-bold text-[40px] text-center px-5">
+      <div className=" justify-center bg-color_8 flex items-center  py-10 md:py-40">
+        <div className="text-text_1 font-bold text-[40px] text-center px-5 ">
           Everything you need to manage your
           <div>Blogs and Portfolios</div>
         </div>
@@ -96,16 +100,26 @@ export default function Home() {
           </div>
         </div>
       </div>
-      <div className="h-[40vh] mt-20">
+      <div className="md:pb-20 pb-20 mt-20">
         <div className="text-text_1 font-bold text-[40px] text-center px-5">
           More than 2 Million people
           <div>have already chosen us!</div>
         </div>
         <div className="flex gap-5 justify-center mt-5">
-          <div className="bg-color_2 border-color_7 border  px-7 py-1 text-color_7 text-[25px] rounded-full">
+          <div
+            onClick={() => {
+              router.push("/login");
+            }}
+            className="bg-color_2 border-color_7 border  px-7 py-1 text-color_7 text-[25px] rounded-full"
+          >
             Login
           </div>
-          <div className="bg-color_7   px-5 py-1 text-color_2 text-[25px] rounded-full">
+          <div
+            onClick={() => {
+              router.push("/register");
+            }}
+            className="bg-color_7   px-5 py-1 text-color_2 text-[25px] rounded-full"
+          >
             Sign Up
           </div>
         </div>

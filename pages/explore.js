@@ -6,10 +6,21 @@ import { useRouter } from "next/router";
 import Trending from "../components/molecules/explore/Trending";
 import BlogPreReview from "../components/molecules/explore/BlogPreReview";
 import SwipeableTemporaryDrawer from "../components/molecules/Drawer";
+
 function Explore() {
   const router = useRouter();
   const dispatch = useDispatch();
-
+  const sessionStorage = useSelector((state) => state.sessionStorageReducer);
+  const [reviewId, setReviewId] = useState("");
+  useEffect(() => {
+    dispatch(trendingBlogs.getTrendingBlogs("t"));
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+  const changeReviewId = (id) => {
+    if (id) {
+      setReviewId(id);
+    }
+  };
   const buttons = [
     {
       name: "For You",
@@ -23,15 +34,10 @@ function Explore() {
     {
       name: "Trending",
       id: 1,
-      pageData: <Trending />,
+      pageData: <Trending changeReviewId={changeReviewId} />,
     },
   ];
   const [selectedPage, setSelectedPage] = useState(buttons[1]);
-
-  useEffect(() => {
-    dispatch(trendingBlogs.getTrendingBlogs("t"));
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return (
     <>
@@ -85,8 +91,8 @@ function Explore() {
               );
             })}
           </div>
-          <div className="grow  h-full ">
-            <BlogPreReview />
+          <div className="grow  md:block hidden h-full ">
+            <BlogPreReview reviewId={reviewId} />
           </div>
         </div>
       </div>

@@ -36,9 +36,12 @@ function BlogPreReview(props) {
   const router = useRouter();
   useEffect(() => {
     if (props.reviewId) {
-      console.log(props.reviewId);
+      //   console.log(props.reviewId);
+      getBlog();
       setReviewId(props.reviewId);
     }
+    return;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.reviewId]);
 
   // useEffect(() => {
@@ -47,7 +50,8 @@ function BlogPreReview(props) {
   //   }
   // }, [sessionStorage]);
 
-  useEffect(() => {
+  const getBlog = (e) => {
+    // e.preventDefault();
     console.log(reviewId);
     if (reviewId) {
       // console.log(reviewId);
@@ -59,7 +63,6 @@ function BlogPreReview(props) {
         })
         .then(function (response) {
           if (response.status === 200) {
-            console.log("first", response);
             setBlogData(response && response.data && response.data.blog);
             setIsLiked(response && response.data && response.data.liked);
             setNumLikes(
@@ -102,7 +105,7 @@ function BlogPreReview(props) {
         });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [reviewId]);
+  };
 
   useEffect(() => {
     if (bookmarks && bookmarks.isFetched && bookmarks.bookmarks) {

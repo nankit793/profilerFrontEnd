@@ -10,14 +10,14 @@ import * as sessionStorageAction from "../../../redux-next/sessionStorage/action
 import axios from "axios";
 import SwipeableTemporaryDrawer from "../Drawer";
 import BlogPreReview from "./BlogPreReview";
-
+import BlogMobilePreview from "./BlogMobilePreview";
 function Trending(props) {
   const trendingBlogs = useSelector((state) => state.trendinBlogsReducer);
   const [followersData, setFollowersData] = useState();
   const [mainBlogs, setMainBlogs] = useState([]);
   const followingList = useSelector((state) => state.followingListReducer);
   const sessionStorage = useSelector((state) => state.sessionStorageReducer);
-
+  const [reviewId, setReviewId] = useState("");
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -108,13 +108,14 @@ function Trending(props) {
             return (
               <>
                 <div
-                  key={e._id}
+                  key={blog._id}
                   onClick={() => {
-                    dispatch(
-                      sessionStorageAction.userReviewBlog(
-                        blog && blog._id && blog._id
-                      )
-                    );
+                    props.changeReviewId(blog._id),
+                      dispatch(
+                        sessionStorageAction.userReviewBlog(
+                          blog && blog._id && blog._id
+                        )
+                      );
                   }}
                   className={`${
                     sessionStorage.session === blog._id
@@ -176,12 +177,12 @@ function Trending(props) {
                       )}
 
                       <div>
-                        {/* {blog &&
-                      blog.blogUpload &&
-                      blog.from.split("T")[0].split("-") &&
-                      dateConverter(blog.from.split("T")[0].split("-")[1]) +
-                        " " +
-                        blog.from.split("T")[0].split("-")[0]}{" "}} */}
+                        {blog &&
+                          blog.blogUpload &&
+                          blog.from.split("T")[0].split("-") &&
+                          dateConverter(blog.from.split("T")[0].split("-")[1]) +
+                            " " +
+                            blog.from.split("T")[0].split("-")[0]}{" "}
                       </div>
                     </div>
                   </div>
@@ -200,13 +201,10 @@ function Trending(props) {
                       {blog && blog.heading}
                     </div>
                     <div className="text-text_2">
-                      qiojri ejr jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne
-                      n ntnt kn kynkl n qiojri ejr jjepjetmlkm n nlnlk n knlk
-                      tnlkwe ne ntn e tne n ntnt kn kynkl n qiojri ejr
-                      jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne n ntnt kn
-                      kynkl n qiojri ejr jjepjetmlkm n nlnlk n knlk tnlkwe ne
-                      ntn e tne n ntnt kn kynkl n qiojri ejr jjepjetmlkm n nlnlk
-                      n knlk tnlkwe ne ntn e tne n ntnt kn kynkl n
+                      {blog.paragraphs &&
+                        blog.paragraphs[0] &&
+                        blog.paragraphs[0].paragraph &&
+                        blog.paragraphs[0].paragraph.slice(0, 250)}
                     </div>
                   </div>
                 </div>
@@ -216,7 +214,7 @@ function Trending(props) {
       </div>
       <div className="mx-2 md:px-3 pt-4 md:hidden">
         {mainBlogs &&
-          mainBlogs.map((e) => {
+          mainBlogs.map((e, index) => {
             const blog = e.blog;
             return (
               <>
@@ -224,9 +222,11 @@ function Trending(props) {
                   anchor="bottom"
                   click={
                     <div
-                      id="operationButton"
-                      key={e._id}
+                      // id="operationButton"
+                      key={index}
                       onClick={() => {
+                        console.log("firsttime");
+                        setReviewId(blog._id);
                         dispatch(
                           sessionStorageAction.userReviewBlog(
                             blog && blog._id && blog._id
@@ -291,15 +291,6 @@ function Trending(props) {
                               )}
                             </>
                           )}
-
-                          <div>
-                            {/* {blog &&
-                      blog.blogUpload &&
-                      blog.from.split("T")[0].split("-") &&
-                      dateConverter(blog.from.split("T")[0].split("-")[1]) +
-                        " " +
-                        blog.from.split("T")[0].split("-")[0]}{" "}} */}
-                          </div>
                         </div>
                       </div>
                       <Image
@@ -316,23 +307,20 @@ function Trending(props) {
                         <div className="py-1 text-[19px] text-text_1">
                           {blog && blog.heading}
                         </div>
+
                         <div className="text-text_2">
-                          qiojri ejr jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e
-                          tne n ntnt kn kynkl n qiojri ejr jjepjetmlkm n nlnlk n
-                          knlk tnlkwe ne ntn e tne n ntnt kn kynkl n qiojri ejr
-                          jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne n ntnt
-                          kn kynkl n qiojri ejr jjepjetmlkm n nlnlk n knlk
-                          tnlkwe ne ntn e tne n ntnt kn kynkl n qiojri ejr
-                          jjepjetmlkm n nlnlk n knlk tnlkwe ne ntn e tne n ntnt
-                          kn kynkl n
+                          {blog.paragraphs &&
+                            blog.paragraphs[0] &&
+                            blog.paragraphs[0].paragraph &&
+                            blog.paragraphs[0].paragraph.slice(0, 250)}
                         </div>
                       </div>
                     </div>
                   }
                   classNameDrawer="text-color_2"
                   data={
-                    <div className="grow  h-full ">
-                      <BlogPreReview />
+                    <div className="grow md:hidden block h-full ">
+                      <BlogMobilePreview reviewId={reviewId} />
                     </div>
                   }
                 />

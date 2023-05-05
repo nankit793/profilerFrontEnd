@@ -91,7 +91,7 @@ function Navbar() {
           <SwipeableTemporaryDrawer
             anchor="right"
             click={<SearchIcon />}
-            classNameDrawer="normal-case mr-3 cursor-pointer font-semibold text-[white] p-0  text-[15px]"
+            classNameDrawer="normal-case cursor-pointer font-semibold text-[white] p-0  text-[15px]"
             data={<SearchBarBody />}
           />
 
@@ -149,8 +149,8 @@ function Navbar() {
               </>
             }
             text={
-              <div className="text-color_2 pr-5 bg-color_7 text-color_2">
-                <Menu />
+              <div className="text-color_2 pr-2 bg-color_7">
+                <Menu fontSize="large" />
               </div>
             }
           />

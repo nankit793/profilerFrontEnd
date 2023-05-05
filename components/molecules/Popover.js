@@ -23,7 +23,7 @@ function PopOver(props) {
   return (
     <div>
       <div
-        className=" w-min text-right  hover:bg-color_6 duration-200 cursor-pointer  rounded-full "
+        className={` w-min text-right  hover:bg-color_6 duration-200 cursor-pointer  rounded-full `}
         aria-describedby={id}
         onClick={handleClick}
       >
